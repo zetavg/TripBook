@@ -1,24 +1,15 @@
-# README
+# TripBook
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The TripBook Project.
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+### System
 
-* System dependencies
+* Linux or macOS
+* Ruby 2.4
 
-* Configuration
+## Setup
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Run `bin/setup`.
+2. Edit `.env`.
