@@ -31,6 +31,11 @@ gem 'awesome_print'
 # Configuration
 gem 'settingslogic'
 
+# User Authentication
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

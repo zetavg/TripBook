@@ -24,3 +24,6 @@ module TripBook
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+Rails.application.configure do
+end

@@ -1,4 +1,8 @@
 default: &default
+  host:
+    url: <%= ENV['HOST_URL'] %>
+    host: <%= URI.parse(ENV['HOST_URL']).host %>
+    port: <%= URI.parse(ENV['HOST_URL']).port %>
 
 development:
   <<: *default
