@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
 ruby '2.4.0'
@@ -57,6 +58,8 @@ group :development, :test do
   gem 'database_rewinder'
 
   gem 'simplecov', require: false
+
+  gem 'rubocop', require: false
 end
 
 group :development do
