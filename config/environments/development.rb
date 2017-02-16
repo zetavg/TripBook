@@ -28,6 +28,7 @@ Rails.application.configure do
   end
 
   config.action_mailer.default_url_options = { host: Config.host.host, port: Config.host.port }
+  config.action_mailer.delivery_method = :letter_opener
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
