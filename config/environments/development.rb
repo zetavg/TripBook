@@ -27,7 +27,7 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  config.action_mailer.default_url_options = { host: Config.host.host, port: Config.host.port }
+  config.action_mailer.default_url_options = { host: Config.app.host, port: Config.app.port }
   config.action_mailer.delivery_method = :letter_opener
 
   # Don't care if the mailer can't send.

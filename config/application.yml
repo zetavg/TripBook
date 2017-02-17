@@ -1,8 +1,12 @@
 default: &default
-  host:
+  app:
+    secret_key: <%= ENV['SECRET_KEY'] %>
+    pepper: <%= ENV['PEPPER'] %>
     url: <%= uri = URI.parse(ENV['HOST_URL']); uri.path = ''; uri %>
     host: <%= URI.parse(ENV['HOST_URL']).host %>
     port: <%= URI.parse(ENV['HOST_URL']).port %>
+  mailer:
+    default_sender: <%= ENV['MAILER_DEFAULT_SENDER'] %>
   facebook:
     app_id: <%= ENV['FB_APP_ID'] %>
     app_secret: <%= ENV['FB_APP_SECRET'] %>

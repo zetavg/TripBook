@@ -7,13 +7,13 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '1d63dea520ff4f6111d6a3656e1e8f096578ac35cb4832b089b6063f3609477e48b5886e4e4011fc486d822faa73c5b09286ad86128ca7de248fbc55520a2918'
+  config.secret_key = Config.app.secret_key
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = Config.mailer.default_sender
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -109,7 +109,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'c72dadffcc34e8b2d026dc1595d04a9aeca2fdad4a30e909c2e159b9e0be55a85fecb3d1cd2bafb8511c1cd53a5f3c0e5c05b5dd3eb3149b1e54c0db05b61276'
+  config.pepper = Config.app.pepper
 
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false
@@ -254,7 +254,7 @@ Devise.setup do |config|
                   Facebook::APP_SECRET,
                   scope: Facebook::SCOPES_STRING,
                   info_fields: Facebook::USER_INFO_FIELDS_STRING,
-                  callback_url: Config.host.url + '/users/auth/facebook/callback'
+                  callback_url: Config.app.url + '/users/auth/facebook/callback'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
