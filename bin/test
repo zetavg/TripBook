@@ -25,5 +25,10 @@ chdir APP_ROOT do
     errors_count += 1 unless system 'bin/rubocop'
   end
 
+  if !test_type || test_type == 'eslint'
+    puts "\n== Running ESLint =="
+    errors_count += 1 unless system './node_modules/.bin/eslint app/assets/javascripts/'
+  end
+
   exit(errors_count)
 end

@@ -7,20 +7,22 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
+# Ignore Node.js modules.
+/node_modules/*
 
-# Ignore all logfiles and tempfiles.
+# Ignore configuration files
+/.env
+/config/database.yml
+
+# Ignore all logfiles, tempfiles and reportfiles.
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/coverage/*
+
+# Ignore file storage.
+/public/storage
 
 # Ignore Byebug command history file.
 .byebug_history
-
-/.env
-/config/database.yml
-/public/storage
-/coverage/*

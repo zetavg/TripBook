@@ -19,6 +19,9 @@ chdir APP_ROOT do
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
+  puts "\n== Installing JS dependencies =="
+  system!('bin/rails js:install')
+
   puts "\n== Copying sample files =="
   cp '.env.sample', '.env' unless File.exist?('.env')
   cp 'config/database.yml.sample', 'config/database.yml' unless File.exist?('config/database.yml')

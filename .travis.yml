@@ -6,12 +6,14 @@ cache:
   directories:
     - ~/.rvm/gems/ruby-2.4.0
     - ~/.rvm/rubies/ruby-2.4.0
+    - node_modules
 services:
   - postgresql
   - redis-server
 env:
   - TEST_TYPE=rspec
   - TEST_TYPE=rubocop
+  - TEST_TYPE=eslint
 before_install:
   - "gem update --system"
   - "echo 'gem: --no-document' > ~/.gemrc"
