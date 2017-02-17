@@ -2,7 +2,7 @@
 class CreateUserCoverPhotos < ActiveRecord::Migration[5.0]
   def change
     create_table :user_cover_photos do |t|
-      t.references :user, index: true, foreign_key: true, null: false
+      t.references :user, index: true, foreign_key: true
       t.string :image
       t.string :secure_token
       t.integer :width

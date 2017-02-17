@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170217083849) do
   enable_extension "plpgsql"
 
   create_table "user_cover_photos", force: :cascade do |t|
-    t.integer  "user_id",      null: false
+    t.integer  "user_id"
     t.string   "image"
     t.string   "secure_token"
     t.integer  "width"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20170217083849) do
   end
 
   create_table "user_pictures", force: :cascade do |t|
-    t.integer  "user_id",      null: false
+    t.integer  "user_id"
     t.string   "image"
     t.string   "secure_token"
     t.integer  "width"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170217083849) do
   end
 
   create_table "user_profiles", force: :cascade do |t|
-    t.integer  "user_id",                  null: false
+    t.integer  "user_id"
     t.integer  "gender",         limit: 2
     t.bigint   "birthday_year"
     t.integer  "birthday_month", limit: 2
