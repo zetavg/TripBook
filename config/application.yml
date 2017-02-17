@@ -1,8 +1,11 @@
 default: &default
   host:
-    url: <%= ENV['HOST_URL'] %>
+    url: <%= uri = URI.parse(ENV['HOST_URL']); uri.path = ''; uri %>
     host: <%= URI.parse(ENV['HOST_URL']).host %>
     port: <%= URI.parse(ENV['HOST_URL']).port %>
+  facebook:
+    app_id: <%= ENV['FB_APP_ID'] %>
+    app_secret: <%= ENV['FB_APP_SECRET'] %>
 
 development:
   <<: *default

@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212142932) do
+ActiveRecord::Schema.define(version: 20170217033201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "user_facebook_accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "facebook_id",             null: false
+    t.string   "email"
+    t.string   "name"
+    t.text     "picture_url"
+    t.text     "cover_photo_url"
+    t.text     "access_token",            null: false
+    t.integer  "access_token_expires_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["email"], name: "index_user_facebook_accounts_on_email", using: :btree
+    t.index ["facebook_id"], name: "index_user_facebook_accounts_on_facebook_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_user_facebook_accounts_on_user_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                                  default: "", null: false
@@ -46,4 +62,5 @@ ActiveRecord::Schema.define(version: 20170212142932) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "user_facebook_accounts", "users"
 end
