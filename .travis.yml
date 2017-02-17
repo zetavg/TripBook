@@ -2,7 +2,10 @@ sudo: false
 language: ruby
 rvm: 2.4.0
 cache:
-  - bundler
+  bundler: true
+  directories:
+    - ~/.rvm/gems/ruby-2.4.0
+    - ~/.rvm/rubies/ruby-2.4.0
 services:
   - postgresql
   - redis-server

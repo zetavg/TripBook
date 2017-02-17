@@ -64,6 +64,7 @@ group :development, :test do
   gem 'database_rewinder'
 
   gem 'simplecov', require: false
+  gem 'coveralls', require: false
 
   gem 'rubocop', require: false
 end
