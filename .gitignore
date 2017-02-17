@@ -22,4 +22,5 @@
 
 /.env
 /config/database.yml
+/public/storage
 /coverage/*

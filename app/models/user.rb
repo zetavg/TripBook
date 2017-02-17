@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
+  has_one :picture
+  has_one :cover_photo
   has_one :facebook_account
 
   validates :name, presence: true

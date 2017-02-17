@@ -36,6 +36,13 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
+# File Storage
+gem 'carrierwave'
+gem 'fog'
+
+# Image Processor
+gem 'mini_magick'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

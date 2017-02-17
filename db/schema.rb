@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217033201) do
+ActiveRecord::Schema.define(version: 20170217080642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "user_cover_photos", force: :cascade do |t|
+    t.integer  "user_id",      null: false
+    t.string   "image"
+    t.string   "secure_token"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["secure_token"], name: "index_user_cover_photos_on_secure_token", unique: true, using: :btree
+    t.index ["user_id"], name: "index_user_cover_photos_on_user_id", using: :btree
+  end
 
   create_table "user_facebook_accounts", force: :cascade do |t|
     t.integer  "user_id"
@@ -29,6 +41,18 @@ ActiveRecord::Schema.define(version: 20170217033201) do
     t.index ["email"], name: "index_user_facebook_accounts_on_email", using: :btree
     t.index ["facebook_id"], name: "index_user_facebook_accounts_on_facebook_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_user_facebook_accounts_on_user_id", using: :btree
+  end
+
+  create_table "user_pictures", force: :cascade do |t|
+    t.integer  "user_id",      null: false
+    t.string   "image"
+    t.string   "secure_token"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["secure_token"], name: "index_user_pictures_on_secure_token", unique: true, using: :btree
+    t.index ["user_id"], name: "index_user_pictures_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,5 +86,7 @@ ActiveRecord::Schema.define(version: 20170217033201) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "user_cover_photos", "users"
   add_foreign_key "user_facebook_accounts", "users"
+  add_foreign_key "user_pictures", "users"
 end
