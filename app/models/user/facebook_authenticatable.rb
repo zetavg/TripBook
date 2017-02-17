@@ -45,13 +45,12 @@ class User
           email: email,
           password: SecureRandom.hex(32),
           name: name,
-          confirmed_at: Time.current
+          confirmed_at: Time.current,
+          gender: %w(male female).include?(gender) ? gender : :other
         )
 
         user.create_picture!(remote_image_url: picture_url) if user.picture.blank?
         user.create_cover_photo!(remote_image_url: cover_photo_url) if user.cover_photo.blank?
-
-        # TODO: Log gender
 
         user.from_facebook = true
         user
