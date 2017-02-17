@@ -6,4 +6,6 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:facebook]
 
   has_one :facebook_account
+
+  validates :name, presence: true
 end

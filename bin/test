@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+require 'pathname'
+require 'fileutils'
+include FileUtils
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+chdir APP_ROOT do
+  test_type = ENV['TEST_TYPE']
+  errors_count = 0
+
+  if !test_type || test_type == 'rspec'
+    puts "\n== Running RSpec =="
+    errors_count += 1 unless system 'bin/rspec spec'
+  end
+
+  if !test_type || test_type == 'rubocop'
+    puts "\n== Running Rubocup =="
+    errors_count += 1 unless system 'bin/rubocop'
+  end
+
+  exit(errors_count)
+end

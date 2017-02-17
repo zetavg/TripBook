@@ -1,0 +1,17 @@
+sudo: false
+language: ruby
+rvm: 2.4.0
+cache:
+  - bundler
+services:
+  - postgresql
+  - redis-server
+env:
+  - TEST_TYPE=rspec
+  - TEST_TYPE=rubocop
+before_install:
+  - "gem update --system"
+  - "echo 'gem: --no-document' > ~/.gemrc"
+install:
+  - travis_retry bin/setup
+script: bin/test
