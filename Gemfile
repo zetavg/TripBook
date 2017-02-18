@@ -29,6 +29,11 @@ gem 'awesome_print'
 # Configuration
 gem 'settingslogic'
 
+# Model Utils
+gem 'active_type'
+gem 'aasm'
+gem 'paper_trail'
+
 # User Authentication
 gem 'devise'
 gem 'omniauth'
