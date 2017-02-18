@@ -9,6 +9,18 @@ class User
       attr_accessor :unauthenticated_from_facebook
     end
 
+    def from_facebook?
+      from_facebook.is_a? TrueClass
+    end
+
+    def new_from_facebook?
+      new_from_facebook.is_a? TrueClass
+    end
+
+    def unauthenticated_from_facebook?
+      unauthenticated_from_facebook.is_a? TrueClass
+    end
+
     class_methods do
       def from_facebook(
         access_token:, access_token_expires_at:,
@@ -30,14 +42,13 @@ class User
         )
 
         if facebook_account.user.blank? && find_possible_user
-          # TODO: Link existing users with their FB account
-          # possible_user = User.find_by(email: email)
-          # if possible_user
-          #   possible_user.from_facebook = true
-          #   possible_user.from_facebook_unauthenticated = true
-          #   possible_user.facebook_account = facebook_account
-          #   return possible_user
-          # end
+          possible_user = User.find_by(email: email)
+          if possible_user
+            possible_user.from_facebook = true
+            possible_user.unauthenticated_from_facebook = true
+            possible_user.facebook_account = facebook_account
+            return possible_user
+          end
         end
 
         user = facebook_account.user || facebook_account.create_user!(
