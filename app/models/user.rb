@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_one :picture
   has_one :cover_photo
+  has_many :owned_books, class_name: 'Book', foreign_key: :owner_id
   has_one :facebook_account
 
   validates :name, presence: true

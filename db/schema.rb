@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218172916) do
+ActiveRecord::Schema.define(version: 20170218181530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 20170218172916) do
     t.index ["isbn"], name: "index_book_infos_on_isbn", unique: true, using: :btree
     t.index ["isbn_10"], name: "index_book_infos_on_isbn_10", unique: true, using: :btree
     t.index ["isbn_13"], name: "index_book_infos_on_isbn_13", unique: true, using: :btree
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string   "isbn"
+    t.integer  "owner_id",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["isbn"], name: "index_books_on_isbn", using: :btree
+    t.index ["owner_id"], name: "index_books_on_owner_id", using: :btree
   end
 
   create_table "user_cover_photos", force: :cascade do |t|
@@ -113,6 +122,7 @@ ActiveRecord::Schema.define(version: 20170218172916) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "books", "users", column: "owner_id"
   add_foreign_key "user_cover_photos", "users"
   add_foreign_key "user_facebook_accounts", "users"
   add_foreign_key "user_pictures", "users"
