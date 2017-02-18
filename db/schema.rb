@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217083849) do
+ActiveRecord::Schema.define(version: 20170218172916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "book_infos", primary_key: "isbn", id: :string, limit: 32, force: :cascade do |t|
+    t.string   "isbn_10",      limit: 32
+    t.string   "isbn_13",      limit: 32
+    t.string   "name",         limit: 128, null: false
+    t.string   "cover_image"
+    t.string   "language",     limit: 64
+    t.string   "author",       limit: 64
+    t.string   "publisher",    limit: 64
+    t.date     "publish_date"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["isbn"], name: "index_book_infos_on_isbn", unique: true, using: :btree
+    t.index ["isbn_10"], name: "index_book_infos_on_isbn_10", unique: true, using: :btree
+    t.index ["isbn_13"], name: "index_book_infos_on_isbn_13", unique: true, using: :btree
+  end
 
   create_table "user_cover_photos", force: :cascade do |t|
     t.integer  "user_id"
