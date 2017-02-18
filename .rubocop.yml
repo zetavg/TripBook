@@ -30,6 +30,9 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/BlockComments:
   Enabled: false
 
