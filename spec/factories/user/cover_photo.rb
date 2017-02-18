@@ -8,6 +8,8 @@ FactoryGirl.define do
     end
 
     user
-    remote_image_url { "http://placehold.it/#{size[0]}x#{size[1]}/#{color.delete('#')}/#{background_color.delete('#')}" }
+    remote_image_url do
+      "http://placehold.it/#{size[0]}x#{size[1]}/#{color.delete('#')}/#{background_color.delete('#')}"
+    end
   end
 end

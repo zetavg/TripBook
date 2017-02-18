@@ -9,8 +9,26 @@ Rails:
 Bundler/OrderedGems:
   Enabled: false
 
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 120
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
 
 Style/BlockComments:
   Enabled: false
