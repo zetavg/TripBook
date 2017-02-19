@@ -390,6 +390,9 @@ GEM
     shoulda-context (1.2.1)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
+    simple_form (3.3.1)
+      actionpack (> 4, < 5.1)
+      activemodel (> 4, < 5.1)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -486,6 +489,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   settingslogic
   shoulda
+  simple_form
   simplecov
   slim-rails
   spring

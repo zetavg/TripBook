@@ -48,6 +48,7 @@ gem 'mini_magick'
 
 # Front-end
 gem 'slim-rails'
+gem 'simple_form'
 gem 'jbuilder', '~> 2.5'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.6'
