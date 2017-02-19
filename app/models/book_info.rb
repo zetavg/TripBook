@@ -6,4 +6,5 @@ class BookInfo < ApplicationRecord
   has_many :books, primary_key: :isbn, foreign_key: :isbn
 
   validates :isbn, :name, presence: true
+  validates :isbn, uniqueness: true, on: :create
 end

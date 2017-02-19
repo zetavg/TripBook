@@ -10,6 +10,7 @@ class Me::OwnedBooksController < ApplicationController
 
   def new
     @book = books_scope.build
+    @book.build_info
   end
 
   def create
@@ -29,6 +30,9 @@ class Me::OwnedBooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:isbn)
+    params.require(:book).permit(
+      :isbn,
+      info_attributes: [:isbn, :name, :author, :publisher]
+    )
   end
 end
