@@ -20,6 +20,16 @@ m_Book [label = <<table border="0" align="center" cellspacing="0.5" cellpadding=
   <tr><td align="left" width="130" port="isbn">isbn <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
 </table>
 >];
+m_BookHolding [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">BookHolding</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="ready_for_released_at">ready_for_released_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="released_at">released_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="state">state <font face="Arial ItalicMT" color="grey60">string (16) ∗</font></td></tr>
+</table>
+>];
 m_BookInfo [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
   <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">BookInfo</font></td></tr>
 </table>
@@ -115,6 +125,12 @@ m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding=
   m_User -> "m_User::Picture" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::CoverPhoto" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
   m_User -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
+  m_User -> m_BookHolding [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "3"];
+  m_User -> m_Book [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "2", constraint = "false"];
+  m_User -> m_Book [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1", constraint = "false"];
   m_User -> "m_User::FacebookAccount" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
+  m_Book -> m_BookHolding [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "3"];
+  m_Book -> m_User [style = "dotted", arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "1", constraint = "false"];
   m_BookInfo -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
+  m_BookHolding -> m_BookHolding [arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1"];
 }

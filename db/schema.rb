@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218181530) do
+ActiveRecord::Schema.define(version: 20170219035433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "book_holdings", force: :cascade do |t|
+    t.integer  "user_id",                          null: false
+    t.integer  "book_id",                          null: false
+    t.integer  "previous_holding_id"
+    t.string   "state",                 limit: 16, null: false
+    t.datetime "ready_for_released_at"
+    t.datetime "released_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["book_id"], name: "index_book_holdings_on_book_id", using: :btree
+    t.index ["previous_holding_id"], name: "index_book_holdings_on_previous_holding_id", using: :btree
+    t.index ["state"], name: "index_book_holdings_on_state", using: :btree
+    t.index ["user_id"], name: "index_book_holdings_on_user_id", using: :btree
+  end
 
   create_table "book_infos", primary_key: "isbn", id: :string, limit: 32, force: :cascade do |t|
     t.string   "isbn_10",      limit: 32
@@ -122,6 +137,9 @@ ActiveRecord::Schema.define(version: 20170218181530) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "book_holdings", "book_holdings", column: "previous_holding_id"
+  add_foreign_key "book_holdings", "books"
+  add_foreign_key "book_holdings", "users"
   add_foreign_key "books", "users", column: "owner_id"
   add_foreign_key "user_cover_photos", "users"
   add_foreign_key "user_facebook_accounts", "users"
