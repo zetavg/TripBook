@@ -2,6 +2,7 @@
 FactoryGirl.define do
   factory :book_info do
     isbn { Faker::Code.isbn }
+    isbn_13 { isbn }
     name { Faker::Book.title }
     author { Faker::Book.author }
     publisher { Faker::Book.publisher }
