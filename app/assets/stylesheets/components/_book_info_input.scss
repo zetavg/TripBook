@@ -1,0 +1,54 @@
+$select-item-height: 64px;
+$select-item-padding: 4px;
+
+.book_info_input {
+  .select2-selection,
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: $select-item-height + 2px;
+  }
+}
+
+.book-info-select-item {
+  height: $select-item-height;
+  overflow: hidden;
+
+  .select2-results__option > & {
+    margin: -4px 0;
+  }
+
+  .image, .info {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .loading-text {
+    line-height: $select-item-height;
+  }
+
+  .image {
+    height: $select-item-height;
+    width: 48px;
+
+    .img {
+      height: $select-item-height - $select-item-padding * 2;
+      width: 100%;
+      margin-top: $select-item-padding;
+      margin-bottom: $select-item-padding;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .info {
+    height: $select-item-height;
+    padding-top: $select-item-padding;
+    padding-bottom: $select-item-padding;
+    $select-item-inner-height: $select-item-height - $select-item-padding * 2;
+
+    > * {
+      height: $select-item-inner-height / 3;
+      line-height: $select-item-inner-height / 3;
+    }
+  }
+}

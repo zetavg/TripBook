@@ -15,6 +15,7 @@ nav.navbar.navbar-default
               = current_user.name
               span class="caret"
             ul.dropdown-menu
+              li= link_to('我的藏書', me_owned_books_path)
               li= link_to('Sign out', destroy_user_session_path, :method => :delete)
         - else
           li= link_to('Sign in', new_user_session_path)

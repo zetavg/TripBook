@@ -56,6 +56,7 @@ gem 'sprockets-commoner'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
+gem 'select2-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -10,6 +10,12 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  authenticate :user do
+    namespace :me do
+      resources :owned_books
+    end
+  end
+
   namespace :api, defaults: { format: :json } do
     resources :book_infos, only: [:index]
   end

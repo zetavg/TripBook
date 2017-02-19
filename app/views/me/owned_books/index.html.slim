@@ -1,0 +1,16 @@
+.container
+  h1
+    | 我的藏書
+    =< link_to '新增', new_me_owned_book_path, class: 'btn btn-success'
+  - if @books.present?
+    .row
+      - @books.each do |book|
+        .col-md-4
+          .thumbnail
+            h3= book.name
+  - else
+    .well.text-center
+      p
+        | 您目前並未擁有任何書籍。馬上
+        = link_to '新增一本', new_me_owned_book_path
+        | 吧！

@@ -2,8 +2,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require_tree .
+//= require select2-full
+
+import BookInfoInput from './components/book_info_input'
+
+const components = {}
 
 $(document).on('turbolinks:load', () => {
-  console.log('Hello World!')
+  components.bookInfoInputs = $('.book_info_input').toArray().map(el => new BookInfoInput(el))
 })

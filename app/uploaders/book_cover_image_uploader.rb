@@ -3,7 +3,7 @@ class BookCoverImageUploader < ImageUploader
   include CarrierWave::MiniMagick
 
   def filename
-    "#{model.isbn}.#{file.extension}" if original_filename.present?
+    "cover.#{file.extension}" if original_filename.present?
   end
 
   version :thumbnail do
