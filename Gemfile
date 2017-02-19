@@ -75,6 +75,7 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'coveralls', require: false
 
+  gem 'rails-erd'
   gem 'rubocop', require: false
 end
 

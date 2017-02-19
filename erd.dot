@@ -1,0 +1,120 @@
+digraph TripBook {
+rankdir = "LR";
+ranksep = "0.5";
+nodesep = "0.4";
+pad = "0.4,0.4";
+margin = "0,0";
+concentrate = "true";
+labelloc = "t";
+fontsize = "13";
+fontname = "Arial BoldMT";
+node[ shape  =  "Mrecord" , fontsize  =  "10" , fontname  =  "ArialMT" , margin  =  "0.07,0.05" , penwidth  =  "1.0"];
+edge[ fontname  =  "ArialMT" , fontsize  =  "7" , dir  =  "both" , arrowsize  =  "0.9" , penwidth  =  "1.0" , labelangle  =  "32" , labeldistance  =  "1.8"];
+rankdir = "TB";
+label = "TripBook domain model\n\n";
+m_Book [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">Book</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="isbn">isbn <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+</table>
+>];
+m_BookInfo [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">BookInfo</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="author">author <font face="Arial ItalicMT" color="grey60">string (64)</font></td></tr>
+  <tr><td align="left" width="130" port="cover_image">cover_image <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="isbn_10">isbn_10 <font face="Arial ItalicMT" color="grey60">string (32)</font></td></tr>
+  <tr><td align="left" width="130" port="isbn_13">isbn_13 <font face="Arial ItalicMT" color="grey60">string (32)</font></td></tr>
+  <tr><td align="left" width="130" port="language">language <font face="Arial ItalicMT" color="grey60">string (64)</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial ItalicMT" color="grey60">string (128) ∗</font></td></tr>
+  <tr><td align="left" width="130" port="publish_date">publish_date <font face="Arial ItalicMT" color="grey60">date</font></td></tr>
+  <tr><td align="left" width="130" port="publisher">publisher <font face="Arial ItalicMT" color="grey60">string (64)</font></td></tr>
+</table>
+>];
+m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">User</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="confirmation_sent_at">confirmation_sent_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="confirmation_token">confirmation_token <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="confirmed_at">confirmed_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="current_sign_in_at">current_sign_in_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="current_sign_in_ip">current_sign_in_ip <font face="Arial ItalicMT" color="grey60">inet</font></td></tr>
+  <tr><td align="left" width="130" port="email">email <font face="Arial ItalicMT" color="grey60">string ∗ U</font></td></tr>
+  <tr><td align="left" width="130" port="encrypted_password">encrypted_password <font face="Arial ItalicMT" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="last_sign_in_at">last_sign_in_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="last_sign_in_ip">last_sign_in_ip <font face="Arial ItalicMT" color="grey60">inet</font></td></tr>
+  <tr><td align="left" width="130" port="locale">locale <font face="Arial ItalicMT" color="grey60">string (8)</font></td></tr>
+  <tr><td align="left" width="130" port="mobile">mobile <font face="Arial ItalicMT" color="grey60">string (32)</font></td></tr>
+  <tr><td align="left" width="130" port="mobile_confirmation_sent_at">mobile_confirmation_sent_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="mobile_confirmation_token">mobile_confirmation_token <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="mobile_confirmed_at">mobile_confirmed_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial ItalicMT" color="grey60">string (64) ∗</font></td></tr>
+  <tr><td align="left" width="130" port="remember_created_at">remember_created_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="reset_password_sent_at">reset_password_sent_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+  <tr><td align="left" width="130" port="reset_password_token">reset_password_token <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="sign_in_count">sign_in_count <font face="Arial ItalicMT" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="unconfirmed_email">unconfirmed_email <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="unconfirmed_mobile">unconfirmed_mobile <font face="Arial ItalicMT" color="grey60">string (32)</font></td></tr>
+  <tr><td align="left" width="130" port="username">username <font face="Arial ItalicMT" color="grey60">string (64)</font></td></tr>
+</table>
+>];
+"m_User::CoverPhoto" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">User::CoverPhoto</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="height">height <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="image">image <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="secure_token">secure_token <font face="Arial ItalicMT" color="grey60">string U</font></td></tr>
+  <tr><td align="left" width="130" port="width">width <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
+</table>
+>];
+"m_User::FacebookAccount" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">User::FacebookAccount</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="access_token">access_token <font face="Arial ItalicMT" color="grey60">text ∗</font></td></tr>
+  <tr><td align="left" width="130" port="access_token_expires_at">access_token_expires_at <font face="Arial ItalicMT" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="cover_photo_url">cover_photo_url <font face="Arial ItalicMT" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="email">email <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="facebook_id">facebook_id <font face="Arial ItalicMT" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="name">name <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="picture_url">picture_url <font face="Arial ItalicMT" color="grey60">text</font></td></tr>
+</table>
+>];
+"m_User::Picture" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">User::Picture</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="height">height <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="image">image <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="secure_token">secure_token <font face="Arial ItalicMT" color="grey60">string U</font></td></tr>
+  <tr><td align="left" width="130" port="width">width <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
+</table>
+>];
+"m_User::Profile" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">User::Profile</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="birthday_day">birthday_day <font face="Arial ItalicMT" color="grey60">integer (2)</font></td></tr>
+  <tr><td align="left" width="130" port="birthday_month">birthday_month <font face="Arial ItalicMT" color="grey60">integer (2)</font></td></tr>
+  <tr><td align="left" width="130" port="birthday_year">birthday_year <font face="Arial ItalicMT" color="grey60">integer (8)</font></td></tr>
+  <tr><td align="left" width="130" port="gender">gender <font face="Arial ItalicMT" color="grey60">integer (2)</font></td></tr>
+</table>
+>];
+  m_User -> "m_User::Profile" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
+  m_User -> "m_User::Picture" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
+  m_User -> "m_User::CoverPhoto" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
+  m_User -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
+  m_User -> "m_User::FacebookAccount" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
+  m_BookInfo -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
+}
