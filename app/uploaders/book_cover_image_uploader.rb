@@ -2,6 +2,10 @@
 class BookCoverImageUploader < ImageUploader
   include CarrierWave::MiniMagick
 
+  def filename
+    "#{model.isbn}.#{file.extension}" if original_filename.present?
+  end
+
   version :thumbnail do
     process resize_to_fit: [256, 256]
   end

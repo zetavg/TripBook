@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219035433) do
+ActiveRecord::Schema.define(version: 20170219072412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,11 +30,20 @@ ActiveRecord::Schema.define(version: 20170219035433) do
     t.index ["user_id"], name: "index_book_holdings_on_user_id", using: :btree
   end
 
+  create_table "book_info_cover_images", force: :cascade do |t|
+    t.string   "isbn",       limit: 32, null: false
+    t.string   "image"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["isbn"], name: "index_book_info_cover_images_on_isbn", using: :btree
+  end
+
   create_table "book_infos", primary_key: "isbn", id: :string, limit: 32, force: :cascade do |t|
     t.string   "isbn_10",      limit: 32
     t.string   "isbn_13",      limit: 32
     t.string   "name",         limit: 128, null: false
-    t.string   "cover_image"
     t.string   "language",     limit: 64
     t.string   "author",       limit: 64
     t.string   "publisher",    limit: 64

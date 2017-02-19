@@ -6,7 +6,6 @@ class CreateBookInfos < ActiveRecord::Migration[5.0]
       t.string :isbn_10, limit: 32
       t.string :isbn_13, limit: 32
       t.string :name, limit: 128, null: false
-      t.string :cover_image
       t.string :language, limit: 64
       t.string :author, limit: 64
       t.string :publisher, limit: 64
