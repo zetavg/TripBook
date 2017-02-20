@@ -27,7 +27,7 @@ export default class BookInfoInput {
       if (obj.loading) {
         $item = $(`
           <div class="book-info-select-item">
-            <div class="loading-text">Loading</div>
+            <div class="loading-text">資料載入中⋯⋯</div>
           </div>
         `)
       } else if (obj.new) {
@@ -44,6 +44,12 @@ export default class BookInfoInput {
             </div>
           `)
         }
+      } else if (!obj.id) {
+        $item = $(`
+          <div class="book-info-select-item">
+            <div class="loading-text">${obj.text}</div>
+          </div>
+        `)
       } else {
         const imageURL = obj.cover_image ?
                          obj.cover_image.thumbnail_url :
@@ -72,6 +78,11 @@ export default class BookInfoInput {
     }
 
     this.$isbnSelect2 = this.$isbnSelect.select2({
+      placeholder: '請選擇書籍',
+      language: {
+        noResults: () => '找不到相符的書籍',
+        inputTooShort: () => '請輸入書名、ISBN 或作者姓名搜尋',
+      },
       ajax: {
         url: this.$elenemt.data('api-book-infos-path'),
         dataType: 'json',
@@ -147,9 +158,10 @@ export default class BookInfoInput {
     })
     this.$newInfoBlock.css('display', 'block')
 
+    const $newInfoIsbnInput = this.$newInfoBlock.find('.book_info_isbn input')
+
     if (text) {
       if (text.match(/^[0-9-]+$/)) {
-        const $newInfoIsbnInput = this.$newInfoBlock.find('.book_info_isbn input')
         if (!$newInfoIsbnInput.val()) $newInfoIsbnInput.val(text)
       } else {
         const $newInfoNameInput = this.$newInfoBlock.find('.book_info_name input')
@@ -159,6 +171,8 @@ export default class BookInfoInput {
 
     if (!this.$isbnSelect2.val()) {
       this.$isbnSelect2.select2('trigger', 'select', { data: { id: '__new__', new: true, text: '' } })
+    } else {
+      $newInfoIsbnInput.focus()
     }
   }
 

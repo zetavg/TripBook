@@ -1,5 +1,5 @@
 .container
   h1 新增藏書
   = simple_form_for @book, url: me_owned_books_path do |f|
-    = f.input :isbn, as: :book_info, allow_create: true
+    = f.input :isbn, as: :book_info, allow_create: true, label: I18n.t(:book_info, scope: 'models.models')
     = f.submit '建立', class: 'btn btn-success'

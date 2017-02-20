@@ -36,13 +36,23 @@ m_BookInfo [label = <<table border="0" align="center" cellspacing="0.5" cellpadd
 |
 <table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
   <tr><td align="left" width="130" port="author">author <font face="Arial ItalicMT" color="grey60">string (64)</font></td></tr>
-  <tr><td align="left" width="130" port="cover_image">cover_image <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
   <tr><td align="left" width="130" port="isbn_10">isbn_10 <font face="Arial ItalicMT" color="grey60">string (32)</font></td></tr>
   <tr><td align="left" width="130" port="isbn_13">isbn_13 <font face="Arial ItalicMT" color="grey60">string (32)</font></td></tr>
   <tr><td align="left" width="130" port="language">language <font face="Arial ItalicMT" color="grey60">string (64)</font></td></tr>
   <tr><td align="left" width="130" port="name">name <font face="Arial ItalicMT" color="grey60">string (128) ∗</font></td></tr>
   <tr><td align="left" width="130" port="publish_date">publish_date <font face="Arial ItalicMT" color="grey60">date</font></td></tr>
   <tr><td align="left" width="130" port="publisher">publisher <font face="Arial ItalicMT" color="grey60">string (64)</font></td></tr>
+</table>
+>];
+"m_BookInfo::CoverImage" [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">BookInfo::CoverImage</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="height">height <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
+  <tr><td align="left" width="130" port="image">image <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
+  <tr><td align="left" width="130" port="isbn">isbn <font face="Arial ItalicMT" color="grey60">string (32) ∗</font></td></tr>
+  <tr><td align="left" width="130" port="width">width <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
 </table>
 >];
 m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
@@ -121,6 +131,8 @@ m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding=
   <tr><td align="left" width="130" port="gender">gender <font face="Arial ItalicMT" color="grey60">integer (2)</font></td></tr>
 </table>
 >];
+  m_BookInfo -> "m_BookInfo::CoverImage" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
+  m_BookInfo -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::Profile" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::Picture" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::CoverPhoto" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
@@ -131,6 +143,5 @@ m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding=
   m_User -> "m_User::FacebookAccount" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
   m_Book -> m_BookHolding [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "3"];
   m_Book -> m_User [style = "dotted", arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "1", constraint = "false"];
-  m_BookInfo -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
   m_BookHolding -> m_BookHolding [arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1"];
 }

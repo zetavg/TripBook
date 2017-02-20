@@ -25,10 +25,11 @@ class BookInfoInput < SimpleForm::Inputs::Base
           new_info_block: true
         } do
           template.concat(@builder.simple_fields_for(:info) do |f|
-            template.concat f.input :isbn
-            template.concat f.input :name
-            template.concat f.input :author
-            template.concat f.input :publisher
+            template.concat f.input :isbn, label: I18n.t(:isbn, scope: 'models.attributes.book_info')
+            template.concat f.input :name, label: I18n.t(:name, scope: 'models.attributes.book_info')
+            template.concat f.input :cover_image, label: I18n.t(:cover_image, scope: 'models.attributes.book_info'), as: :basic_image_uploader
+            template.concat f.input :author, label: I18n.t(:author, scope: 'models.attributes.book_info')
+            template.concat f.input :publisher, label: I18n.t(:publisher, scope: 'models.attributes.book_info')
           end)
         end
 
