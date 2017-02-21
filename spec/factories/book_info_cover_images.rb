@@ -7,7 +7,6 @@ FactoryGirl.define do
       color { Faker::Color.hex_color }
     end
 
-    book_info
     remote_image_url do
       "http://placehold.it/#{size[0]}x#{size[1]}/#{color.delete('#')}/#{background_color.delete('#')}"
     end

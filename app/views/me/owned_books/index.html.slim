@@ -7,6 +7,7 @@
       - @books.each do |book|
         .col-md-4
           .thumbnail
+            img src=book.cover_image&.image&.medium&.url
             h3= book.name
   - else
     .well.text-center

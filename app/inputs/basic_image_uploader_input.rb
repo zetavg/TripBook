@@ -2,19 +2,8 @@
 class BasicImageUploaderInput < SimpleForm::Inputs::Base
   include Rails.application.routes.url_helpers
 
-  IMAGE_INPUT_FIELD_HTML = <<-EOF.strip_heredoc
-    <div class="add-image">
-      <input
-        type=\"file\"
-        accept=\"image/jpg,image/jpeg,image/gif,image/png\"
-        form=""
-        data-upload-input="ture"
-        multiple
-      >
-    </div>
-  EOF
-
   def input(_wrapper_options = nil)
+    # rubocop:disable OutputSafety
     thumbnail_size = options[:thumbnail_size] || 'thumbnail'
     object.try("build_#{attribute_name}") if object.try(attribute_name).blank?
     image_model = object.try(attribute_name)
@@ -26,14 +15,31 @@ class BasicImageUploaderInput < SimpleForm::Inputs::Base
     } do
 
       template.concat <<-EOF.strip_heredoc.html_safe
-        <div class="image-thumbnail">
-          <img src="#{image_model&.image&.try(thumbnail_size)&.url}" />
+        <div class="preview-area">
+          <div class="image-thumbnail">
+            <a href="#{image_model&.image&.url}" target="_blank">
+              <img src="#{image_model&.image&.try(thumbnail_size)&.url}" />
+            </a>
+          </div>
         </div>
       EOF
 
-      template.concat IMAGE_INPUT_FIELD_HTML.html_safe
+      template.concat <<-EOF.strip_heredoc.html_safe
+        <div class="upload-area">
+          <div class="add-image">
+            上傳圖片
+            <input
+              type=\"file\"
+              accept=\"image/jpg,image/jpeg,image/gif,image/png\"
+              form=""
+              data-upload-input="ture"
+              multiple
+            >
+          </div>
+        </div>
+      EOF
 
-      template.concat @builder.input "belonging_#{attribute_name}_id"
+      template.concat @builder.hidden_field "belonging_#{attribute_name}_id", data: { uploader: :id_input }
     end
   end
 end

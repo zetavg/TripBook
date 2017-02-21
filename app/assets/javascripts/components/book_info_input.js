@@ -9,6 +9,8 @@ export default class BookInfoInput {
     if (this.allowCreate) {
       this.$newInfoBlock = this.$elenemt.find('[data-new-info-block]')
 
+      this.initInfoForm()
+
       const selectVal = this.$isbnSelect.val()
       const infoVal = this.$newInfoBlock.find('input').map((i, input) => $(input).val()).toArray().join('')
 
@@ -148,6 +150,14 @@ export default class BookInfoInput {
     window.$isbnSelect2 = this.$isbnSelect2
   }
 
+  initInfoForm() {
+    this.$newInfoBlock.find('.book_info_name input').on('change', (e) => {
+      const value = e.target.value
+      const googleCoverImageURL = `https://www.google.com/search?q=${value.replace(/ /g, '+')}&tbm=isch`
+      this.$newInfoBlock.find('.book_info_cover_image .help-block a').attr('href', googleCoverImageURL)
+    })
+  }
+
   enableCreateMode(text) {
     this.$isbnSelect.attr('name', `_${this.$isbnSelect.attr('name')}`)
 
@@ -164,10 +174,10 @@ export default class BookInfoInput {
 
     if (text) {
       if (text.match(/^[0-9-]+$/)) {
-        if (!$newInfoIsbnInput.val()) $newInfoIsbnInput.val(text)
+        if (!$newInfoIsbnInput.val()) $newInfoIsbnInput.val(text).trigger('change')
       } else {
         const $newInfoNameInput = this.$newInfoBlock.find('.book_info_name input')
-        if (!$newInfoNameInput.val()) $newInfoNameInput.val(text)
+        if (!$newInfoNameInput.val()) $newInfoNameInput.val(text).trigger('change')
       }
     }
 

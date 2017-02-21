@@ -1,0 +1,35 @@
+.basic_image_uploader_input {
+  display: table;
+
+  .preview-area,
+  .upload-area {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .image-thumbnail {
+    @extend .thumbnail;
+    margin: 0;
+    margin-right: 8px;
+
+    img {
+      max-height: 80px;
+      max-width: 80px;
+    }
+  }
+
+  .add-image {
+    @extend .btn, .btn-default;
+    position: relative;
+    overflow: hidden;
+
+    input {
+      position: absolute;
+      left: -100px;
+      top: -100px;
+      width: 999px;
+      height: 999px;
+      cursor: pointer;
+    }
+  }
+}

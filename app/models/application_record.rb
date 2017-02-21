@@ -10,7 +10,7 @@ class ApplicationRecord < ActiveRecord::Base
       case belonging_method_match[2]
       when '='
         attribute_class = (try(attribute_name) || try("build_#{attribute_name}")).class
-        try("#{attribute_name}=", args[0] && attribute_class.find(args[0]))
+        try("#{attribute_name}=", args[0].present? && attribute_class.find(args[0]))
       else
         try(attribute_name)&.id
       end

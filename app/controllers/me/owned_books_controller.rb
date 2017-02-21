@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Me::OwnedBooksController < ApplicationController
   def index
-    @books = books_scope
+    @books = books_scope.includes(info: :cover_image)
   end
 
   def show
@@ -10,7 +10,6 @@ class Me::OwnedBooksController < ApplicationController
 
   def new
     @book = books_scope.build
-    @book.build_info
   end
 
   def create
