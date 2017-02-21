@@ -1,0 +1,7 @@
+ul.nav.nav-tabs
+  li role="presentation" class=(@show == 'in_hand' ? :active : nil)
+    = link_to me_books_path(show: 'in_hand') do
+      | 手上的書
+  li role="presentation" class=(@show == 'all' ? :active : nil)
+    = link_to me_books_path(show: 'all') do
+      | 看過的書

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   authenticate :user do
     namespace :me do
+      resources :books
       resources :owned_books
     end
   end

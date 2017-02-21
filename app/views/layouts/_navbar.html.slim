@@ -8,6 +8,10 @@ nav.navbar.navbar-default
         span.icon-bar
       a.navbar-brand href="#{root_path}" TripBook
     #navbar.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        - if user_signed_in?
+          li class=(controller.class.name.starts_with?('Me::Books') ? 'active' : nil)
+            = link_to '書架', me_books_path
       ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
           li.dropdown
