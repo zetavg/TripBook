@@ -8,7 +8,7 @@
         .col-md-4
           .thumbnail
             img src=book.cover_image&.image&.medium&.url
-            h3= book.name
+            h3= link_to book.name, me_owned_book_path(book)
   - else
     .well.text-center
       p

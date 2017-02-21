@@ -14,11 +14,12 @@ ActiveRecord::Schema.define(version: 20170219072412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
-  create_table "book_holdings", force: :cascade do |t|
+  create_table "book_holdings", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.integer  "user_id",                          null: false
-    t.integer  "book_id",                          null: false
-    t.integer  "previous_holding_id"
+    t.uuid     "book_id",                          null: false
+    t.uuid     "previous_holding_id"
     t.string   "state",                 limit: 16, null: false
     t.datetime "ready_for_released_at"
     t.datetime "released_at"
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 20170219072412) do
     t.index ["user_id"], name: "index_book_holdings_on_user_id", using: :btree
   end
 
-  create_table "book_info_cover_images", force: :cascade do |t|
+  create_table "book_info_cover_images", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "isbn",       limit: 32
     t.string   "image"
     t.integer  "width"
@@ -55,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170219072412) do
     t.index ["isbn_13"], name: "index_book_infos_on_isbn_13", unique: true, using: :btree
   end
 
-  create_table "books", force: :cascade do |t|
+  create_table "books", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "isbn"
     t.integer  "owner_id",   null: false
     t.datetime "created_at", null: false

@@ -5,7 +5,7 @@ class Me::OwnedBooksController < ApplicationController
   end
 
   def show
-    @books = books_scope.find(params[:id])
+    @book = books_scope.find(params[:id])
   end
 
   def new
