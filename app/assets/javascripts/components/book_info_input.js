@@ -153,7 +153,9 @@ export default class BookInfoInput {
 
     this.$newInfoBlock.find('input').map((i, input) => {
       const $input = $(input)
-      $input.attr('name', $input.attr('name').replace(/^_+/, ''))
+      if ($input.attr('name')) {
+        $input.attr('name', $input.attr('name').replace(/^_+/, ''))
+      }
       return true
     })
     this.$newInfoBlock.css('display', 'block')

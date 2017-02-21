@@ -32,7 +32,10 @@ class Me::OwnedBooksController < ApplicationController
   def book_params
     params.require(:book).permit(
       :isbn,
-      info_attributes: [:isbn, :name, :author, :publisher]
+      info_attributes: [
+        :isbn, :name, :author, :publisher,
+        :belonging_cover_image_id
+      ]
     )
   end
 end

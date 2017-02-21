@@ -23,6 +23,7 @@
 
 # Ignore file storage.
 /public/storage
+/public/uploads
 
 # Ignore Byebug command history file.
 .byebug_history

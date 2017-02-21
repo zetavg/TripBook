@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20170219072412) do
   end
 
   create_table "book_info_cover_images", force: :cascade do |t|
-    t.string   "isbn",       limit: 32, null: false
+    t.string   "isbn",       limit: 32
     t.string   "image"
     t.integer  "width"
     t.integer  "height"
