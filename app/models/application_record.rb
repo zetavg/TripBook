@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
+  FALSE_VALUES = [false, 0, '0', 'f', 'F', 'false', 'FALSE', 'off', 'OFF', ''].freeze
+
+  def parse_boolean(value)
+    !FALSE_VALUES.include?(value)
+  end
 
   def method_missing(method, *args)
     belonging_method_match = method.match(/^belonging_(.+)_id(=?)$/)

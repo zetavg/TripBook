@@ -39,5 +39,8 @@ Style/BlockComments:
 Style/Documentation:
   Enabled: false
 
+Style/Lambda:
+  Enabled: false
+
 Style/StringLiterals:
   Enabled: false

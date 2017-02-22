@@ -1,2 +1,11 @@
 .container
-  h1= @book.name
+  h2
+    = @book.name
+    =< link_to '編輯', edit_me_owned_book_path(@book), class: 'btn btn-default'
+
+  h3 與書的故事
+  p= simple_format @book.story&.content
+
+  h3 書摘
+  p= simple_format @book.summary&.content
+

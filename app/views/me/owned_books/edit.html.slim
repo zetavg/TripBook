@@ -1,0 +1,16 @@
+.container
+  h2= @book.name
+  = simple_form_for @book, url: me_owned_book_path(@book) do |f|
+    h3 我與書的故事
+    = f.simple_fields_for :story do |f|
+      = f.hidden_field :id
+      = f.input :content, label: '內容'
+      = f.input :privacy_level, label: '隱私層級'
+      = f.input :publish, as: :boolean, label: '發佈'
+    h3 個人書摘
+    = f.simple_fields_for :summary do |f|
+      = f.hidden_field :id
+      = f.input :content, label: '內容'
+      = f.input :privacy_level, label: '隱私層級'
+      = f.input :publish, as: :boolean, label: '發佈'
+    = f.submit '更新', class: 'btn btn-success'

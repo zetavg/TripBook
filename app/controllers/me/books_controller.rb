@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Me::BooksController < ApplicationController
   def index
     @show = params[:show] || 'in_hand'

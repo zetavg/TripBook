@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219072412) do
+ActiveRecord::Schema.define(version: 20170222085426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,30 @@ ActiveRecord::Schema.define(version: 20170219072412) do
     t.index ["isbn"], name: "index_book_infos_on_isbn", unique: true, using: :btree
     t.index ["isbn_10"], name: "index_book_infos_on_isbn_10", unique: true, using: :btree
     t.index ["isbn_13"], name: "index_book_infos_on_isbn_13", unique: true, using: :btree
+  end
+
+  create_table "book_stories", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.integer  "user_id",                   null: false
+    t.string   "book_isbn",                 null: false
+    t.datetime "published_at"
+    t.integer  "privacy_level", default: 0, null: false
+    t.text     "content"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["published_at"], name: "index_book_stories_on_published_at", using: :btree
+    t.index ["user_id"], name: "index_book_stories_on_user_id", using: :btree
+  end
+
+  create_table "book_summaries", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.integer  "user_id",                   null: false
+    t.string   "book_isbn",                 null: false
+    t.datetime "published_at"
+    t.integer  "privacy_level", default: 0, null: false
+    t.text     "content"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["published_at"], name: "index_book_summaries_on_published_at", using: :btree
+    t.index ["user_id"], name: "index_book_summaries_on_user_id", using: :btree
   end
 
   create_table "books", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -150,6 +174,10 @@ ActiveRecord::Schema.define(version: 20170219072412) do
   add_foreign_key "book_holdings", "book_holdings", column: "previous_holding_id"
   add_foreign_key "book_holdings", "books"
   add_foreign_key "book_holdings", "users"
+  add_foreign_key "book_stories", "book_infos", column: "book_isbn", primary_key: "isbn"
+  add_foreign_key "book_stories", "users"
+  add_foreign_key "book_summaries", "book_infos", column: "book_isbn", primary_key: "isbn"
+  add_foreign_key "book_summaries", "users"
   add_foreign_key "books", "users", column: "owner_id"
   add_foreign_key "user_cover_photos", "users"
   add_foreign_key "user_facebook_accounts", "users"

@@ -5,7 +5,7 @@ class Me::OwnedBooksController < ApplicationController
   end
 
   def show
-    @book = books_scope.find(params[:id])
+    find_book
   end
 
   def new
@@ -13,12 +13,28 @@ class Me::OwnedBooksController < ApplicationController
   end
 
   def create
-    @book = books_scope.build(book_params)
+    @book = books_scope.build(create_book_params)
 
     if @book.save
-      redirect_to me_owned_books_path, flash: { success: "已新增藏書《#{@book.name}》。" }
+      redirect_to edit_me_owned_book_path(@book), flash: { success: "已新增藏書《#{@book.name}》，繼續填入以下內容吧！" }
     else
       render :new
+    end
+  end
+
+  def edit
+    find_book
+    @book.build_story unless @book.story
+    @book.build_summary unless @book.summary
+  end
+
+  def update
+    find_book
+
+    if @book.update_attributes(update_book_params)
+      redirect_to me_owned_books_path, flash: { success: "已更新藏書《#{@book.name}》。" }
+    else
+      render :edit
     end
   end
 
@@ -28,12 +44,32 @@ class Me::OwnedBooksController < ApplicationController
     current_user.owned_books
   end
 
-  def book_params
+  def find_book
+    @book = books_scope.find(params[:id]).for(current_user)
+  end
+
+  def create_book_params
+    return unless params[:book]
+
+    if params.dig(:book, :isbn)
+      params.require(:book).permit(:isbn)
+    else
+      params.require(:book).permit(
+        info_attributes: [
+          :isbn, :name, :author, :publisher,
+          :belonging_cover_image_id
+        ]
+      )
+    end
+  end
+
+  def update_book_params
     params.require(:book).permit(
-      :isbn,
-      info_attributes: [
-        :isbn, :name, :author, :publisher,
-        :belonging_cover_image_id
+      story_attributes: [
+        :id, :content, :publish, :privacy_level
+      ],
+      summary_attributes: [
+        :id, :content, :publish, :privacy_level
       ]
     )
   end

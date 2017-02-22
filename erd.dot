@@ -51,8 +51,30 @@ m_BookInfo [label = <<table border="0" align="center" cellspacing="0.5" cellpadd
 <table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
   <tr><td align="left" width="130" port="height">height <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
   <tr><td align="left" width="130" port="image">image <font face="Arial ItalicMT" color="grey60">string</font></td></tr>
-  <tr><td align="left" width="130" port="isbn">isbn <font face="Arial ItalicMT" color="grey60">string (32) ∗</font></td></tr>
+  <tr><td align="left" width="130" port="isbn">isbn <font face="Arial ItalicMT" color="grey60">string (32)</font></td></tr>
   <tr><td align="left" width="130" port="width">width <font face="Arial ItalicMT" color="grey60">integer</font></td></tr>
+</table>
+>];
+m_BookStory [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">BookStory</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="book_isbn">book_isbn <font face="Arial ItalicMT" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="content">content <font face="Arial ItalicMT" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="privacy_level">privacy_level <font face="Arial ItalicMT" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="published_at">published_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
+</table>
+>];
+m_BookSummary [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
+  <tr><td align="center" valign="bottom" width="130"><font face="Arial BoldMT" point-size="11">BookSummary</font></td></tr>
+</table>
+|
+<table border="0" align="left" cellspacing="2" cellpadding="0" width="134">
+  <tr><td align="left" width="130" port="book_isbn">book_isbn <font face="Arial ItalicMT" color="grey60">string ∗</font></td></tr>
+  <tr><td align="left" width="130" port="content">content <font face="Arial ItalicMT" color="grey60">text</font></td></tr>
+  <tr><td align="left" width="130" port="privacy_level">privacy_level <font face="Arial ItalicMT" color="grey60">integer ∗</font></td></tr>
+  <tr><td align="left" width="130" port="published_at">published_at <font face="Arial ItalicMT" color="grey60">datetime</font></td></tr>
 </table>
 >];
 m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding="0" width="134">
@@ -131,17 +153,26 @@ m_User [label = <<table border="0" align="center" cellspacing="0.5" cellpadding=
   <tr><td align="left" width="130" port="gender">gender <font face="Arial ItalicMT" color="grey60">integer (2)</font></td></tr>
 </table>
 >];
-  m_BookInfo -> "m_BookInfo::CoverImage" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
+  m_BookInfo -> "m_BookInfo::CoverImage" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
   m_BookInfo -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
+  m_BookInfo -> m_BookStory [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
+  m_BookInfo -> m_BookSummary [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::Profile" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::Picture" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::CoverPhoto" [arrowsize = "0.6", arrowhead = "dot", arrowtail = "odot", weight = "2"];
   m_User -> m_Book [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
   m_User -> m_BookHolding [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "3"];
-  m_User -> m_Book [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "2", constraint = "false"];
   m_User -> m_Book [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1", constraint = "false"];
+  m_User -> m_Book [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1", constraint = "false"];
+  m_User -> m_BookStory [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
+  m_User -> m_BookSummary [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "2"];
   m_User -> "m_User::FacebookAccount" [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
   m_Book -> m_BookHolding [arrowsize = "0.6", arrowhead = "dotnormal", arrowtail = "odot", weight = "3"];
+  m_Book -> m_User [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1", constraint = "false"];
   m_Book -> m_User [style = "dotted", arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "1", constraint = "false"];
+  m_Book -> m_BookStory [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1", constraint = "false"];
+  m_Book -> m_BookSummary [style = "dotted", arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1", constraint = "false"];
+  m_Book -> m_BookStory [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
+  m_Book -> m_BookSummary [arrowsize = "0.6", arrowhead = "odot", arrowtail = "odot", weight = "2"];
   m_BookHolding -> m_BookHolding [arrowsize = "0.6", arrowhead = "odotnormal", arrowtail = "odot", weight = "1"];
 }
