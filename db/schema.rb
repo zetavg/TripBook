@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20170222085426) do
     t.integer  "user_id",                          null: false
     t.uuid     "book_id",                          null: false
     t.uuid     "previous_holding_id"
-    t.string   "state",                 limit: 16, null: false
+    t.string   "state",                 limit: 32, null: false
     t.datetime "ready_for_released_at"
     t.datetime "released_at"
     t.datetime "created_at",                       null: false

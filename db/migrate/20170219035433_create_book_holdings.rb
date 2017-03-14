@@ -5,7 +5,7 @@ class CreateBookHoldings < ActiveRecord::Migration[5.0]
       t.references :user, null: false, index: true, foreign_key: true
       t.references :book, null: false, index: true, foreign_key: true, type: :uuid
       t.references :previous_holding, foreign_key: { to_table: :book_holdings }, index: true, type: :uuid
-      t.string :state, limit: 16, null: false
+      t.string :state, limit: 32, null: false
       t.datetime :ready_for_released_at
       t.datetime :released_at
 
