@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class BookHolding < ApplicationRecord
+class Book::Holding < ApplicationRecord
   include AASM
   include Trackable
 
@@ -7,7 +7,7 @@ class BookHolding < ApplicationRecord
 
   belongs_to :user
   belongs_to :book
-  belongs_to :previous_holding, optional: true, class_name: 'BookHolding'
+  belongs_to :previous_holding, optional: true, class_name: 'Book::Holding'
 
   aasm column: :state do
     state :holding, initial: true

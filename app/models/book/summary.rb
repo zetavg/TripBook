@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class BookSummary < ApplicationRecord
+class Book::Summary < ApplicationRecord
   enum privacy_level: {
     only_me: 0,
     only_by_invitation: 1,

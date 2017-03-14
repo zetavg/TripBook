@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe BookHolding, type: :model do
+RSpec.describe Book::Holding, type: :model do
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:book) }
   it { is_expected.to belong_to(:previous_holding) }
