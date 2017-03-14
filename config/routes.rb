@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  resources :books
+
   authenticate :user do
     namespace :me do
       resources :books

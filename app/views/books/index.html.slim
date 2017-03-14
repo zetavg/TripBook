@@ -1,0 +1,8 @@
+.container
+  .row
+    - @book_infos.each do |book_info|
+      .col-md-4
+        .thumbnail
+          img src=book_info.cover_image&.image&.medium&.url
+          h3= link_to book_info.name, book_path(book_info)
+  = paginate @book_infos

@@ -46,6 +46,9 @@ gem 'fog'
 # Image Processor
 gem 'mini_magick'
 
+# Paging
+gem 'kaminari'
+
 # Front-end
 gem 'slim-rails'
 gem 'simple_form'

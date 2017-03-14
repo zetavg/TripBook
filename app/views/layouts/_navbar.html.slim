@@ -9,6 +9,8 @@ nav.navbar.navbar-default
       a.navbar-brand href="#{root_path}" TripBook
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav
+        li class=(controller.class.name.starts_with?('Books') ? 'active' : nil)
+          = link_to '書籍', books_path
         - if user_signed_in?
           li class=(controller.class.name.starts_with?('Me::Books') ? 'active' : nil)
             = link_to '書架', me_books_path
