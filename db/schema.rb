@@ -10,11 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222085426) do
+ActiveRecord::Schema.define(version: 20170314102140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "book_borrowing_trips", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid     "book_id",                                         null: false
+    t.string   "state",                    limit: 32
+    t.integer  "max_single_durition_days"
+    t.integer  "max_durition_days"
+    t.integer  "max_borrowings_count"
+    t.integer  "borrowings_count",                    default: 0, null: false
+    t.datetime "ended_at"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.index ["book_id"], name: "index_book_borrowing_trips_on_book_id", using: :btree
+    t.index ["state"], name: "index_book_borrowing_trips_on_state", using: :btree
+  end
+
+  create_table "book_borrowings", force: :cascade do |t|
+    t.uuid     "book_borrowing_trip_id", null: false
+    t.uuid     "book_holding_id",        null: false
+    t.datetime "ended_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["book_borrowing_trip_id"], name: "index_book_borrowings_on_book_borrowing_trip_id", using: :btree
+    t.index ["book_holding_id"], name: "index_book_borrowings_on_book_holding_id", using: :btree
+  end
 
   create_table "book_holdings", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.integer  "user_id",                          null: false
@@ -171,6 +195,9 @@ ActiveRecord::Schema.define(version: 20170222085426) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "book_borrowing_trips", "books"
+  add_foreign_key "book_borrowings", "book_borrowing_trips"
+  add_foreign_key "book_borrowings", "book_holdings"
   add_foreign_key "book_holdings", "book_holdings", column: "previous_holding_id"
   add_foreign_key "book_holdings", "books"
   add_foreign_key "book_holdings", "users"

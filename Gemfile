@@ -76,6 +76,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda'
   gem 'faker'
+  gem 'timecop'
   gem 'database_rewinder'
 
   gem 'simplecov', require: false

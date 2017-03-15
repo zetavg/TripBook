@@ -6,6 +6,9 @@ RSpec.describe Book::Holding, type: :model do
   it { is_expected.to belong_to(:book) }
   it { is_expected.to belong_to(:previous_holding) }
 
+  it { is_expected.to have_immutable_attribute(:user_id) }
+  it { is_expected.to have_immutable_attribute(:book_id) }
+
   describe "life cycle" do
     describe "create" do
       let(:book) { create(:book) }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Book::Holding < ApplicationRecord
-  include AASM
+  include StateMachine
   include Trackable
 
   scope :active, -> { where(state: [:holding, :ready_for_release]) }
@@ -9,7 +9,7 @@ class Book::Holding < ApplicationRecord
   belongs_to :book
   belongs_to :previous_holding, optional: true, class_name: 'Book::Holding'
 
-  aasm column: :state do
+  state_machine column: :state do
     state :holding, initial: true
     state :ready_for_release
     state :released
@@ -41,11 +41,24 @@ class Book::Holding < ApplicationRecord
     end
   end
 
+  validate :immutable_user_id, on: :update
+  validate :immutable_book_id, on: :update
+
   before_validation :set_previous_holding, on: :create
   after_create :release_old_holdings
   after_destroy :rehold_previous_holding
 
   private
+
+  def immutable_user_id
+    return unless user_id_changed?
+    errors.add(:user_id, 'is immutable')
+  end
+
+  def immutable_book_id
+    return unless book_id_changed?
+    errors.add(:book_id, 'is immutable')
+  end
 
   def set_previous_holding
     self.previous_holding ||= book.holdings.active.last
