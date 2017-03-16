@@ -9,5 +9,14 @@ class BookInfo < ApplicationRecord
   has_many :book_summaries, primary_key: :isbn, foreign_key: :book_isbn, class_name: 'Book::Summary'
 
   validates :isbn, :name, presence: true
+  validates :isbn, format: { with: /\A(97(8|9))?\d{9}(\d|X)\Z/ }
   validates :isbn, uniqueness: true, on: :create
+
+  before_validation :strip_isbn
+
+  private
+
+  def strip_isbn
+    self.isbn = isbn&.to_s&.gsub(/[^0-9]/, '')
+  end
 end
