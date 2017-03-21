@@ -6,6 +6,12 @@ class BooksController < ApplicationController
 
   def show
     find_book_info
+    @book_holding_stories = Book::Story::HoldingView
+                            .for_isbn(@book_info.isbn)
+                            .where(holding_state: 'ready_for_release')
+                            .published
+                            .open_to_world
+                            .includes(:user)
   end
 
   private

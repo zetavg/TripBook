@@ -24,5 +24,7 @@ module TripBook
     # -- all .rb files in that directory are automatically loaded.
 
     config.autoload_paths << Rails.root.join('lib')
+
+    config.active_record.schema_format = :sql
   end
 end

@@ -6,6 +6,8 @@ class Me::OwnedBooksController < ApplicationController
 
   def show
     find_book
+    @ended_book_borrowing_trips = Book::BorrowingTrip.for_book(@book).complete.order(created_at: :desc)
+    @current_book_borrowing_trip = Book::BorrowingTrip.for_book(@book).active.last
   end
 
   def new

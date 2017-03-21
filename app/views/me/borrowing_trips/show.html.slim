@@ -1,0 +1,41 @@
+.container
+  h2
+    = @book.name
+    | ：
+    = l(@book_borrowing_trip.created_at, format: :date)
+    - if @book_borrowing_trip.ended_at
+      | －
+      = l(@book_borrowing_trip.ended_at, format: :date)
+    - elsif @book_borrowing_trip.max_durition_days
+      | ～
+      | 最久至
+      = l(@book_borrowing_trip.created_at + @book_borrowing_trip.max_durition, format: :date)
+    - else
+      | ～
+
+  p 狀態：#{@book_borrowing_trip.state}
+
+  ul
+    li 開始時間：#{@book_borrowing_trip.created_at}
+    - if @book_borrowing_trip.max_single_durition_days
+      li 借閱天數限制：#{@book_borrowing_trip.max_single_durition_days}
+    - if @book_borrowing_trip.max_durition_days
+      li 旅程天數限制：#{@book_borrowing_trip.max_durition_days}
+    - if @book_borrowing_trip.max_borrowings_count
+      li 旅程借閱次數限制：#{@book_borrowing_trip.max_borrowings_count}
+    li 借閱次數：#{@book_borrowing_trip.borrowings_count}
+    - if @book_borrowing_trip.ended_at
+      li 結束時間：#{@book_borrowing_trip.ended_at}
+  ul
+    - @book_borrowing_trip.borrowings.each do |book_borrowing|
+      li
+        = book_borrowing.borrower.name
+        - if book_borrowing.story&.content_for(:invitee).present?
+          | ：
+          = book_borrowing.story.content_for(:invitee)
+  - if @book_borrowing_trip.may_prepare_to_end?
+    => link_to '召回', me_owned_book_borrowing_trip_cancellation_path(borrowing_trip_id: @book_borrowing_trip.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-default'
+  - if @book_borrowing_trip.active?
+    => link_to '確認已返還並結束旅程', me_owned_book_borrowing_trip_returnation_path(borrowing_trip_id: @book_borrowing_trip.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-default'
+    => link_to '編輯', edit_me_owned_book_borrowing_trip_path(@book_borrowing_trip, owned_book_id: @book.id), class: 'btn btn-default'
+  = link_to '返回藏書', me_owned_book_path(@book)

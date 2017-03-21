@@ -8,7 +8,7 @@ class Book::Borrowing < ApplicationRecord
   belongs_to :holding, foreign_key: :book_holding_id
 
   delegate :book, to: :borrowing_trip, prefix: false
-  delegate :state, :previous_holding, :ready_for_release!, :cancel_release!, to: :holding, prefix: false
+  delegate :state, :previous_holding, :ready_for_release!, :cancel_release!, :story, to: :holding, prefix: false
 
   validates :borrower, presence: true
 

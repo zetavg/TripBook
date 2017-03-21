@@ -1,2 +1,22 @@
 .container
   h1= @book_info.name
+  .row
+    .col-md-3
+      .thumbnail
+        img src=@book_info.cover_image&.image&.medium&.url
+      ul
+        li 典藏數量：#{@book_info.books.count}
+        li 待出借數量：#{@book_info.book_holdings.ready_for_release.count}
+    .col-md-9
+      h2 書摘
+      ul
+        - @book_info.book_summaries.open_to_world.each do |book_summary|
+          li = book_summary.content
+      h2 與書的故事
+      ul
+        - @book_info.book_stories.open_to_world.each do |book_story|
+          li = book_story.content
+      h2 與書的故事－待出借
+      ul
+        - @book_holding_stories.each do |book_story|
+          li = "#{book_story.user.name}：#{book_story.content}"

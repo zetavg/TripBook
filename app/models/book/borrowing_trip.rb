@@ -7,6 +7,8 @@ class Book::BorrowingTrip < ApplicationRecord
   END_STATES = %w(ended).freeze
 
   scope :active, -> { where(state: ACTIVE_STATES) }
+  scope :complete, -> { where(state: :ended).where('borrowings_count > 0') }
+  scope :for_book, ->(book) { where(book: book) }
 
   belongs_to :book
   has_many :borrowings, foreign_key: :book_borrowing_trip_id
@@ -39,6 +41,9 @@ class Book::BorrowingTrip < ApplicationRecord
 
     event :prepare_to_end do
       transitions from: :in_progress, to: :prepare_to_end
+    end
+
+    event :cancel do
       transitions from: :pending, to: :ended
     end
   end
@@ -113,8 +118,10 @@ class Book::BorrowingTrip < ApplicationRecord
   end
 
   def prepare_to_end_if_needed
+    return if ended?
     return unless should_be_prepare_to_end?
-    prepare_to_end!
+    cancel! if may_cancel?
+    prepare_to_end! if may_prepare_to_end?
   end
 
   def end_if_needed
@@ -124,10 +131,11 @@ class Book::BorrowingTrip < ApplicationRecord
   end
 
   def set_current_holding_to_ready_for_release
-    book.current_holding.ready_for_release!
+    book.current_holding.ready_for_release! if book.current_holding.may_ready_for_release?
   end
 
   def set_current_holding_to_holding_if_needed
+    return unless end?
     if state_was == 'pending' &&
        book.holder == book.owner &&
        book.current_holding.ready_for_release?

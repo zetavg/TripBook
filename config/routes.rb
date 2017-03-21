@@ -15,13 +15,20 @@ Rails.application.routes.draw do
   authenticate :user do
     namespace :me do
       resources :books
-      resources :owned_books
+      resources :owned_books, path: 'owned-books' do
+        resources :borrowing_trips, path: 'borrowing-trips', only: [:new, :create, :show, :edit, :update] do
+          scope module: :book_borrowing_trips do
+            resource :cancellation, only: [:create]
+            resource :returnation, only: [:create]
+          end
+        end
+      end
     end
   end
 
   namespace :api, defaults: { format: :json } do
-    resources :book_infos, only: [:index]
-    resources :book_info_cover_images, only: [:create]
+    resources :book_infos, path: 'book-infos', only: [:index]
+    resources :book_info_cover_images, path: 'book-info-cover-images', only: [:create]
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -8,6 +8,8 @@ class Book::Story < ApplicationRecord
   }
 
   scope :for, ->(user) { where(user: user) }
+  scope :for_isbn, ->(isbn) { where(book_isbn: isbn) }
+  scope :published, -> { where.not(published_at: nil) }
 
   belongs_to :user
   belongs_to :book_info, primary_key: :isbn, foreign_key: :book_isbn
@@ -28,4 +30,18 @@ class Book::Story < ApplicationRecord
   end
 
   alias published? publish
+
+  def content_for(user_type)
+    return unless published?
+    case user_type.to_sym
+    when :self
+      content
+    when :invitee
+      content if privacy_level_before_type_cast >= 1
+    when :follower
+      content if privacy_level_before_type_cast >= 2
+    else
+      content if privacy_level_before_type_cast >= 3
+    end
+  end
 end

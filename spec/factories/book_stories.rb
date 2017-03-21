@@ -3,6 +3,6 @@ FactoryGirl.define do
   factory :book_story, class: Book::Story do
     user
     book_isbn { create(:book).isbn }
-    content { Faker::Lorem.paragraphs }
+    content { Faker::Lorem.paragraphs.join(' ') }
   end
 end

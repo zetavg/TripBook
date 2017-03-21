@@ -206,5 +206,6 @@ zh-TW:
     formats:
       default: "%Y年%b%d日 %A %H:%M:%S %Z"
       long: "%Y年%b%d日 %H:%M"
+      date: "%Y年%b%d日"
       short: "%b%d日 %H:%M"
     pm: 下午

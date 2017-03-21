@@ -1,11 +1,41 @@
 .container
-  h2
-    = @book.name
-    =< link_to '編輯', edit_me_owned_book_path(@book), class: 'btn btn-default'
+  h2= @book.name
+  .row
+    .col-md-8
 
-  h3 與書的故事
-  p= simple_format @book.story&.content
+      h3 與書的故事
+      p= simple_format @book.story&.content
 
-  h3 書摘
-  p= simple_format @book.summary&.content
+      h3 書摘
+      p= simple_format @book.summary&.content
 
+      h3 目前旅程
+      - if @current_book_borrowing_trip.blank?
+        p 無進行中旅程。
+      - else
+        ul
+          li
+            = link_to me_owned_book_borrowing_trip_path(@current_book_borrowing_trip, owned_book_id: @book.id) do
+              = "狀態：#{@current_book_borrowing_trip.state}"
+
+      - if @ended_book_borrowing_trips.present?
+        h3 旅程足跡
+        ul
+          - @ended_book_borrowing_trips.each do |book_borrowing_trip|
+            li
+              = link_to me_owned_book_borrowing_trip_path(book_borrowing_trip, owned_book_id: @book.id) do
+                = l(book_borrowing_trip.created_at, format: :date)
+                | －
+                = l(book_borrowing_trip.ended_at, format: :date)
+                | ，
+                = book_borrowing_trip.borrowings.map { |borrowing| borrowing.borrower.name }.join('、')
+
+      => link_to '編輯', edit_me_owned_book_path(@book), class: 'btn btn-default'
+      - if @current_book_borrowing_trip.blank?
+        => link_to '建立旅程', new_me_owned_book_borrowing_trip_path(owned_book_id: @book.id), class: 'btn btn-default'
+
+    .col-md-4
+      .thumbnail
+        img src=@book.cover_image&.image&.medium&.url
+
+  = link_to '返回', :back

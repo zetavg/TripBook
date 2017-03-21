@@ -9,6 +9,8 @@ class Book::Holding < ApplicationRecord
   belongs_to :book
   belongs_to :previous_holding, optional: true, class_name: 'Book::Holding'
 
+  has_one :story, class_name: 'Book::Story::HoldingView'
+
   state_machine column: :state do
     state :holding, initial: true
     state :ready_for_release
