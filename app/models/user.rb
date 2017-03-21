@@ -2,6 +2,7 @@
 class User < ApplicationRecord
   include Profileable
   include BookRelations
+  include BookBorrowingRelations
   include FacebookAuthenticatable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,

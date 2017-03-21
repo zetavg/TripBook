@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Book < ApplicationRecord
+  include BorrowingRelations
+
   attr_accessor :for_user
 
   belongs_to :owner, class_name: 'User'

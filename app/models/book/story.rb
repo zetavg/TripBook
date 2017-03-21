@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Book::Story < ApplicationRecord
+  include Trackable
+
   enum privacy_level: {
     only_me: 0,
     only_by_invitation: 1,

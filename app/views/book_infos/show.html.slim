@@ -8,9 +8,11 @@
         li 典藏數量：#{@book_info.books.count}
         li 待出借數量：#{@book_info.book_holdings.ready_for_release.count}
         li 借閱需求量：#{@book_info.borrow_demands.active.count}
-    - if user_signed_in?
-      - if current_user.book_borrow_demands.where(book_info: @book_info).active.any?
-      - else
+      - if user_signed_in?
+        - if current_user.book_borrow_demands.where(book_info: @book_info).active.any?
+          = link_to '取消借閱登記', book_info_borrow_demand_cancellation_path(book_info_isbn: @book_info.isbn), method: :post, class: 'btn btn-danger'
+        - else
+          = link_to '我想要借', book_info_borrow_demand_path(book_info_isbn: @book_info.isbn), method: :post, class: 'btn btn-default'
     .col-md-9
       h2 書摘
       ul

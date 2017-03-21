@@ -61,6 +61,21 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: book_borrow_demands; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE book_borrow_demands (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    user_id integer NOT NULL,
+    book_isbn character varying NOT NULL,
+    state character varying(32) NOT NULL,
+    borrowing_id uuid,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
 -- Name: book_borrowing_trips; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -83,32 +98,13 @@ CREATE TABLE book_borrowing_trips (
 --
 
 CREATE TABLE book_borrowings (
-    id integer NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     book_borrowing_trip_id uuid NOT NULL,
     book_holding_id uuid NOT NULL,
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: book_borrowings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE book_borrowings_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: book_borrowings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE book_borrowings_id_seq OWNED BY book_borrowings.id;
 
 
 --
@@ -434,13 +430,6 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: book_borrowings id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY book_borrowings ALTER COLUMN id SET DEFAULT nextval('book_borrowings_id_seq'::regclass);
-
-
---
 -- Name: user_cover_photos id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -481,6 +470,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: book_borrow_demands book_borrow_demands_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrow_demands
+    ADD CONSTRAINT book_borrow_demands_pkey PRIMARY KEY (id);
 
 
 --
@@ -593,6 +590,20 @@ ALTER TABLE ONLY user_profiles
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_book_borrow_demands_on_borrowing_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrow_demands_on_borrowing_id ON book_borrow_demands USING btree (borrowing_id);
+
+
+--
+-- Name: index_book_borrow_demands_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrow_demands_on_user_id ON book_borrow_demands USING btree (user_id);
 
 
 --
@@ -838,6 +849,14 @@ ALTER TABLE ONLY user_pictures
 
 
 --
+-- Name: book_borrow_demands fk_rails_37ed1977ba; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrow_demands
+    ADD CONSTRAINT fk_rails_37ed1977ba FOREIGN KEY (borrowing_id) REFERENCES book_borrowings(id);
+
+
+--
 -- Name: book_borrowings fk_rails_568fdd072d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -902,6 +921,14 @@ ALTER TABLE ONLY user_cover_photos
 
 
 --
+-- Name: book_borrow_demands fk_rails_c431fa9007; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrow_demands
+    ADD CONSTRAINT fk_rails_c431fa9007 FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
 -- Name: book_borrowings fk_rails_d0b00ff879; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -945,6 +972,7 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170222085426'),
 ('20170314080224'),
 ('20170314102140'),
-('20170316041313');
+('20170316041313'),
+('20170321102027');
 
 

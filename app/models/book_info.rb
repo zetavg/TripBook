@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 class BookInfo < ApplicationRecord
+  include BorrowingRelations
+
   ISBN_REGEXP = /\A(97(8|9))?\d{9}(\d|X)\Z/
+
   self.primary_key = :isbn
 
   has_one :cover_image, primary_key: :isbn, foreign_key: :isbn, autosave: true

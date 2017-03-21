@@ -10,13 +10,27 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  resources :book_infos, path: 'books', only: [:index, :show], param: :isbn
+  resources :book_infos, path: 'books',
+                         only: [:index, :show],
+                         param: :isbn do
+    scope module: :book_infos do
+      authenticate :user do
+        resource :borrow_demand, path: 'borrow-demand',
+                                 only: [:create] do
+          scope module: :borrow_demands do
+            resource :cancellation, only: [:create]
+          end
+        end
+      end
+    end
+  end
 
   authenticate :user do
     namespace :me do
       resources :books
       resources :owned_books, path: 'owned-books' do
-        resources :borrowing_trips, path: 'borrowing-trips', only: [:new, :create, :show, :edit, :update] do
+        resources :borrowing_trips, path: 'borrowing-trips',
+                                    only: [:new, :create, :show, :edit, :update] do
           scope module: :book_borrowing_trips do
             resource :cancellation, only: [:create]
             resource :returnation, only: [:create]
