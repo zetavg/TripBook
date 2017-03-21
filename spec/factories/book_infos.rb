@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :book_info do
-    isbn { Faker::Code.isbn }
+    isbn do
+      until @isbn =~ BookInfo::ISBN_REGEXP
+        @isbn = Faker::Code.isbn.gsub(/[^0-9]/, '')
+      end
+      @isbn
+    end
     isbn_13 { isbn }
     name { Faker::Book.title }
     author { Faker::Book.author }
