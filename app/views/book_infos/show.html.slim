@@ -7,6 +7,10 @@
       ul
         li 典藏數量：#{@book_info.books.count}
         li 待出借數量：#{@book_info.book_holdings.ready_for_release.count}
+        li 借閱需求量：#{@book_info.borrow_demands.active.count}
+    - if user_signed_in?
+      - if current_user.book_borrow_demands.where(book_info: @book_info).active.any?
+      - else
     .col-md-9
       h2 書摘
       ul
