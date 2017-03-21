@@ -11,7 +11,7 @@ class CreateBookStories < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_foreign_key :book_stories, :book_infos, column: :book_isbn, primary_key: :isbn
+    add_foreign_key :book_stories, :book_infos, column: :book_isbn, primary_key: :isbn, on_delete: :restrict
     add_index :book_stories, :published_at
   end
 end

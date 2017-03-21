@@ -9,7 +9,7 @@ class Book::BorrowDemand < ApplicationRecord
   scope :active, -> { where(state: ACTIVE_STATES) }
 
   belongs_to :user
-  belongs_to :borrowings, optional: true, class_name: 'Book::Borrowing'
+  belongs_to :borrowing, optional: true
   belongs_to :book_info, primary_key: :isbn, foreign_key: :book_isbn
   has_many :books, primary_key: :book_isbn, foreign_key: :book_isbn
 

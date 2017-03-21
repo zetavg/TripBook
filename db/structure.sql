@@ -99,8 +99,8 @@ CREATE TABLE book_borrowing_trips (
 
 CREATE TABLE book_borrowings (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    book_borrowing_trip_id uuid NOT NULL,
-    book_holding_id uuid NOT NULL,
+    borrowing_trip_id uuid NOT NULL,
+    holding_id uuid NOT NULL,
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -621,17 +621,17 @@ CREATE INDEX index_book_borrowing_trips_on_state ON book_borrowing_trips USING b
 
 
 --
--- Name: index_book_borrowings_on_book_borrowing_trip_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_book_borrowings_on_borrowing_trip_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_book_borrowings_on_book_borrowing_trip_id ON book_borrowings USING btree (book_borrowing_trip_id);
+CREATE INDEX index_book_borrowings_on_borrowing_trip_id ON book_borrowings USING btree (borrowing_trip_id);
 
 
 --
--- Name: index_book_borrowings_on_book_holding_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_book_borrowings_on_holding_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_book_borrowings_on_book_holding_id ON book_borrowings USING btree (book_holding_id);
+CREATE INDEX index_book_borrowings_on_holding_id ON book_borrowings USING btree (holding_id);
 
 
 --
@@ -821,7 +821,7 @@ CREATE UNIQUE INDEX index_users_on_username ON users USING btree (username);
 --
 
 ALTER TABLE ONLY book_stories
-    ADD CONSTRAINT fk_rails_0699fdcfff FOREIGN KEY (book_isbn) REFERENCES book_infos(isbn);
+    ADD CONSTRAINT fk_rails_0699fdcfff FOREIGN KEY (book_isbn) REFERENCES book_infos(isbn) ON DELETE RESTRICT;
 
 
 --
@@ -857,11 +857,11 @@ ALTER TABLE ONLY book_borrow_demands
 
 
 --
--- Name: book_borrowings fk_rails_568fdd072d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: books fk_rails_6cd736403e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY book_borrowings
-    ADD CONSTRAINT fk_rails_568fdd072d FOREIGN KEY (book_holding_id) REFERENCES book_holdings(id);
+ALTER TABLE ONLY books
+    ADD CONSTRAINT fk_rails_6cd736403e FOREIGN KEY (isbn) REFERENCES book_infos(isbn) ON DELETE RESTRICT;
 
 
 --
@@ -881,11 +881,27 @@ ALTER TABLE ONLY book_holdings
 
 
 --
+-- Name: book_borrowings fk_rails_7b2a167bbd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowings
+    ADD CONSTRAINT fk_rails_7b2a167bbd FOREIGN KEY (borrowing_trip_id) REFERENCES book_borrowing_trips(id);
+
+
+--
 -- Name: book_summaries fk_rails_824719b63b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_summaries
     ADD CONSTRAINT fk_rails_824719b63b FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: book_info_cover_images fk_rails_829d9b9504; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_info_cover_images
+    ADD CONSTRAINT fk_rails_829d9b9504 FOREIGN KEY (isbn) REFERENCES book_infos(isbn) ON DELETE SET NULL;
 
 
 --
@@ -929,11 +945,11 @@ ALTER TABLE ONLY book_borrow_demands
 
 
 --
--- Name: book_borrowings fk_rails_d0b00ff879; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: book_borrowings fk_rails_d5c7a92c6f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY book_borrowings
-    ADD CONSTRAINT fk_rails_d0b00ff879 FOREIGN KEY (book_borrowing_trip_id) REFERENCES book_borrowing_trips(id);
+    ADD CONSTRAINT fk_rails_d5c7a92c6f FOREIGN KEY (holding_id) REFERENCES book_holdings(id);
 
 
 --
@@ -949,7 +965,15 @@ ALTER TABLE ONLY book_holdings
 --
 
 ALTER TABLE ONLY book_summaries
-    ADD CONSTRAINT fk_rails_f3623c029c FOREIGN KEY (book_isbn) REFERENCES book_infos(isbn);
+    ADD CONSTRAINT fk_rails_f3623c029c FOREIGN KEY (book_isbn) REFERENCES book_infos(isbn) ON DELETE RESTRICT;
+
+
+--
+-- Name: book_borrow_demands fk_rails_f49f571546; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrow_demands
+    ADD CONSTRAINT fk_rails_f49f571546 FOREIGN KEY (book_isbn) REFERENCES book_infos(isbn) ON DELETE RESTRICT;
 
 
 --

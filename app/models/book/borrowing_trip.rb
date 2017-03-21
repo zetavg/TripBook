@@ -11,8 +11,8 @@ class Book::BorrowingTrip < ApplicationRecord
   scope :for_book, ->(book) { where(book: book) }
 
   belongs_to :book
-  has_many :borrowings, foreign_key: :book_borrowing_trip_id
-  has_one :current_borrowing, -> { active }, foreign_key: :book_borrowing_trip_id, class_name: 'Borrowing'
+  has_many :borrowings
+  has_one :current_borrowing, -> { active }, class_name: 'Borrowing'
 
   # TODO: scope: :state may not be safe because we have multiple active states
   validates :book, uniqueness: { scope: :state }, unless: :end?

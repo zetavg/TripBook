@@ -10,5 +10,6 @@ class CreateBooks < ActiveRecord::Migration[5.0]
     end
 
     add_index :books, :isbn
+    add_foreign_key :books, :book_infos, column: :isbn, primary_key: :isbn, on_delete: :restrict
   end
 end

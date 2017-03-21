@@ -11,5 +11,6 @@ class CreateBookInfoCoverImages < ActiveRecord::Migration[5.0]
     end
 
     add_index :book_info_cover_images, :isbn
+    add_foreign_key :book_info_cover_images, :book_infos, column: :isbn, primary_key: :isbn, on_delete: :nullify
   end
 end

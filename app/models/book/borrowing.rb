@@ -4,8 +4,8 @@ class Book::Borrowing < ApplicationRecord
 
   scope :active, -> { where(ended_at: nil) }
 
-  belongs_to :borrowing_trip, foreign_key: :book_borrowing_trip_id, counter_cache: true
-  belongs_to :holding, foreign_key: :book_holding_id
+  belongs_to :borrowing_trip, counter_cache: true
+  belongs_to :holding
 
   delegate :book, to: :borrowing_trip, prefix: false
   delegate :state, :previous_holding, :ready_for_release!, :cancel_release!, :story, to: :holding, prefix: false
@@ -24,7 +24,7 @@ class Book::Borrowing < ApplicationRecord
   end
 
   def previous_borrowing
-    self.class.find_by(book_holding_id: previous_holding.id)
+    self.class.find_by(holding_id: previous_holding.id)
   end
 
   def end!

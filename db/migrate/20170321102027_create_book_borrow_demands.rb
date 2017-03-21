@@ -9,5 +9,7 @@ class CreateBookBorrowDemands < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_foreign_key :book_borrow_demands, :book_infos, column: :book_isbn, primary_key: :isbn, on_delete: :restrict
   end
 end
