@@ -8,7 +8,12 @@
         .col-md-4
           .thumbnail
             img src=book.cover_image&.image&.medium&.url
-            h3= book.name
+            .caption
+              h3= book.name
+              p
+                - if book.current_holding.user == current_user
+                  - if book.current_holding.ready_for_release?
+                    = link_to '發送邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-default'
   - else
     .well.text-center
       p

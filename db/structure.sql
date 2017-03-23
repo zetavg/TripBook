@@ -76,6 +76,33 @@ CREATE TABLE book_borrow_demands (
 
 
 --
+-- Name: book_borrowing_invitation_invitation_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE book_borrowing_invitation_invitation_users (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    borrowing_invitation_id uuid NOT NULL,
+    user_id integer,
+    message text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: book_borrowing_invitations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE book_borrowing_invitations (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    holding_id uuid NOT NULL,
+    borrowing_id uuid,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
 -- Name: book_borrowing_trips; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -481,6 +508,22 @@ ALTER TABLE ONLY book_borrow_demands
 
 
 --
+-- Name: book_borrowing_invitation_invitation_users book_borrowing_invitation_invitation_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_invitation_invitation_users
+    ADD CONSTRAINT book_borrowing_invitation_invitation_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: book_borrowing_invitations book_borrowing_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_invitations
+    ADD CONSTRAINT book_borrowing_invitations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: book_borrowing_trips book_borrowing_trips_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -604,6 +647,34 @@ CREATE INDEX index_book_borrow_demands_on_borrowing_id ON book_borrow_demands US
 --
 
 CREATE INDEX index_book_borrow_demands_on_user_id ON book_borrow_demands USING btree (user_id);
+
+
+--
+-- Name: index_book_borrowing_invitation_invitation_users_on_b_o_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrowing_invitation_invitation_users_on_b_o_id ON book_borrowing_invitation_invitation_users USING btree (borrowing_invitation_id);
+
+
+--
+-- Name: index_book_borrowing_invitation_invitation_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrowing_invitation_invitation_users_on_user_id ON book_borrowing_invitation_invitation_users USING btree (user_id);
+
+
+--
+-- Name: index_book_borrowing_invitations_on_borrowing_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrowing_invitations_on_borrowing_id ON book_borrowing_invitations USING btree (borrowing_id);
+
+
+--
+-- Name: index_book_borrowing_invitations_on_holding_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrowing_invitations_on_holding_id ON book_borrowing_invitations USING btree (holding_id);
 
 
 --
@@ -833,6 +904,22 @@ ALTER TABLE ONLY books
 
 
 --
+-- Name: book_borrowing_invitations fk_rails_25e71b8cd3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_invitations
+    ADD CONSTRAINT fk_rails_25e71b8cd3 FOREIGN KEY (borrowing_id) REFERENCES book_borrowings(id);
+
+
+--
+-- Name: book_borrowing_invitation_invitation_users fk_rails_2ce47b00cd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_invitation_invitation_users
+    ADD CONSTRAINT fk_rails_2ce47b00cd FOREIGN KEY (borrowing_invitation_id) REFERENCES book_borrowing_invitations(id);
+
+
+--
 -- Name: book_stories fk_rails_2e62e355a0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -854,6 +941,14 @@ ALTER TABLE ONLY user_pictures
 
 ALTER TABLE ONLY book_borrow_demands
     ADD CONSTRAINT fk_rails_37ed1977ba FOREIGN KEY (borrowing_id) REFERENCES book_borrowings(id);
+
+
+--
+-- Name: book_borrowing_invitation_invitation_users fk_rails_47e5c973f2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_invitation_invitation_users
+    ADD CONSTRAINT fk_rails_47e5c973f2 FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --
@@ -953,6 +1048,14 @@ ALTER TABLE ONLY book_borrowings
 
 
 --
+-- Name: book_borrowing_invitations fk_rails_deb81ce894; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_invitations
+    ADD CONSTRAINT fk_rails_deb81ce894 FOREIGN KEY (holding_id) REFERENCES book_holdings(id);
+
+
+--
 -- Name: book_holdings fk_rails_f151dbf562; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -997,6 +1100,8 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170314080224'),
 ('20170314102140'),
 ('20170316041313'),
-('20170321102027');
+('20170321102027'),
+('20170321135208'),
+('20170321143015');
 
 

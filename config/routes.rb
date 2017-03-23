@@ -27,7 +27,14 @@ Rails.application.routes.draw do
 
   authenticate :user do
     namespace :me do
-      resources :books
+      resources :books do
+        scope module: :books do
+          resources :borrowing_invitations, path: 'borrowing-invitations', only: [:index, :new, :create] do
+            resource :cancellation, only: [:create], module: :borrowing_invitations
+          end
+        end
+      end
+
       resources :owned_books, path: 'owned-books' do
         resources :borrowing_trips, path: 'borrowing-trips',
                                     only: [:new, :create, :show, :edit, :update] do

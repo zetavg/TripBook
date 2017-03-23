@@ -1,0 +1,4 @@
+.container
+  p 已發送邀請給 #{@borrowing_invitation.invitees.first.name}。
+  => link_to '撤銷邀請', me_book_borrowing_invitation_cancellation_path(book_id: @book.id, borrowing_invitation_id: @borrowing_invitation.invitation_users.first.id), method: :post, class: 'btn btn-danger'
+  = link_to '返回', :back

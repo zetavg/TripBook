@@ -11,7 +11,7 @@ class Book::BorrowingTrip::Cancellation < ActiveType::Object
 
   def validate_borrowing_trip_not_ended
     return unless borrowing_trip.ended?
-    errors.add(:borrowing_trip, "hasalready ended")
+    errors.add(:borrowing_trip, "has already ended")
   end
 
   def cancel_borrowing_trip

@@ -2,6 +2,7 @@
 class Book::Holding < ApplicationRecord
   include StateMachine
   include Trackable
+  include BorrowingRelations
 
   scope :active, -> { where(state: [:holding, :ready_for_release]) }
 
