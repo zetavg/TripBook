@@ -27,7 +27,7 @@ class Book::BorrowDemand < ApplicationRecord
     end
   end
 
-  validates :book_isbn, uniqueness: { scope: :state }, unless: :end?
+  validates :book_isbn, uniqueness: { scope: [:user_id, :state] }, unless: :end?
 
   def active?
     ACTIVE_STATES.include?(state)

@@ -27,6 +27,9 @@ Rails.application.routes.draw do
 
   authenticate :user do
     namespace :me do
+      resources :invitations, only: [:index] do
+      end
+
       resources :books do
         scope module: :books do
           resources :borrowing_invitations, path: 'borrowing-invitations', only: [:index, :new, :create] do

@@ -1,0 +1,18 @@
+.container
+  h1 收到的邀請
+  table.table.table-striped
+    thead
+      tr
+        th 書籍
+        th 邀請者
+        th 訊息
+        th 邀請者與書的故事
+        th 動作
+    tbody
+      - @invitations.each do |invitation|
+        tr
+          td= invitation.book.name
+          td= invitation.inviter.name
+          td= invitation.message
+          td= invitation.story.content_for(:invitee)
+          td

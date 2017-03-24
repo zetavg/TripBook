@@ -9,6 +9,7 @@ class CreateBookBorrowingInvitationInvitationUsers < ActiveRecord::Migration[5.0
                                           },
                                           type: :uuid
       t.references :user, foreign_key: true, index: true
+      t.string :state, limit: 32, null: false
       t.text :message
 
       t.timestamps

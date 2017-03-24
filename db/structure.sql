@@ -83,6 +83,7 @@ CREATE TABLE book_borrowing_invitation_invitation_users (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     borrowing_invitation_id uuid NOT NULL,
     user_id integer,
+    state character varying(32) NOT NULL,
     message text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -402,6 +403,27 @@ CREATE SEQUENCE user_profiles_id_seq
 --
 
 ALTER SEQUENCE user_profiles_id_seq OWNED BY user_profiles.id;
+
+
+--
+-- Name: user_recieved_book_borrowing_invitations; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW user_recieved_book_borrowing_invitations AS
+ SELECT book_holdings.user_id AS inviter_id,
+    book_borrowing_invitation_invitation_users.user_id,
+    book_holdings.state AS holding_state,
+    book_borrowing_invitation_invitation_users.state,
+    book_holdings.book_id,
+    books.isbn AS book_isbn,
+    book_stories.id AS story_id,
+    book_borrowing_invitations.id,
+    book_borrowing_invitation_invitation_users.message
+   FROM ((((book_borrowing_invitations
+     JOIN book_borrowing_invitation_invitation_users ON ((book_borrowing_invitation_invitation_users.borrowing_invitation_id = book_borrowing_invitations.id)))
+     JOIN book_holdings ON ((book_holdings.id = book_borrowing_invitations.holding_id)))
+     JOIN books ON ((books.id = book_holdings.book_id)))
+     JOIN book_stories ON ((((book_stories.book_isbn)::text = (books.isbn)::text) AND (book_stories.user_id = book_holdings.user_id))));
 
 
 --
@@ -1102,6 +1124,7 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170316041313'),
 ('20170321102027'),
 ('20170321135208'),
-('20170321143015');
+('20170321143015'),
+('20170323154713');
 
 
