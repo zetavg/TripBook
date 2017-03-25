@@ -16,7 +16,7 @@
           td= invitation.inviter.name
           td= invitation.book.owner.name
           td= invitation.message
-          td= invitation.story.content_for(:invitee)
+          td= invitation.story&.content_for(:invitee)
           td
             = link_to '接受', me_invitation_acception_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-success'
             | &nbsp;
