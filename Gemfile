@@ -62,6 +62,10 @@ gem 'turbolinks', '~> 5'
 gem 'select2-rails'
 gem 'jquery-fileupload-rails'
 
+# Administration
+gem 'activeadmin', '~> 1.0.0.pre5'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
