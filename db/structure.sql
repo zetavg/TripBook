@@ -427,7 +427,7 @@ CREATE VIEW user_recieved_book_borrowing_invitations AS
      JOIN book_borrowing_invitation_invitation_users ON ((book_borrowing_invitation_invitation_users.borrowing_invitation_id = book_borrowing_invitations.id)))
      JOIN book_holdings ON ((book_holdings.id = book_borrowing_invitations.holding_id)))
      JOIN books ON ((books.id = book_holdings.book_id)))
-     JOIN book_stories ON ((((book_stories.book_isbn)::text = (books.isbn)::text) AND (book_stories.user_id = book_holdings.user_id))));
+     LEFT JOIN book_stories ON ((((book_stories.book_isbn)::text = (books.isbn)::text) AND (book_stories.user_id = book_holdings.user_id))));
 
 
 --

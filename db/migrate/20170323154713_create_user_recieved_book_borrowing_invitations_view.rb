@@ -20,7 +20,7 @@ class CreateUserRecievedBookBorrowingInvitationsView < ActiveRecord::Migration[5
           ON "book_holdings"."id" = "book_borrowing_invitations"."holding_id"
         INNER JOIN "books"
           ON "books"."id" = "book_holdings"."book_id"
-        INNER JOIN "book_stories"
+        LEFT JOIN "book_stories"
           ON "book_stories"."book_isbn" = "books"."isbn"
           AND "book_stories"."user_id" = "book_holdings"."user_id"
       ;
