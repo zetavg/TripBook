@@ -39,6 +39,8 @@ Rails.application.routes.draw do
           resources :borrowing_invitations, path: 'borrowing-invitations', only: [:index, :new, :create] do
             resource :cancellation, only: [:create], module: :borrowing_invitations
           end
+
+          resource :reading_completion, path: 'reading-completion', only: [:create]
         end
       end
 

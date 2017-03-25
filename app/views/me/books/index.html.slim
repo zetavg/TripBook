@@ -11,9 +11,7 @@
             .caption
               h3= book.name
               p
-                - if book.current_holding.user == current_user
-                  - if book.current_holding.ready_for_release?
-                    = link_to '發送邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-default'
+                = render 'book_actions', book: book
   - else
     .well.text-center
       p

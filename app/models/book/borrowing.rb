@@ -3,6 +3,7 @@ class Book::Borrowing < ApplicationRecord
   include Trackable
 
   scope :active, -> { where(ended_at: nil) }
+  scope :for_user, ->(user) { joins(:holding).where('book_holdings.user_id': user.id) }
 
   belongs_to :borrowing_trip, counter_cache: true
   belongs_to :holding

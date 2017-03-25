@@ -17,4 +17,8 @@ class Me::BooksController < ApplicationController
       current_user.past_holded_books
     end
   end
+
+  def find_book
+    @book = books_scope.find(params[:book_id] || params[:id])
+  end
 end

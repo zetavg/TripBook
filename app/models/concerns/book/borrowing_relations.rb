@@ -9,5 +9,9 @@ class Book
       has_one :current_borrowing_trip, -> { active }, class_name: 'Book::BorrowingTrip'
       # TODO: add more
     end
+
+    def current_borrowing_user
+      current_borrowing_trip&.current_borrowing&.borrower
+    end
   end
 end

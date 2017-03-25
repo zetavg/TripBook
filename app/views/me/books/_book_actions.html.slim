@@ -1,0 +1,15 @@
+- # Borrowing Trip Actions
+- if book.current_borrowing_trip
+  - # Book in hand
+  - if book.current_holding.user == current_user
+    - if book.current_holding.may_ready_for_release?
+      = link_to '讀完了', me_book_reading_completion_path(book_id: book.id), method: :post, class: 'btn btn-default'
+    - if book.current_holding.ready_for_release?
+      - case book.current_borrowing_trip.next_step
+        - when :lend
+          = link_to '發送邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-default'
+        - when :pass_on
+          = link_to '發送邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-default'
+        - when :return
+          | 下一步：請將書交還給原書主人
+  - # TODO: Is owner
