@@ -10,7 +10,7 @@ class Book::Borrowing::ReadingCompletion < ActiveType::Object
   private
 
   def validate_borrowing_state_is_holding
-    return if borrowing.state == 'holding'
+    return if borrowing&.state == 'holding'
     errors.add(:borrowing, "is not holding")
   end
 

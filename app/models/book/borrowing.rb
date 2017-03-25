@@ -13,6 +13,7 @@ class Book::Borrowing < ApplicationRecord
            to: :holding, prefix: false, allow_nil: true
 
   validates :borrower, presence: true
+  validate :validate_borrowing_trip_active
 
   after_create :set_borrowing_trip_to_in_progress_if_needed
   after_create :set_previous_borrowing_to_end
@@ -35,6 +36,11 @@ class Book::Borrowing < ApplicationRecord
   end
 
   private
+
+  def validate_borrowing_trip_active
+    return if borrowing_trip.active?
+    errors.add(:borrowing_trip, 'is not active')
+  end
 
   def set_borrowing_trip_to_in_progress_if_needed
     return unless borrowing_trip.pending?

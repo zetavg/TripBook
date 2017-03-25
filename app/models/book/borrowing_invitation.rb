@@ -14,7 +14,7 @@ class Book::BorrowingInvitation < ApplicationRecord
   validate :validate_state_is_ready_for_release, on: :create
 
   def borrowing_trip
-    holding.borrowing&.borrowing_trip || holding.book.current_borrowing_trip
+    holding.book.current_borrowing_trip
   end
 
   private
