@@ -8,7 +8,7 @@
   }
 
   .image-thumbnail {
-    @extend .thumbnail;
+    @extend .img-thumbnail;
     margin: 0;
     margin-right: 8px;
 
@@ -19,7 +19,7 @@
   }
 
   .add-image {
-    @extend .btn, .btn-default;
+    @extend .btn, .btn-success;
     position: relative;
     overflow: hidden;
 
