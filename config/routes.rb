@@ -28,6 +28,10 @@ Rails.application.routes.draw do
   authenticate :user do
     namespace :me do
       resources :invitations, only: [:index] do
+        scope module: :invitations do
+          resource :acception, only: [:create]
+          resource :rejection, only: [:create]
+        end
       end
 
       resources :books do

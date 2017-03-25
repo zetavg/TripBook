@@ -2,10 +2,10 @@
 class Book::BorrowingTrip::Cancellation < ActiveType::Object
   nests_one :borrowing_trip, scope: proc { Book::BorrowingTrip.active }
 
-  before_save :cancel_borrowing_trip
-
   validates :borrowing_trip, presence: true
   validate :validate_borrowing_trip_not_ended
+
+  before_save :cancel_borrowing_trip
 
   private
 

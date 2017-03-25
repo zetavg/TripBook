@@ -417,8 +417,12 @@ CREATE VIEW user_recieved_book_borrowing_invitations AS
     book_holdings.book_id,
     books.isbn AS book_isbn,
     book_stories.id AS story_id,
+    book_borrowing_invitation_invitation_users.message,
     book_borrowing_invitations.id,
-    book_borrowing_invitation_invitation_users.message
+    book_borrowing_invitations.holding_id,
+    book_borrowing_invitations.borrowing_id,
+    book_borrowing_invitations.created_at,
+    book_borrowing_invitations.updated_at
    FROM ((((book_borrowing_invitations
      JOIN book_borrowing_invitation_invitation_users ON ((book_borrowing_invitation_invitation_users.borrowing_invitation_id = book_borrowing_invitations.id)))
      JOIN book_holdings ON ((book_holdings.id = book_borrowing_invitations.holding_id)))

@@ -5,6 +5,7 @@
       tr
         th 書籍
         th 邀請者
+        th 書的擁有者
         th 訊息
         th 邀請者與書的故事
         th 動作
@@ -13,6 +14,10 @@
         tr
           td= invitation.book.name
           td= invitation.inviter.name
+          td= invitation.book.owner.name
           td= invitation.message
           td= invitation.story.content_for(:invitee)
           td
+            = link_to '接受', me_invitation_acception_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-success'
+            | &nbsp;
+            = link_to '謝絕', me_invitation_rejection_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

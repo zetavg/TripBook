@@ -7,8 +7,9 @@ class Book::Borrowing < ApplicationRecord
   belongs_to :borrowing_trip, counter_cache: true
   belongs_to :holding
 
-  delegate :book, to: :borrowing_trip, prefix: false
-  delegate :state, :previous_holding, :ready_for_release!, :cancel_release!, :story, to: :holding, prefix: false
+  delegate :book, to: :borrowing_trip, prefix: false, allow_nil: true
+  delegate :state, :previous_holding, :ready_for_release!, :cancel_release!, :story,
+           to: :holding, prefix: false, allow_nil: true
 
   validates :borrower, presence: true
 

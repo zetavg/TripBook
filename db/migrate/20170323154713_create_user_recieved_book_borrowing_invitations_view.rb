@@ -11,8 +11,8 @@ class CreateUserRecievedBookBorrowingInvitationsView < ActiveRecord::Migration[5
           "book_holdings"."book_id" AS book_id,
           "books"."isbn" AS book_isbn,
           "book_stories"."id" AS story_id,
-          "book_borrowing_invitations"."id" AS id,
-          "book_borrowing_invitation_invitation_users"."message"
+          "book_borrowing_invitation_invitation_users"."message",
+          "book_borrowing_invitations".*
         FROM "book_borrowing_invitations"
         INNER JOIN "book_borrowing_invitation_invitation_users"
           ON "book_borrowing_invitation_invitation_users"."borrowing_invitation_id" = "book_borrowing_invitations"."id"
