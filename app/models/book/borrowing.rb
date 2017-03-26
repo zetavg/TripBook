@@ -13,7 +13,7 @@ class Book::Borrowing < ApplicationRecord
            to: :holding, prefix: false, allow_nil: true
 
   validates :borrower, presence: true
-  validate :validate_borrowing_trip_active
+  validate :validate_borrowing_trip_active, on: :create
 
   after_create :set_borrowing_trip_to_in_progress_if_needed
   after_create :set_previous_borrowing_to_end
