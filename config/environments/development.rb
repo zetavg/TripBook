@@ -27,6 +27,8 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload
+
   config.action_mailer.default_url_options = { host: Config.app.host, port: Config.app.port }
   config.action_mailer.delivery_method = :letter_opener
 

@@ -92,6 +92,9 @@ group :development, :test do
 end
 
 group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
@@ -99,6 +102,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
+  gem 'guard', require: false
+  gem 'guard-rspec', require: false
+  gem 'guard-livereload', '~> 2.5.2', require: false
+
+  gem 'rack-livereload'
   gem 'letter_opener'
 end
 

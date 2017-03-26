@@ -35,3 +35,7 @@ The TripBook Project.
 - `bin/rake syntax:check`: Check the code syntax using Rubocop.
 - `bin/rake syntax:check_js`: Check JS code syntax using ESLint.
 - `bin/rake syntax:auto_correct`: Auto correct the code syntax using Rubocop.
+
+### Guard
+
+Run `bin/guard` for autotest and livereload.
