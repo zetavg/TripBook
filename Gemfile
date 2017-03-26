@@ -53,7 +53,7 @@ gem 'kaminari'
 gem 'slim-rails'
 gem 'simple_form'
 gem 'jbuilder', '~> 2.5'
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'sprockets-commoner'
 gem 'uglifier', '>= 1.3.0'
@@ -101,6 +101,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'sassc-rails'
 
   gem 'guard', require: false
   gem 'guard-rspec', require: false
