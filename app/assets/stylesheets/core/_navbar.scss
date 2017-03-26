@@ -1,0 +1,55 @@
+.navbar-default {
+  $navbar-default-height: 56px;
+
+  @extend .navbar-light;
+
+  min-height: $navbar-default-height;
+  background-color: $white;
+
+  & + *:not(.flash-messages),
+  & + .flash-messages + * {
+    margin-top: 8px;
+  }
+
+  @include media-breakpoint-only(xs) {
+    > .container {
+      width: 100%;
+    }
+  }
+
+  @include media-breakpoint-between(xs, md) {
+    .navbar-toggler-right {
+      right: 0;
+    }
+  }
+
+  @include media-breakpoint-between(lg, xl) {
+    $navbar-default-extended-height: 80px;
+    $navbar-default-minimized-height: 52px;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1024;
+
+    height: $navbar-default-extended-height;
+    transition: height .5s;
+
+    &.minimized {
+      height: $navbar-default-minimized-height;
+    }
+
+    & + *:not(.flash-messages) {
+      margin-top: $navbar-default-extended-height + 8px;
+    }
+
+    & + .flash-messages {
+      margin-top: $navbar-default-extended-height;
+    }
+
+    & + .flash-messages + * {
+      margin-top: 8px;
+    }
+  }
+}

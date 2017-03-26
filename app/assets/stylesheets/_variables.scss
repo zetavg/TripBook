@@ -1,0 +1,35 @@
+// Variables
+//
+// See https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss for more Bootstrap variables.
+
+
+// Colors
+//
+// Grayscale and brand colors.
+
+// Base colors
+$white:  #fff;
+$black:  #000;
+$red:    #d9534f;
+$orange: #f0ad4e;
+$yellow: #ffd500;
+$green:  #5cb85c;
+$blue:   #0275d8;
+$teal:   #5bc0de;
+$pink:   #ff5b77;
+$purple: #613d7c;
+
+// Grayscale
+$gray-dark:                 #292b2c;
+$gray:                      #464a4c;
+$gray-light:                #636c72;
+$gray-lighter:              #eceeef;
+$gray-lightest:             #efefef;
+
+// Semantic color scheme
+$brand-primary:             $black;
+$brand-success:             $green;
+$brand-info:                $teal;
+$brand-warning:             $orange;
+$brand-danger:              $red;
+$brand-inverse:             $gray-dark;

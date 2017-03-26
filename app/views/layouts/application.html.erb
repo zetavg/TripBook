@@ -10,10 +10,7 @@
 
   <body>
     <%= render partial: 'layouts/navbar' %>
-
-    <div class="container">
-      <%= flash_messages %>
-    </div>
+    <%= render partial: 'layouts/flash_messages' %>
 
     <%= yield %>
   </body>

@@ -1,0 +1,8 @@
+- if flash.any?
+  .flash-messages
+    - flash.each do |type, message|
+      .alert role="alert" class=class_for_flash_message(type)
+        .container
+          button.close aria-label="Close" data-dismiss="alert" type="button"
+            span aria-hidden="true" &times;
+          = message

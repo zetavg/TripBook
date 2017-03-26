@@ -1,0 +1,25 @@
+.flash-messages {
+  .alert {
+    margin: 0;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .alert + .alert {
+    margin-top: -1px;
+  }
+
+  .close {
+    span {
+      font-weight: 200;
+      opacity: .5;
+    }
+  }
+
+  // Prevent margin collapsing
+  &::after {
+    content: ' ';
+    display: table;
+  }
+}

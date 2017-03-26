@@ -14,7 +14,21 @@
  *= require select2
  *= require select2-bootstrap
  */
+
+// Core
+//
+// Base and core component styles used across the app.
+
+@import "variables";
 @import "bootstrap";
+@import "core/base";
+@import "core/turbolinks";
+@import "core/navbar";
+@import "core/flash_messages";
+
+// Components
+//
+// Reuseable component styles.
 
 @import 'components/book_info_input';
 @import 'components/basic_image_uploader_input';
