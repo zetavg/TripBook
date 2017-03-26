@@ -1,0 +1,54 @@
+.books-shelf {
+  $row-height: 360px;
+  @extend .d-flex, .flex-row, .flex-wrap, .justify-content-center, .justify-content-around;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: -9999px;
+    right: -9999px;
+
+    background: linear-gradient(to bottom, $gray-lightest 0%, $gray-lighter 80%, $gray-light 100%);
+    background-size: 80px $row-height;
+  }
+
+  .books-shelf-item {
+    @extend .d-flex, .justify-content-center;
+    z-index: 1;
+    height: $row-height;
+    padding: 0 4px;
+    overflow: hidden;
+
+    > * {
+      @extend .align-self-end;
+      max-height: $row-height;
+      margin-bottom: -1px;
+    }
+  }
+
+  .book-cover {
+    @include book-cover-scale(.75); // [296, 420] * .75 = [222, 315]
+  }
+
+  @include media-breakpoint-between(lg, xl) {
+    .book-cover {
+      // max-width: 200px;
+    }
+  }
+
+  @include media-breakpoint-between(sm, md) {
+    .book-cover {
+      // max-width: 160px;
+    }
+  }
+
+  @include media-breakpoint-only(xs) {
+    .book-cover {
+      // max-width: 80px;
+    }
+  }
+}

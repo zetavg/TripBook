@@ -24,14 +24,14 @@
   }
 
   @include media-breakpoint-between(lg, xl) {
-    $navbar-default-extended-height: 80px;
+    $navbar-default-extended-height: 94px;
     $navbar-default-minimized-height: 52px;
 
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    z-index: 1024;
+    z-index: $zindex-fixed;
 
     height: $navbar-default-extended-height;
     transition: height .5s;

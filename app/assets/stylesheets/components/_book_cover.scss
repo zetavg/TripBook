@@ -1,0 +1,36 @@
+@mixin book-cover-scale($scale: 1) {
+  @for $i from 1 through 420 {
+    &[data-width="#{$i}"],
+    &[data-width="#{$i}"] > img {
+      width: $i * $scale * 1px;
+    }
+
+    &[data-height="#{$i}"],
+    &[data-height="#{$i}"] > img {
+      height: $i * $scale * 1px;
+    }
+  }
+}
+
+.book-cover {
+  @include book-cover-scale;
+  @extend .d-flex, .flex-column, .justify-content-around, .align-items-center;
+
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba($black, .2);
+
+  background-color: $gray-light;
+  color: $gray-lighter;
+
+  img {
+    width: 100%;
+    border-radius: 2px;
+  }
+
+  .title:first-child {
+    @extend h3;
+    margin-top: 24px;
+    font-weight: 200;
+    text-align: center;
+  }
+}

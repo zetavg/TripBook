@@ -25,6 +25,7 @@
 @import "core/turbolinks";
 @import "core/navbar";
 @import "core/flash_messages";
+@import "core/utilities";
 
 // Components
 //
@@ -32,3 +33,5 @@
 
 @import 'components/book_info_input';
 @import 'components/basic_image_uploader_input';
+@import 'components/book_cover';
+@import 'components/books_shelf';
