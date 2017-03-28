@@ -34,7 +34,7 @@
     z-index: $zindex-fixed;
 
     height: $navbar-default-extended-height;
-    transition: height .5s;
+    @include transition(height .5s);
 
     &.minimized {
       height: $navbar-default-minimized-height;
