@@ -7,12 +7,7 @@
       .books-shelf
         - @books.each do |book|
           .books-shelf-item
-            - if book.cover_image.present?
-              .book-cover(data-width=book.cover_image.dimensions[0] data-height=book.cover_image.dimensions[1])
-                img src=book.cover_image&.image&.medium&.url
-            - else
-              .book-cover(data-width=300 data-height=420)
-                .title= book.name
+            = book_cover(book)
     - else
       .well.text-center
         p

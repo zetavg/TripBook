@@ -10,7 +10,7 @@
 // Base colors
 $white:  #fff;
 $black:  #000;
-$red:    #d9534f;
+$red:    #df484f;
 $orange: #f0ad4e;
 $yellow: #ffd500;
 $green:  #5cb85c;
@@ -33,3 +33,56 @@ $brand-info:                $teal;
 $brand-warning:             $orange;
 $brand-danger:              $red;
 $brand-inverse:             $gray-dark;
+
+// Buttons
+//
+// Text, background and border color for buttons.
+
+$btn-padding-x:                  .875rem;
+$btn-padding-y:                  .5rem;
+
+$btn-padding-x-sm:               .5rem;
+$btn-padding-y-sm:               .25rem;
+
+$btn-padding-x-lg:               1.5rem;
+$btn-padding-y-lg:               .75rem;
+
+$btn-border-radius:              0;
+$btn-border-radius-lg:           0;
+$btn-border-radius-sm:           0;
+
+$btn-transition:                 all .2s ease-in-out !default;
+
+$btn-line-height:                1.25;
+// $btn-font-weight:                $font-weight-normal;
+$btn-box-shadow:                 inset 0 1px 0 rgba($white,.15), 0 1px 1px rgba($black,.075);
+$btn-focus-box-shadow:           0 0 0 2px rgba($brand-primary, .25);
+$btn-active-box-shadow:          inset 0 3px 5px rgba($black,.125);
+
+$btn-block-spacing-y:            .5rem;
+
+$btn-primary-color:              $white;
+$btn-primary-bg:                 $brand-primary;
+$btn-primary-border:             $btn-primary-bg;
+
+$btn-secondary-color:            $gray-dark;
+$btn-secondary-bg:               $white;
+$btn-secondary-border:           #ccc;
+
+$btn-info-color:                 $white;
+$btn-info-bg:                    $brand-info;
+$btn-info-border:                $btn-info-bg;
+
+$btn-success-color:              $white;
+$btn-success-bg:                 $brand-success;
+$btn-success-border:             $btn-success-bg;
+
+$btn-warning-color:              $white;
+$btn-warning-bg:                 $brand-warning;
+$btn-warning-border:             $btn-warning-bg;
+
+$btn-danger-color:               $white;
+$btn-danger-bg:                  $brand-danger;
+$btn-danger-border:              $btn-danger-bg;
+
+$btn-link-disabled-color:        $gray-light;
