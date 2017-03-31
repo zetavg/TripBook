@@ -13,6 +13,7 @@
 @import "core/buttons";
 @import "core/navbar";
 @import "core/flash_messages";
+@import "core/footer";
 @import "core/utilities";
 
 // Components
@@ -25,3 +26,9 @@
 @import 'components/book_cover';
 @import 'components/books_shelf';
 @import 'components/book_statis';
+
+// Layouts
+//
+// Constructs a page.
+
+@import 'layouts/content';
