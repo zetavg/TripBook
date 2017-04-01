@@ -1,14 +1,13 @@
-.container-fluid.overflow-hidden
-  .container
-    h1
-      | 書架
-    = render 'navtab'
-    - if @books.present?
-      .books-shelf
-        - @books.each do |book|
-          .books-shelf-item
-            = book_cover(book)
-    - else
-      .well.text-center
-        p
-          | 這裡目前沒有任何書籍。
+.container
+  h1
+    | 書架
+  = render 'navtab'
+  - if @books.present?
+    .books-shelf
+      - @books.each do |book|
+        .books-shelf-item
+          = book_cover(book)
+  - else
+    .well.text-center
+      p
+        | 這裡目前沒有任何書籍。

@@ -5,7 +5,7 @@ module BooksHelper
       content_tag(
         :div,
         class: ['book-cover', responsive && 'book-cover-responsive'],
-          style: style,
+        style: style,
         'data-width': book.cover_image.dimensions[0],
         'data-height': book.cover_image.dimensions[1]
       ) do
@@ -15,7 +15,7 @@ module BooksHelper
       content_tag(
         :div,
         class: ['book-cover', responsive && 'book-cover-responsive'],
-          style: style,
+        style: style,
         'data-width': 300,
         'data-height': 420
       ) do

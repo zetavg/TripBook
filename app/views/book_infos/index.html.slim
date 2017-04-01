@@ -1,8 +1,8 @@
 .container
-  .row
+  .books-exhibit
     - @book_infos.each do |book_info|
-      .col-md-4
-        .thumbnail
-          img src=book_info.cover_image&.image&.medium&.url
-          h3= link_to book_info.name, book_info
+      = link_to book_info, class: 'books-exhibit-item' do
+        = book_cover(book_info)
+        p
+          span= book_info.name
   = paginate @book_infos

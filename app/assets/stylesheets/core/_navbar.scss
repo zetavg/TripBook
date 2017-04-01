@@ -1,7 +1,7 @@
 $navbar-default-height: 56px;
 $navbar-default-extended-height: 94px;
 $navbar-default-minimized-height: 52px;
-$navbar-margin: 8px;
+$navbar-margin: 0;
 
 .navbar-default {
   @extend .navbar-light;
