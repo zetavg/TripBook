@@ -1,8 +1,10 @@
-$footer-height: 64px;
+$footer-height: 64px !default;
+$footer-background-color: $gray-darker !default;
 
 .footer {
+  position: relative;
   height: $footer-height;
   padding: 8px 0;
-  background-color: $gray-light;
+  background-color: $footer-background-color;
   color: $gray;
 }

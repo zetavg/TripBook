@@ -2,7 +2,8 @@ nav.navbar.navbar-default.navbar-toggleable-md
   .container
     button.navbar-toggler.navbar-toggler-right aria-controls="navbar" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbar" data-toggle="collapse" type="button"
       span.navbar-toggler-icon
-    a.navbar-brand href="#{root_path}" 書旅：TripBook
+    a.navbar-brand href="#{root_path}"
+      = image_tag 'brand/nav-logo.svg', alt: '書旅：TripBook'
     #navbar.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
         li.nav-item class=(controller.class.name.starts_with?('BookInfos') ? 'active' : nil)

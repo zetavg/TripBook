@@ -2,6 +2,6 @@
   min-height: calc(100vh - #{$navbar-default-height + $navbar-margin} - #{$footer-height});
 
   @include media-breakpoint-between(lg, xl) {
-    min-height: calc(100vh - #{$navbar-default-extended-height + $navbar-margin} - #{$footer-height});
+    min-height: calc(100vh - 58px - #{$navbar-default-extended-height + $navbar-margin} - #{$footer-height});
   }
 }

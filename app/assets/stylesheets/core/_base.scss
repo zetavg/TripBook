@@ -1,3 +1,13 @@
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  background: linear-gradient(to bottom, $gray-lightest 0%, $gray-lightest 49%, $gray-darkest 51%, $gray-darkest 100%);
+  background-color: $gray-light;
+}
+
 body {
   background-color: $gray-lightest;
 }
