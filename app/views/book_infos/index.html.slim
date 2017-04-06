@@ -5,4 +5,7 @@
         = book_cover(book_info)
         p
           span= book_info.name
-  = paginate @book_infos
+
+  .text-center
+    - pagination_class = 'text-center'
+    = paginate @book_infos, pagination_class: 'text-center'

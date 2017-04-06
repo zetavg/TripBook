@@ -1,0 +1,75 @@
+.pagination {
+  $item-margin-x:   0;
+  $item-margin-y:   0;
+  $item-padding-x:  .75rem;
+  $item-padding-y:  .75em;
+  $line-height:     1rem;
+  $font-size:       .875rem;
+
+  $color:           $gray-darker;
+  $bg:              transparent;
+  $border-width:    $border-width;
+  $border-color:    lighten($gray-darker, 10%);
+
+  $hover-color:     $white;
+  $hover-bg:        $gray-darker;
+  $hover-border:    $gray-darker;
+
+  $active-color:    $white;
+  $active-bg:       $gray-darker;
+  $active-border:   $gray-darker;
+
+  $disabled-color:  $gray-light;
+  $disabled-bg:     transparent;
+  $disabled-border: $gray-light;
+
+  display: inline-block;
+  padding-left: 0;
+  list-style: none;
+
+  &-item {
+    display: inline-block;
+    margin: $item-margin-y $item-margin-x;
+    font-size: $font-size;
+
+    &.active a {
+      z-index: 2;
+      color: $active-color;
+      background-color: $active-bg;
+      border-color: $active-border;
+    }
+
+    &.disabled a {
+      color: $disabled-color;
+      pointer-events: none;
+      cursor: $cursor-disabled; // While `pointer-events: none` removes the cursor in modern browsers, we provide a disabled cursor as a fallback.
+      background-color: $disabled-bg;
+      border-color: $disabled-border;
+    }
+  }
+
+  &-link {
+    position: relative;
+    display: block;
+    padding: $item-padding-y $item-padding-x;
+    margin-left: -1px;
+    line-height: $line-height;
+    color: $color;
+    background-color: $bg;
+    border: $border-width solid $border-color;
+
+
+      border-width: 0.5px;
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    }
+
+    @include hover-focus {
+      color: $hover-color;
+      text-decoration: none;
+      background-color: $hover-bg;
+      border-color: $hover-border;
+    }
+
+    @include transition(all, .3s);
+  }
+}

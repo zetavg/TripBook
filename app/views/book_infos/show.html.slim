@@ -1,9 +1,15 @@
-.container style="padding-top: 8px;"
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+.container style="padding-top: 16px;"
   h2= @book_info.name
   - if @book_info.author
     h3
       .small= @book_info.author
-  .row
+  .row style="padding-top: 8px; padding-bottom: 16px;"
     .col-md-4.text-center
       = book_cover(@book_info, responsive: true, style: 'margin-bottom: 16px;')
       ul.book-statis style="margin-bottom: 16px;"

@@ -12,6 +12,8 @@
   </head>
 
   <body>
+    <%= yield :body %>
+
     <%= render partial: 'layouts/navbar' %>
     <%= render partial: 'layouts/flash_messages' %>
 

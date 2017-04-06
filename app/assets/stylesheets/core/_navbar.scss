@@ -8,6 +8,7 @@ $navbar-margin: 0;
 
   min-height: $navbar-default-height;
   background-color: $white;
+  border-bottom: 1px solid $gray-lighter;
 
   & + *:not(.flash-messages),
   & + .flash-messages + * {

@@ -4,10 +4,10 @@ body {
 }
 
 html {
-  background: linear-gradient(to bottom, transparent 0%, transparent 49%, $gray-darkest 51%, $gray-darkest 100%);
+  background: linear-gradient(to bottom, transparent 0%, transparent 80%, $gray-darkest 80%, $gray-darkest 100%);
   background-color: $gray-lighter;
 }
 
 body {
-  background-color: $gray-lightest;
+  background-color: $gray-lighter;
 }
