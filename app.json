@@ -1,0 +1,26 @@
+{
+  "name": "TripBook",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  },
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/ruby" }
+  ],
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ],
+  "env": {
+    "HOST_URL": {
+      "description": "The URL of the host."
+    },
+    "SECRET_KEY": {
+      "description": "A secret key.",
+      "generator": "secret"
+    },
+    "PEPPER": {
+      "description": "A secret key.",
+      "generator": "secret"
+    }
+  }
+}
