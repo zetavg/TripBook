@@ -1,17 +1,39 @@
-.container
-  h1
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+.container style="padding-top: 16px;"
+  h1 style="padding-bottom: 8px;"
     | 我的藏書
     =< link_to '新增', new_me_owned_book_path, class: 'btn btn-success'
+
   - if @books.present?
-    .row
-      - @books.each do |book|
-        .col-md-4
-          .thumbnail
-            img src=book.cover_image&.image&.medium&.url
-            h3= link_to book.name, me_owned_book_path(book)
+    table.table.table-hover
+      thead
+        tr
+          th
+          th 書名
+          th 作者
+          th 目前持有者
+      tbody
+        - @books.each do |book|
+          tr style="height: 108px;"
+            td style="text-align: center; vertical-align: middle;"
+              = book_cover book, show_placeholder: false, max_width: 80, max_height: 80, style: 'margin: auto;'
+            td style="vertical-align: middle;"
+              = link_to book.name, me_owned_book_path(book)
+              br
+              small.text-muted= book.isbn
+            td style="vertical-align: middle;"
+              = book.author
+            td style="vertical-align: middle;"
+              = book.holder&.name
+
   - else
-    .well.text-center
-      p
+    .card.text-center
+      .card-block
         | 您目前並未擁有任何書籍。馬上
         = link_to '新增一本', new_me_owned_book_path
         | 吧！

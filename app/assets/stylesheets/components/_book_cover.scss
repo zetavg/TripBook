@@ -16,6 +16,8 @@
   @include book-cover-scale;
   @extend .d-flex, .flex-column, .justify-content-around, .align-items-center;
 
+  position: relative;
+
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba($black, .2);
 
@@ -36,6 +38,19 @@
     padding: 8px 4px;
     font-weight: 200;
     text-align: center;
+  }
+
+  .btn-toolbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 12px;
+    background: linear-gradient(to top, rgba($gray, .5) 0%, transparent 100%);
+
+    .btn {
+      @include button-outline-variant($gray-lighter, $gray-lighter)
+    }
   }
 
   &-responsive {

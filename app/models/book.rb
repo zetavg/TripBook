@@ -37,6 +37,7 @@ class Book < ApplicationRecord
 
   delegate :isbn_10, :isbn_13,
            :name, :cover_image, :language, :author, :publisher, :publish_date,
+           :build_cover_image,
            to: :info, prefix: false
 
   after_create :create_book_holding_on_create

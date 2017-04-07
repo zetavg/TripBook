@@ -5,8 +5,7 @@ class Book::Story < ApplicationRecord
   enum privacy_level: {
     only_me: 0,
     only_by_invitation: 1,
-    invitees_and_followers: 2,
-    open_to_world: 3
+    open_to_world: 15
   }
 
   scope :for, ->(user) { where(user: user) }

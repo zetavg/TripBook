@@ -51,8 +51,10 @@ class Book::BorrowingTrip < ApplicationRecord
 
   validate :validate_book_hold_by_owner, on: :create
 
+  after_initialize :nilify_blanks
   after_initialize :prepare_to_end_if_needed
   after_initialize :end_if_needed
+  before_validation :nilify_blanks
   after_create :set_current_holding_to_ready_for_release
   after_save :set_current_holding_to_holding_if_needed
   after_save :end_borrowings_if_ended
@@ -112,6 +114,12 @@ class Book::BorrowingTrip < ApplicationRecord
   end
 
   private
+
+  def nilify_blanks
+    self.max_single_durition_days = nil if max_single_durition_days&.zero?
+    self.max_durition_days = nil if max_durition_days&.zero?
+    self.max_borrowings_count = nil if max_borrowings_count&.zero?
+  end
 
   def validate_book_hold_by_owner
     return if book.holder == book.owner

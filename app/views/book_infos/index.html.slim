@@ -1,4 +1,4 @@
-.container
+.container style="padding-bottom: 16px;"
   .books-exhibit
     - @book_infos.each do |book_info|
       = link_to book_info, class: 'books-exhibit-item' do
@@ -6,6 +6,6 @@
         p
           span= book_info.name
 
-  .text-center
+  .text-center style="padding-top: 8px;"
     - pagination_class = 'text-center'
     = paginate @book_infos, pagination_class: 'text-center'

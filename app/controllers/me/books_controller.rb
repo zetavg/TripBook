@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class Me::BooksController < ApplicationController
   def index
-    @show = params[:show] || 'in_hand'
-    @books = books_scope(@show).order('book_holdings.updated_at DESC')
+    @show = (params[:show] || 'in_hand').underscore
+    @books = books_scope(@show).order(updated_at: :desc)
   end
 
   private

@@ -1,10 +1,12 @@
-ul.nav.nav-tabs
-  li role="presentation" class=(@show == 'in_hand' ? :active : nil)
-    = link_to me_books_path(show: 'in_hand') do
+ul.nav.nav-tabs.nav-gray-lightest
+  li.nav-link.hidden-xs-down style="border: 0; font-weight: 500; padding-right: 10px;"
+    | 我的書架 －
+  li.nav-item role="presentation" class=(@show == 'in_hand' ? :active : nil)
+    = link_to me_books_path(show: 'in-hand'), class: "nav-link#{@show == 'in_hand' ? ' active' : nil}" do
       | 手上的書
-  li role="presentation" class=(@show == 'ready_for_release' ? :active : nil)
-    = link_to me_books_path(show: 'ready_for_release') do
-      | 待處理
-  li role="presentation" class=(@show == 'all' ? :active : nil)
-    = link_to me_books_path(show: 'all') do
+  li.nav-item role="presentation" class=(@show == 'ready_for_release' ? :active : nil)
+    = link_to me_books_path(show: 'ready-for-release'), class: "nav-link#{@show == 'ready_for_release' ? ' active' : nil}" do
+      | 待送出
+  li.nav-item role="presentation" class=(@show == 'all' ? :active : nil)
+    = link_to me_books_path(show: 'all'), class: "nav-link#{@show == 'all' ? ' active' : nil}" do
       | 看過的書

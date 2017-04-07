@@ -1,28 +1,32 @@
 # frozen_string_literal: true
 module BooksHelper
-  def book_cover(book, responsive: false, style: nil)
-    if book.cover_image.present?
-      content_tag(
-        :div,
-        class: ['book-cover', responsive && 'book-cover-responsive'],
-        style: style,
-        'data-width': book.cover_image.dimensions[0],
-        'data-height': book.cover_image.dimensions[1]
-      ) do
-        image_tag(book.cover_image&.image&.medium&.url)
+  def book_cover(
+    book,
+    show_placeholder: true,
+    responsive: false,
+    max_width: 296.0,
+    max_height: 420.0,
+    html_class: nil,
+    style: nil
+  )
+    book.build_cover_image if show_placeholder && book.cover_image.blank?
+    return if book.cover_image.blank?
+    dimensions = book.cover_image.dimensions(max_width: max_width, max_height: max_height)
+
+    content_tag(
+      :div,
+      class: ['book-cover', responsive && 'book-cover-responsive', html_class],
+      style: style,
+      'data-width': dimensions[0],
+      'data-height': dimensions[1]
+    ) do
+      if book.cover_image.image.present?
+        concat image_tag(book.cover_image&.image&.medium&.url)
+      else
+        concat content_tag(:div, book.name, class: 'title')
       end
-    else
-      content_tag(
-        :div,
-        class: ['book-cover', responsive && 'book-cover-responsive'],
-        style: style,
-        'data-width': 300,
-        'data-height': 420
-      ) do
-        content_tag(:div, class: 'title') do
-          book.name
-        end
-      end
+
+      yield(book) if block_given?
     end
   end
 end

@@ -6,9 +6,10 @@ class BookInfo::CoverImage < ApplicationRecord
 
   validate :immutable_isbn, on: :update
 
-  def dimensions
-    width_scale = 296.0 / width
-    height_scale = 420.0 / height
+  def dimensions(max_width: 296.0, max_height: 420.0)
+    return [max_width, max_height].map(&:to_i) unless image.present?
+    width_scale = max_width.to_f / width
+    height_scale = max_height.to_f / height
     min_scale = [width_scale, height_scale].min
     [width, height].map { |i| i * min_scale }.map(&:to_i)
   end

@@ -1,4 +1,4 @@
-.container
+.container style="margin-top: 16px;"
   h1 邀請
   = simple_form_for @borrowing_invitation_for_user, url: me_book_borrowing_invitations_path(book_id: @book.id), method: :post do |f|
     = f.input :user_id

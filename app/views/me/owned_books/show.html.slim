@@ -1,41 +1,55 @@
-.container
-  h2= @book.name
-  .row
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+.container style="margin-top: 16px;"
+  ol.breadcrumb
+    li.breadcrumb-item
+      = link_to '我的藏書', me_owned_books_path
+    li.breadcrumb-item= @book.name
+
+
+  .row style="padding-top: 8px; padding-bottom: 16px;"
     .col-md-8
-
-      h3 與書的故事
-      p= simple_format @book.story&.content
-
-      h3 書摘
-      p= simple_format @book.summary&.content
-
-      h3 目前旅程
-      - if @current_book_borrowing_trip.blank?
-        p 無進行中旅程。
-      - else
-        ul
-          li
-            = link_to me_owned_book_borrowing_trip_path(@current_book_borrowing_trip, owned_book_id: @book.id) do
-              = "狀態：#{@current_book_borrowing_trip.state}"
-
-      - if @ended_book_borrowing_trips.present?
-        h3 旅程足跡
-        ul
-          - @ended_book_borrowing_trips.each do |book_borrowing_trip|
-            li
-              = link_to me_owned_book_borrowing_trip_path(book_borrowing_trip, owned_book_id: @book.id) do
-                = l(book_borrowing_trip.created_at, format: :date)
-                | －
-                = l(book_borrowing_trip.ended_at, format: :date)
-                | ，
-                = book_borrowing_trip.borrowings.map { |borrowing| borrowing.borrower.name }.join('、')
-
-      => link_to '編輯', edit_me_owned_book_path(@book), class: 'btn btn-default'
-      - if @current_book_borrowing_trip.blank?
-        => link_to '建立旅程', new_me_owned_book_borrowing_trip_path(owned_book_id: @book.id), class: 'btn btn-default'
-
-    .col-md-4
-      .thumbnail
-        img src=@book.cover_image&.image&.medium&.url
-
-  = link_to '返回', :back
+      - if @book.current_borrowing_trip.present?
+        .card style="margin-bottom: 16px;"
+          .card-block
+            h4.card-title
+              | 目前旅程
+              =< state_badge(@book.current_borrowing_trip)
+            hr
+            | 下一步：
+            - case @book.current_borrowing_trip.state
+            - when 'pending'
+              = link_to '將書送出', me_books_path(show: 'ready-for-release'), class: 'btn btn-secondary'
+      .card style="margin-bottom: 16px;"
+        .card-block
+          h4.card-title 與書的故事
+          hr
+          - if @book.story&.content&.present?
+            = simple_format @book.story&.content
+          - else
+            .text-center.text-muted 目前還沒有寫故事
+      .card style="margin-bottom: 16px;"
+        .card-block
+          h4.card-title 旅程足跡
+          hr
+          - if @book.borrowing_trips.complete.present?
+            ul
+              - @book.borrowing_trips.complete.each do |book_borrowing_trip|
+                li
+                  = link_to me_owned_book_borrowing_trip_path(book_borrowing_trip, owned_book_id: @book.id) do
+                    = l(book_borrowing_trip.created_at, format: :date)
+                    | －
+                    = l(book_borrowing_trip.ended_at, format: :date)
+                    | ，
+                    = book_borrowing_trip.borrowings.map { |borrowing| borrowing.borrower.name }.join('、')
+          - else
+            .text-center.text-muted 目前還沒有旅程足跡
+    .col-md-4.text-center
+      = book_cover(@book, responsive: true, style: 'margin-bottom: 16px;', html_class: 'hidden-sm-down')
+      - if @book.current_borrowing_trip.blank?
+        => link_to '建立旅程', new_me_owned_book_borrowing_trip_path(owned_book_id: @book.id), class: 'btn btn-block btn-primary'
+      => link_to '編輯', edit_me_owned_book_path(@book), class: 'btn btn-block btn-secondary'

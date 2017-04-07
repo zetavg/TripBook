@@ -1,13 +1,35 @@
-.container
-  h1
-    | 書架
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+.container style="padding-top: 16px;"
+  h1.h2.hidden-sm-up style="padding-bottom: 4px;"
+    | 我的書架
   = render 'navtab'
   - if @books.present?
     .books-shelf
       - @books.each do |book|
         .books-shelf-item
-          = book_cover(book)
+          = book_cover(book) do
+            - if book.current_borrowing_trip.present?
+              .btn-toolbar
+                .btn-group
+                  - if book.current_holding.ready_for_release?
+                    - case book.current_borrowing_trip.next_step
+                    - when :lend
+                      = link_to '邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
+                    - when :pass_on
+                      = link_to '邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
+                    - when :return
+                      = link_to '歸還', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
+                  - else
   - else
-    .well.text-center
-      p
+    .card.text-center style="margin-top: 16px;"
+      .card-block
         | 這裡目前沒有任何書籍。
+        = link_to '瀏覽站上的書籍並登記借閱', book_infos_path
+        | 或
+        = link_to '新增藏書', new_me_owned_book_path
+        | 來放上新的書吧！

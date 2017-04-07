@@ -19,5 +19,6 @@ class Book::BorrowingInvitation::InvitationUser < ApplicationRecord
     end
   end
 
+  validates :user_id, :borrowing_invitation, presence: true
   validates :user, uniqueness: { scope: :borrowing_invitation_id }
 end

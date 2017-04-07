@@ -6,8 +6,6 @@ class Me::OwnedBooksController < ApplicationController
 
   def show
     find_book
-    @ended_book_borrowing_trips = Book::BorrowingTrip.for_book(@book).complete.order(created_at: :desc)
-    @current_book_borrowing_trip = Book::BorrowingTrip.for_book(@book).active.last
   end
 
   def new
@@ -27,6 +25,7 @@ class Me::OwnedBooksController < ApplicationController
   def edit
     find_book
     @book.build_story unless @book.story
+    @book.story.publish = true
     @book.build_summary unless @book.summary
   end
 
@@ -34,7 +33,7 @@ class Me::OwnedBooksController < ApplicationController
     find_book
 
     if @book.update_attributes(update_book_params)
-      redirect_to me_owned_books_path, flash: { success: "已更新藏書《#{@book.name}》。" }
+      redirect_to me_owned_book_path(@book), flash: { success: "已更新藏書《#{@book.name}》。" }
     else
       render :edit
     end

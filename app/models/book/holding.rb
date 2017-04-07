@@ -7,7 +7,7 @@ class Book::Holding < ApplicationRecord
   scope :active, -> { where(state: [:holding, :ready_for_release]) }
 
   belongs_to :user
-  belongs_to :book
+  belongs_to :book, touch: true
   belongs_to :previous_holding, optional: true, class_name: 'Book::Holding'
 
   has_one :story, class_name: 'Book::Story::HoldingView'

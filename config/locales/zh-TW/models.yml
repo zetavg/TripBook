@@ -1,0 +1,57 @@
+zh-TW:
+  models:
+    models:
+      book: 書籍
+      book_info: 書籍
+    attributes:
+      book:
+        isbn: ISBN
+        info: 書籍資料
+      book_info:
+        isbn: ISBN
+        name: 書名
+        cover_image: 封面
+        author: 作者
+        publisher: 出版社
+        publish_date: 出版日期
+        language: 語言
+      book/story:
+        content: 內容
+        privacy_level: 隱私層級
+        privacy_levels:
+          only_me: 限本人
+          only_by_invitation: 限受邀者
+          open_to_world: 公開
+        publish: 發佈
+      book/borrowing_trip:
+        book: 書籍
+        state: 狀態
+        states:
+          pending: 準備中
+          in_progress: 旅行中
+          prepare_to_end: 準備返回
+          ended: 已結束
+        max_single_durition_days: 最長單次借閱天數
+        max_single_durition_days_selections:
+          0: 不限制
+          7: 一週
+          14: 二週
+          30: 一個月
+        max_durition_days: 旅程最長天數
+        max_durition_days_selections:
+          0: 不限制
+          30: 一個月
+          60: 兩個月
+          90: 三個月
+          180: 半年
+          360: 一年
+        max_borrowings_count: 旅程最多借閱次數
+        borrowings_count: 借閱次數
+        ended_at: 結束時間
+        created_at: 開始時間
+        updated_at: 更新時間
+      book/borrowing_invitation:
+      book/borrowing_invitation/invitation_user:
+        user: 被邀請者
+        user_id: 被邀請者
+        message: 私人訊息
