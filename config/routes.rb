@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  root 'pages#index'
+  # root 'pages#index'
+  root 'book_infos#index'
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',

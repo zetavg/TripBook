@@ -22,5 +22,8 @@
       "description": "A secret key.",
       "generator": "secret"
     }
+  },
+  "scripts": {
+    "postdeploy": "bin/rake staging:bootstrap"
   }
 }

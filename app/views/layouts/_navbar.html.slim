@@ -16,14 +16,16 @@ nav.navbar.navbar-default.navbar-toggleable-md class="#{yield :navbar_class}"
           li.nav-item.dropdown
             a#user-nav.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#"
               = current_user.name
-            .dropdown-menu aria-labelledby="user-nav"
+            .dropdown-menu.dropdown-menu-right aria-labelledby="user-nav"
               = link_to me_invitations_path, class: 'dropdown-item' do
-                | 邀請
+                | 收到的邀請
                 - if current_user.recieved_book_borrowing_invitations.avaliable.any?
                   | &nbsp;
                   span.badge.badge-pill.badge-success style="vertical-align: text-top;"
                     = current_user.recieved_book_borrowing_invitations.avaliable.count
+              .dropdown-divider
               = link_to '我的藏書', me_owned_books_path, class: 'dropdown-item'
-              = link_to 'Sign out', destroy_user_session_path, :method => :delete, class: 'dropdown-item'
+              .dropdown-divider
+              = link_to '登出', destroy_user_session_path, :method => :delete, class: 'dropdown-item'
         - else
           li.nav-item= link_to 'Sign in', new_user_session_path, class: 'nav-link'
