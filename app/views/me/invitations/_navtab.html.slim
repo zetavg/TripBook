@@ -1,0 +1,19 @@
+ul.nav.nav-tabs.nav-gray-lightest
+  li.nav-link.hidden-xs-down style="border: 0; font-weight: 500; padding-right: 10px;"
+    | 我的邀請 －
+  li.nav-item role="presentation" class=(@show == 'in_hand' ? :active : nil)
+    = link_to me_invitations_path(show: 'pending'), class: "nav-link#{@show == 'pending' ? ' active' : nil}" do
+      | 待回覆
+      - if current_user.recieved_book_borrowing_invitations.avaliable.count > 0
+        | &nbsp;
+        span.badge.badge-pill.badge-success style="vertical-align: middle;"
+          = current_user.recieved_book_borrowing_invitations.avaliable.count
+  li.nav-item role="presentation" class=(@show == 'accepted' ? :active : nil)
+    = link_to me_invitations_path(show: 'accepted'), class: "nav-link#{@show == 'accepted' ? ' active' : nil}" do
+      | 已接受
+  li.nav-item role="presentation" class=(@show == 'rejected' ? :active : nil)
+    = link_to me_invitations_path(show: 'rejected'), class: "nav-link#{@show == 'rejected' ? ' active' : nil}" do
+      | 已拒絕
+  li.nav-item role="presentation" class=(@show == 'ended' ? :active : nil)
+    = link_to me_invitations_path(show: 'ended'), class: "nav-link#{@show == 'ended' ? ' active' : nil}" do
+      | 已過期

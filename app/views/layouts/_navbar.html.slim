@@ -21,7 +21,7 @@ nav.navbar.navbar-default.navbar-toggleable-md class="#{yield :navbar_class}"
                 | 邀請
                 - if current_user.recieved_book_borrowing_invitations.avaliable.any?
                   | &nbsp;
-                  span.badge
+                  span.badge.badge-pill.badge-success style="vertical-align: text-top;"
                     = current_user.recieved_book_borrowing_invitations.avaliable.count
               = link_to '我的藏書', me_owned_books_path, class: 'dropdown-item'
               = link_to 'Sign out', destroy_user_session_path, :method => :delete, class: 'dropdown-item'

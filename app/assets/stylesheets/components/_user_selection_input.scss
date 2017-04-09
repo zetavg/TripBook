@@ -1,0 +1,19 @@
+.user-selection-input {
+
+  &-select-item {
+
+    .image {
+      float: left;
+      height: 26px;
+      margin-right: 4px;
+    }
+
+    .img {
+      width: 22px;
+      height: 22px;
+      margin: 2px;
+      background-size: contain;
+      background-position: center;
+    }
+  }
+}

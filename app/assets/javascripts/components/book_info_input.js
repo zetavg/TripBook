@@ -146,8 +146,6 @@ export default class BookInfoInput {
         return true
       })
     }
-
-    window.$isbnSelect2 = this.$isbnSelect2
   }
 
   initInfoForm() {

@@ -13,4 +13,9 @@ class User < ApplicationRecord
   has_one :facebook_account
 
   validates :name, presence: true
+  validates :username, uniqueness: true
+
+  def username
+    self[:username] || name
+  end
 end

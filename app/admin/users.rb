@@ -24,6 +24,9 @@ ActiveAdmin.register User do
     column :name do |user|
       link_to user.name, admin_user_path(user)
     end
+    column :username do |user|
+      link_to user.username, admin_user_path(user)
+    end
     column :email
     column :created_at
     column :actions do |user|

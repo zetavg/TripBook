@@ -1,4 +1,19 @@
-.container
-  p 已發送邀請給 #{@borrowing_invitation.invitees.first.name}。
-  => link_to '撤銷邀請', me_book_borrowing_invitation_cancellation_path(book_id: @book.id, borrowing_invitation_id: @borrowing_invitation.invitation_users.first.id), method: :post, class: 'btn btn-danger'
-  = link_to '返回', :back
+.container style="margin-top: 16px;"
+  .row.justify-content-md-center
+    .col-md-8
+      .card
+        .card-block
+          h1.h4.card-title 送出的邀請
+          h2.h6.card-subtitle 《#{@book.name}》
+        ul.list-group.list-group-flush
+          - @borrowing_invitation.invitation_users.each do |invitation_user|
+            li.list-group-item
+              = invitation_user.user&.username
+              - if invitation_user.message.present?
+                = "，訊息：「#{invitation_user.message}」"
+              - else
+                | &nbsp;
+              = link_to '撤銷邀請', me_book_borrowing_invitation_cancellation_path(book_id: @book.id, borrowing_invitation_id: @borrowing_invitation.invitation_users.first.id), method: :post, class: 'btn btn-danger btn-sm', data: { confirm: '撤銷邀請之後，您發送給對方的邀請訊息也會被刪除，確定要撤銷邀請嗎？' }
+          li.list-group-item
+            .text-center style="width: 100%;"
+              = link_to '再多邀請一個人', new_me_book_borrowing_invitation_path(book_id: @book.id)

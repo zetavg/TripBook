@@ -20,5 +20,5 @@ class Book::BorrowingInvitation::InvitationUser < ApplicationRecord
   end
 
   validates :user_id, :borrowing_invitation, presence: true
-  validates :user, uniqueness: { scope: :borrowing_invitation_id }
+  validates :user_id, uniqueness: { scope: :borrowing_invitation_id, message: '已重複邀請' }
 end

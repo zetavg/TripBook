@@ -29,5 +29,9 @@ class User
 
       facebook_account
     end
+
+    def url
+      "https://www.facebook.com/#{facebook_id}"
+    end
   end
 end

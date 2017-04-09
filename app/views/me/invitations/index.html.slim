@@ -1,23 +1,50 @@
-.container
-  h1 收到的邀請
-  table.table.table-striped
-    thead
-      tr
-        th 書籍
-        th 邀請者
-        th 書的擁有者
-        th 訊息
-        th 邀請者與書的故事
-        th 動作
-    tbody
-      - @invitations.each do |invitation|
-        tr
-          td= invitation.book.name
-          td= invitation.inviter.name
-          td= invitation.book.owner.name
-          td= invitation.message
-          td= invitation.story&.content_for(:invitee)
-          td
-            = link_to '接受', me_invitation_acception_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-success'
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+.container style="padding-top: 16px;"
+  h1.h2.hidden-sm-up style="padding-bottom: 4px;"
+    | 我的邀請
+  = render 'navtab'
+  - if @invitations.present?
+    - @invitations.each do |invitation|
+      .card style="margin: 16px 0;"
+        .card-block
+          = book_cover invitation.book, max_width: 80, max_height: 100, style: 'float: right;', html_class: 'hidden-sm-down'
+          h2.h4.card-title= invitation.book.name
+          .h6.card-subtitle
+            | 來自 #{invitation.inviter.username}
+            - if invitation.book.owner != invitation.inviter
+              | ，書籍為 #{invitation.book.owner.username} 所有
+          p.card-text
+          p.card-text
+            = link_to '查看書籍的更多資料', invitation.book.info, target: '_blank'
+        ul.list-group.list-group-flush
+          - if invitation.story&.content_for(:invitee).present?
+            li.list-group-item
+              h3.h5 #{invitation.inviter.name} 與書的故事
+              div(style="width: 100%;")= simple_format invitation.story&.content_for(:invitee)
+          - if invitation.message.present?
+            li.list-group-item
+              h3.h5 #{invitation.inviter.name} 給你的訊息
+              div(style="width: 100%;")= simple_format invitation.message
+        - if invitation.avaliable?
+          .card-block
+            = link_to '接受', me_invitation_acception_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'card-link text-success', data: { confirm: '確定要接受此邀請嗎？接受之後，系統將會把您的聯絡資訊提供給對方。' }
             | &nbsp;
-            = link_to '謝絕', me_invitation_rejection_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+            = link_to '謝絕', me_invitation_rejection_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'card-link text-danger', data: { confirm: '確定要謝絕此邀請嗎？' }
+        - elsif invitation.accepted?
+          .card-block
+            h3.h5 #{invitation.inviter.name} 的聯絡資訊
+            ul
+              li= link_to 'Facebook', invitation.inviter.facebook_account&.url, target: '_blank'
+              li Email: #{invitation.inviter.email}
+
+  - else
+    .card.text-center style="margin-top: 16px;"
+      .card-block
+        | 這裡還沒有邀請喔。
+        = link_to '瀏覽站上的書籍並登記借閱', book_infos_path
+        | 來讓其他人邀請你吧！

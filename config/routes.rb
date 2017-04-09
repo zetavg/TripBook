@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
+    resources :users, path: 'users', only: [:index]
     resources :book_infos, path: 'book-infos', only: [:index]
     resources :book_info_cover_images, path: 'book-info-cover-images', only: [:create]
   end
