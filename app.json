@@ -11,8 +11,12 @@
     "heroku-postgresql:hobby-dev"
   ],
   "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
     "HOST_URL": {
-      "description": "The URL of the host."
+      "description": "The URL of the host, not required if `HEROKU_APP_NAME` is set.",
+      "required": false
     },
     "SECRET_KEY": {
       "description": "A secret key.",
@@ -21,6 +25,21 @@
     "PEPPER": {
       "description": "A secret key.",
       "generator": "secret"
+    },
+    "AWS_S3_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_S3_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "AWS_S3_REGION": {
+      "required": true
+    },
+    "AWS_S3_BUCKET": {
+      "required": true
+    },
+    "AWS_S3_ASSET_HOST": {
+      "required": false
     }
   },
   "scripts": {
