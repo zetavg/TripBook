@@ -1,7 +1,7 @@
 .container
   h1 編輯旅程
   = simple_form_for @book_borrowing_trip, url: me_owned_book_borrowing_trip_path(@book_borrowing_trip, owned_book_id: @book.id) do |f|
-    = f.input :max_durition_days
-    = f.input :max_single_durition_days
+    = f.input :max_durition_days, collection: I18n.t(:max_durition_days_selections, scope: [:models, :attributes, :'book/borrowing_trip']).invert, include_blank: false, include_hidden: false
+    = f.input :max_single_durition_days, collection: I18n.t(:max_single_durition_days_selections, scope: [:models, :attributes, :'book/borrowing_trip']).invert, include_blank: false, include_hidden: false
     = f.input :max_borrowings_count
     = f.submit '更新', class: 'btn btn-success'

@@ -20,10 +20,16 @@
               | 目前旅程
               =< state_badge(@book.current_borrowing_trip)
             hr
-            | 下一步：
             - case @book.current_borrowing_trip.state
             - when 'pending'
+              | 下一步：
               = link_to '將書送出', me_books_path(show: 'ready-for-release'), class: 'btn btn-secondary'
+            - else
+              - if @book.current_borrowing_trip.may_prepare_to_end?
+                => link_to '召回', me_owned_book_borrowing_trip_cancellation_path(borrowing_trip_id: @book.current_borrowing_trip.id, owned_book_id: @book.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-secondary'
+              - if @book.current_borrowing_trip.active?
+                => link_to '確認已返還並結束旅程', me_owned_book_borrowing_trip_returnation_path(borrowing_trip_id: @book.current_borrowing_trip.id, owned_book_id: @book.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-secondary'
+                => link_to '編輯', edit_me_owned_book_borrowing_trip_path(@book.current_borrowing_trip, owned_book_id: @book.id), class: 'btn btn-secondary'
       .card style="margin-bottom: 16px;"
         .card-block
           h4.card-title 與書的故事
