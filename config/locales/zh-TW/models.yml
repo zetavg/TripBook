@@ -55,3 +55,8 @@ zh-TW:
         user: 被邀請者
         user_id: 被邀請者
         message: 私人訊息
+      book/reading_completion:
+        user: 使用者
+        book: 書籍
+        story_content: 與書的故事
+        story_privacy_level: 與書的故事－隱私級別

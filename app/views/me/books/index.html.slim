@@ -13,18 +13,20 @@
       - @books.each do |book|
         .books-shelf-item
           = book_cover(book) do
-            - if book.current_borrowing_trip.present?
-              .btn-toolbar
-                .btn-group
-                  - if book.current_holding.ready_for_release?
-                    - case book.current_borrowing_trip.next_step
-                    - when :lend
-                      = link_to '邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
-                    - when :pass_on
-                      = link_to '邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
-                    - when :return
-                      = link_to '歸還', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
-                  - else
+            - if book.current_holding.user == current_user
+              - if book.current_borrowing_trip.present?
+                .btn-toolbar
+                  .btn-group
+                    - if book.current_holding.ready_for_release?
+                      - case book.current_borrowing_trip.next_step
+                      - when :lend
+                        = link_to '邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
+                      - when :pass_on
+                        = link_to '邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
+                      - when :return
+                        = link_to '歸還', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
+                    - else
+                        = link_to '我已看完', new_me_book_reading_completion_path(book_id: book.id), class: 'btn btn-sm'
   - else
     .card.text-center style="margin-top: 16px;"
       .card-block

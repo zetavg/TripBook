@@ -1,0 +1,13 @@
+.container style="margin-top: 16px;"
+  .row.justify-content-md-center
+    .col-lg-4.col-md-8
+      .card
+        .card-block
+          h1.h4.card-title 讀完了！
+          h2.h6.card-subtitle 《#{@book.name}》
+          p
+          = simple_form_for @reading_completion, url: me_book_reading_completion_path(book_id: @book.id), method: :post do |f|
+            = f.input :story_content, as: :text, input_html: { style: 'height: 200px;' }
+            = f.input :story_privacy_level, collection: Book::Story.human_privacy_levels, include_blank: false, include_hidden: false
+
+            = f.submit '確認', class: 'btn btn-success'

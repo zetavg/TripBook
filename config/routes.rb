@@ -53,7 +53,7 @@ Rails.application.routes.draw do
             resource :cancellation, only: [:create], module: :borrowing_invitations
           end
 
-          resource :reading_completion, path: 'reading-completion', only: [:create]
+          resource :reading_completion, path: 'reading-completion', only: [:new, :create]
         end
       end
 
