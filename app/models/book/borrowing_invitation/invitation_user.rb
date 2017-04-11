@@ -2,6 +2,8 @@
 class Book::BorrowingInvitation::InvitationUser < ApplicationRecord
   include StateMachine
 
+  scope :not_accepted, -> { where.not(state: :accepted) }
+
   belongs_to :borrowing_invitation
   belongs_to :user
 

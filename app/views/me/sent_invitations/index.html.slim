@@ -1,0 +1,61 @@
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+.container style="padding-top: 16px;"
+  h1.h2.hidden-sm-up style="padding-bottom: 4px;"
+    | 送出的邀請
+  = render 'navtab'
+  - if @borrowing_invitations.present?
+    - @borrowing_invitations.each do |invitation|
+      .card style="margin: 16px 0;"
+        .card-block
+          = book_cover invitation.book, max_width: 80, max_height: 100, style: 'float: right;', html_class: 'hidden-sm-down'
+          h2.h4.card-title= invitation.book.name
+          .h6.card-subtitle
+            | 來自 #{invitation.inviter.username}
+            - if invitation.book.owner != invitation.inviter
+              | ，書籍為 #{invitation.book.owner.username} 所有
+          p.card-text
+          p.card-text
+            = link_to '查看書籍的更多資料', invitation.book.info, target: '_blank'
+        - if invitation.avaliable?
+          ul.list-group.list-group-flush
+            - invitation.invitation_users.each do |invitation_user|
+              li.list-group-item
+                = invitation_user.user&.username
+                - if invitation_user.message.present?
+                  = "，訊息：「#{invitation_user.message}」"
+                - else
+                  | &nbsp;
+                = link_to '撤銷邀請', me_sent_invitation_invitation_user_cancellation_path(sent_invitation_id: invitation.id, invitation_user_id: invitation_user.id), method: :post, class: 'btn btn-danger btn-sm', data: { confirm: '撤銷邀請之後，您發送給對方的邀請訊息也會被刪除，確定要撤銷邀請嗎？' }
+            li.list-group-item
+              .text-center style="width: 100%;"
+                = link_to '再多邀請一個人', new_me_sent_invitation_invitation_user_path(sent_invitation_id: invitation.id)
+        - else
+          - if invitation.not_accepted_invitation_users.any?
+            .card-block
+              p 其他被邀請的人：
+              ul
+                - invitation.not_accepted_invitation_users.each do |invitation_user|
+                  li
+                    = invitation_user.user&.username
+                    - if invitation_user.message.present?
+                      = "，訊息：「#{invitation_user.message}」"
+          .card-footer
+            p
+              | 已由 #{invitation.accepted_invitee.username} 接受
+              - if invitation.accepted_invitation_user.message.present?
+                | ，您給他的訊息是：「#{invitation.accepted_invitation_user.message}」
+            p #{invitation.accepted_invitee.username} 的聯絡資訊：
+            ul
+              li 本名：#{invitation.accepted_invitee.name}
+              li= link_to 'Facebook', invitation.accepted_invitee.facebook_account&.url, target: '_blank'
+              li Email: #{invitation.accepted_invitee.email}
+
+  - else
+    .card.text-center style="margin-top: 16px;"
+      .card-block
+        | 這裡還沒有邀請喔。

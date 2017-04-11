@@ -1,0 +1,13 @@
+ul.nav.nav-tabs.nav-gray-lightest
+  li.nav-link.hidden-xs-down style="border: 0; font-weight: 500; padding-right: 10px;"
+    | 送出的邀請 －
+  li.nav-item role="presentation" class=(@show == 'pending' ? :active : nil)
+    = link_to me_sent_invitations_path(show: 'pending'), class: "nav-link#{@show == 'pending' ? ' active' : nil}" do
+      | 等待中
+      - if current_user.sent_book_borrowing_invitations.avaliable.count > 0
+        | &nbsp;
+        span.badge.badge-pill.badge-success style="vertical-align: middle;"
+          = current_user.sent_book_borrowing_invitations.avaliable.count
+  li.nav-item role="presentation" class=(@show == 'ended' ? :active : nil)
+    = link_to me_sent_invitations_path(show: 'ended'), class: "nav-link#{@show == 'ended' ? ' active' : nil}" do
+      | 已完成

@@ -37,6 +37,15 @@ Rails.application.routes.draw do
           resource :rejection, only: [:create]
         end
       end
+      resources :sent_invitations, only: [:index], path: 'sent-invitations' do
+        scope module: :sent_invitations do
+          resources :invitation_users, only: [:new, :create] do
+            scope module: :invitation_users do
+              resource :cancellation, only: [:create]
+            end
+          end
+        end
+      end
 
       resources :books do
         scope module: :books do

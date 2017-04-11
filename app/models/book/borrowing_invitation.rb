@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 class Book::BorrowingInvitation < ApplicationRecord
-  scope :avaliable, -> { joins(:holding).where('holdings.state': :ready_for_release) }
+  scope :avaliable, -> { joins(:holding).where('book_holdings.state': :ready_for_release) }
+  scope :ended, -> { joins(:holding).where('book_holdings.state': :released) }
 
   belongs_to :holding
+  has_one :inviter, through: :holding, source: :user
+  has_one :book, through: :holding, source: :book
   belongs_to :borrowing, optional: true
   has_many :invitation_users
   has_many :invitees, through: :invitation_users, source: :user
+  has_one :accepted_invitation_user, -> { accepted }, class_name: 'InvitationUser'
+  has_one :accepted_invitee, through: :accepted_invitation_user, source: :user
+  has_many :not_accepted_invitation_users, -> { not_accepted }, class_name: 'InvitationUser'
+  has_many :not_accepted_invitees, through: :not_accepted_invitation_users, source: :user
 
   delegate :state, :story, to: :holding, prefix: false
   accepts_nested_attributes_for :invitation_users, allow_destroy: true
@@ -15,6 +22,18 @@ class Book::BorrowingInvitation < ApplicationRecord
 
   def borrowing_trip
     holding.book.current_borrowing_trip
+  end
+
+  def avaliable?
+    state == 'ready_for_release'
+  end
+
+  def accepted?
+    state == 'released'
+  end
+
+  def ended?
+    state == 'released'
   end
 
   private

@@ -1,12 +1,12 @@
 .container style="margin-top: 16px;"
   .row.justify-content-md-center
-    .col-md-4
+    .col-lg-4.col-md-8
       .card
         .card-block
           h1.h4.card-title 送出新的邀請
           h2.h6.card-subtitle 《#{@book.name}》
           p
           = simple_form_for @borrowing_invitation_for_user, url: me_book_borrowing_invitations_path(book_id: @book.id), method: :post do |f|
-            = f.input :user_id, as: :user_selection, preload_user_ids: [1, 2]
+            = f.input :user_id, as: :user_selection, preload_user_ids: @book.info.borrow_demands.active.map(&:user_id)
             = f.input :message
             = f.submit '發送', class: 'btn btn-success'
