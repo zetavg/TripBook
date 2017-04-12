@@ -2,31 +2,31 @@
 class Book::ReadingCompletion < ActiveType::Object
   nests_one :user, scope: proc { User.all }
   nests_one :book, scope: proc { Book.all }
+  nests_one :story, scope: proc { BookStory.all }
 
-  attribute :story_content, :string
-  attribute :story_privacy_level, :string
+  delegate :content,  :privacy_level,
+           :content=, :privacy_level=,
+           to: :story, prefix: true
 
   validates :user, :book, presence: true
 
+  after_initialize :find_story
+  before_validation :find_story
   before_save :update_user_book_story
   before_save :mark_book_holding_to_ready_for_realease
 
   private
 
-  def validate_invitation_invites_user
-    return if invitation.invitees.include?(user)
-    errors.add(:invitation, "illegal")
-    errors.add(:user, "illegal")
+  def find_story
+    return unless book&.isbn.present?
+    self.story ||= user&.book_stories.for_isbn(book.isbn).first_or_create!
   end
 
   def update_user_book_story
-    @book_story = user.book_stories.for_isbn(book.isbn).first_or_create!
-    @book_story.assign_attributes(
-      publish: true,
-      content: story_content,
-      privacy_level: story_privacy_level
+    story.assign_attributes(
+      publish: true
     )
-    @book_story.save!
+    story.save!
   end
 
   def mark_book_holding_to_ready_for_realease

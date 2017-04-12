@@ -2,7 +2,7 @@
 class Me::SentInvitationsController < ApplicationController
   def index
     @show = (params[:show] || 'pending').underscore
-    @borrowing_invitations = borrowing_invitations_scope(@show)
+    @borrowing_invitations = borrowing_invitations_scope(@show).order(updated_at: :desc)
   end
 
   private

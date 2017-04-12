@@ -35,14 +35,12 @@ class Me::BorrowingTripsController < ApplicationController
     find_book_borrowing_trip
 
     if @book_borrowing_trip.end?
-      redirect_to me_owned_book_borrowing_trip_path(@book_borrowing_trip, owned_book_id: @book.id),
-                  flash: { success: "無法編輯已結束的旅程" }
+      redirect_to me_owned_book_path(@book), flash: { success: "無法編輯已結束的旅程" }
       return
     end
 
     if @book_borrowing_trip.update_attributes(book_borrowing_trip_params)
-      redirect_to me_owned_book_borrowing_trip_path(@book_borrowing_trip, owned_book_id: @book.id),
-                  flash: { success: "已更新藏書《#{@book.name}》的旅程" }
+      redirect_to me_owned_book_path(@book), flash: { success: "已更新藏書《#{@book.name}》的旅程" }
     else
       render :new
     end

@@ -20,10 +20,17 @@
               | 目前旅程
               =< state_badge(@book.current_borrowing_trip)
             hr
+            p
+              = book_borrowing_trip_brief_info(@book.current_borrowing_trip)
+              - if @book.current_borrowing_trip.pending? || @book.current_borrowing_trip.in_progress?
+                | &nbsp;(
+                = link_to '編輯規則', edit_me_owned_book_borrowing_trip_path(@book.current_borrowing_trip.id, owned_book_id: @book.id)
+                | )
+
             - case @book.current_borrowing_trip.state
             - when 'pending'
               | 下一步：
-              = link_to '將書送出', me_books_path(show: 'ready-for-release'), class: 'btn btn-secondary'
+              = link_to '邀請第一位借書者', me_book_borrowing_invitations_path(book_id: @book.current_borrowing_trip.book.id), class: 'btn btn-secondary'
             - else
               - if @book.current_borrowing_trip.may_prepare_to_end?
                 => link_to '召回', me_owned_book_borrowing_trip_cancellation_path(borrowing_trip_id: @book.current_borrowing_trip.id, owned_book_id: @book.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-secondary'

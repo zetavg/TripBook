@@ -6,7 +6,7 @@ ActiveAdmin.register User do
 
   member_action :go_sign_in, method: :get do
     sign_in(:user, resource)
-    redirect_to root_path
+    redirect_to root_path, flash: { info: "用 #{resource.email} 的身分登入成功" }
   end
 
   scope :all, default: true
@@ -50,6 +50,10 @@ ActiveAdmin.register User do
         link_to 'Sign in as this user', go_sign_in_admin_user_path(user), target: :_blank
       end
     end
+  end
+
+  action_item :sign_in, only: :show do
+    link_to "Sign in", go_sign_in_admin_user_path(user), target: :_blank
   end
 
   form do |f|
