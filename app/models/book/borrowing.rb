@@ -17,6 +17,7 @@ class Book::Borrowing < ApplicationRecord
 
   after_create :set_borrowing_trip_to_in_progress_if_needed
   after_create :set_previous_borrowing_to_end
+  after_create :mark_borrow_demand_as_fulfilled
 
   def borrower
     holding&.user
@@ -49,5 +50,9 @@ class Book::Borrowing < ApplicationRecord
 
   def set_previous_borrowing_to_end
     borrowing_trip.borrowings.where.not(id: id).find_each(&:end!)
+  end
+
+  def mark_borrow_demand_as_fulfilled
+    borrower.book_borrow_demands.where(book_isbn: book.isbn).find_each(&:fulfill!)
   end
 end
