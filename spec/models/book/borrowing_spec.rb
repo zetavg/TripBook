@@ -39,6 +39,14 @@ RSpec.describe Book::Borrowing, type: :model do
           expect(previous_borrowing.ended_at).to be_present
         end
       end
+
+      context "has borrow demand" do
+        let!(:borrow_demand) { create(:book_borrow_demand, user: borrower, book_isbn: book.isbn) }
+
+        it "marks the borrow demand as fulfilled" do
+          expect { subject }.to change { borrow_demand.reload.state }.from('pending').to('fulfilled')
+        end
+      end
     end
   end
 
