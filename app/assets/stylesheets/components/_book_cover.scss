@@ -54,6 +54,12 @@
       &:hover {
         background-color: rgba($gray-light, .5);
       }
+
+      &-primary {
+        @include button-outline-variant(lighten($yellow, .2), lighten($yellow, .2));
+        &:hover { background-color: rgba(lighten($yellow, .2), .5); }
+        // @include button-variant(rgba($black, .5), $gray-lighter, $gray-lighter);
+      }
     }
   }
 
