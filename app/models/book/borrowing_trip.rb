@@ -11,7 +11,7 @@ class Book::BorrowingTrip < ApplicationRecord
   scope :for_book, ->(book) { where(book: book) }
 
   belongs_to :book
-  has_many :borrowings
+  has_many :borrowings, -> { order(created_at: :asc) }
   has_one :current_borrowing, -> { active }, class_name: 'Borrowing'
 
   # TODO: scope: :state may not be safe because we have multiple active states

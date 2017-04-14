@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
-  FALSE_VALUES = [false, 0, '0', 'f', 'F', 'false', 'FALSE', 'off', 'OFF', ''].freeze
+  include ParseBoolean
 
   class << self
     def human_enum_name(enum_name, enum_value)
@@ -38,10 +38,6 @@ class ApplicationRecord < ActiveRecord::Base
     def respond_to_missing?(method, *args)
       method.match(/^human_(.+)$/) || super
     end
-  end
-
-  def parse_boolean(value)
-    !FALSE_VALUES.include?(value)
   end
 
   def method_missing(method, *args)

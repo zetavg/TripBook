@@ -1,8 +1,11 @@
 # frozen_string_literal: true
-class Book::ReadingCompletion < ActiveType::Object
+class Book::Reading < ActiveType::Object
+  include ParseBoolean
+
   nests_one :user, scope: proc { User.all }
   nests_one :book, scope: proc { Book.all }
   nests_one :story, scope: proc { BookStory.all }
+  attribute :ready_for_release, :boolean
 
   delegate :content,  :privacy_level,
            :content=, :privacy_level=,
@@ -30,6 +33,7 @@ class Book::ReadingCompletion < ActiveType::Object
   end
 
   def mark_book_holding_to_ready_for_realease
+    return unless parse_boolean(ready_for_release)
     @book_holding = book.holdings.where(user: user).holding.last
     return unless @book_holding.present?
     @book_holding.ready_for_release!
