@@ -17,19 +17,25 @@
           th 書名
           th 作者
           th 目前持有者
+          th
       tbody
         - @books.each do |book|
           tr style="height: 108px;"
             td style="text-align: center; vertical-align: middle;"
-              = book_cover book, show_placeholder: false, max_width: 80, max_height: 80, style: 'margin: auto;'
+              = link_to me_owned_book_path(book) do
+                = book_cover book, show_placeholder: false, max_width: 80, max_height: 80, style: 'margin: auto;'
             td style="vertical-align: middle;"
-              = link_to book.name, me_owned_book_path(book)
-              br
-              small.text-muted= book.isbn
+              = link_to me_owned_book_path(book) do
+                = book.name
+                br
+                small.text-muted= book.isbn
             td style="vertical-align: middle;"
               = book.author
             td style="vertical-align: middle;"
               = book.holder&.name
+            td style="vertical-align: middle;"
+              - if book.current_borrowing_trip.blank?
+                = link_to '建立旅程', new_me_owned_book_borrowing_trip_path(owned_book_id: book.id), class: 'btn btn-secondary'
 
   - else
     .card.text-center
