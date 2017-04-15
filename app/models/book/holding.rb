@@ -4,7 +4,9 @@ class Book::Holding < ApplicationRecord
   include Trackable
   include BorrowingRelations
 
-  scope :active, -> { where(state: [:holding, :ready_for_release]) }
+  ACTIVE_STATES = %w(holding ready_for_release).freeze
+
+  scope :active, -> { where(state: ACTIVE_STATES) }
 
   belongs_to :user
   belongs_to :book, touch: true
@@ -50,6 +52,10 @@ class Book::Holding < ApplicationRecord
   before_validation :set_previous_holding, on: :create
   after_create :release_old_holdings
   after_destroy :rehold_previous_holding
+
+  def active?
+    ACTIVE_STATES.include?(state)
+  end
 
   private
 

@@ -8,14 +8,12 @@ class Book::BorrowingTrip < ApplicationRecord
 
   scope :active, -> { where(state: ACTIVE_STATES) }
   scope :complete, -> { where(state: :ended).where('borrowings_count > 0') }
-  scope :for_book, ->(book) { where(book: book) }
+  scope :for_book, ->(book) { joins(:holding).where('book_holdings.book_id = ?', book.try(:id) || book) }
 
-  belongs_to :book
+  belongs_to :holding, class_name: 'Holding'
+  has_one :book, through: :holding
   has_many :borrowings, -> { order(created_at: :asc) }
   has_one :current_borrowing, -> { active }, class_name: 'Borrowing'
-
-  # TODO: scope: :state may not be safe because we have multiple active states
-  validates :book, uniqueness: { scope: :state }, unless: :end?
 
   state_machine column: :state do
     state :pending, initial: true
@@ -30,7 +28,7 @@ class Book::BorrowingTrip < ApplicationRecord
     event :end do
       transitions from: [:pending, :in_progress, :prepare_to_end], to: :ended do
         guard do
-          book.holder == book.owner
+          book.holder == holding.user
         end
       end
 
@@ -49,7 +47,9 @@ class Book::BorrowingTrip < ApplicationRecord
     end
   end
 
-  validate :validate_book_hold_by_owner, on: :create
+  validates :holding, presence: true
+  validate :validate_holding_active, on: :create
+  validate :validate_unique_active_for_book, unless: :end?
 
   after_initialize :nilify_blanks
   after_initialize :prepare_to_end_if_needed
@@ -65,6 +65,10 @@ class Book::BorrowingTrip < ApplicationRecord
 
   def end?
     END_STATES.include?(state)
+  end
+
+  def book=(book)
+    self.holding = book.current_holding
   end
 
   def max_single_durition
@@ -114,6 +118,16 @@ class Book::BorrowingTrip < ApplicationRecord
   end
 
   private
+
+  def validate_holding_active
+    return if holding&.active?
+    errors.add(:holding, :not_active)
+  end
+
+  def validate_unique_active_for_book
+    return unless book&.borrowing_trips&.active&.where&.not(id: id)&.any?
+    errors.add(:book, :already_has_active_borrowing_trip)
+  end
 
   def nilify_blanks
     self.max_single_durition_days = nil if max_single_durition_days&.zero?

@@ -11,12 +11,13 @@ class Me::BorrowingTripsController < ApplicationController
 
   def new
     find_book
-    @book_borrowing_trip = book_borrowing_trip_scope.build
+    build_book_borrowing_trip
   end
 
   def create
     find_book
-    @book_borrowing_trip = book_borrowing_trip_scope.build(book_borrowing_trip_params)
+    build_book_borrowing_trip
+    @book_borrowing_trip.assign_attributes(book_borrowing_trip_params)
 
     if @book_borrowing_trip.save
       redirect_to me_owned_book_path(@book), flash: { success: "已為藏書《#{@book.name}》預備新的旅程" }
@@ -57,11 +58,15 @@ class Me::BorrowingTripsController < ApplicationController
   end
 
   def book_borrowing_trip_scope
-    Book::BorrowingTrip.where(book: @book || find_book)
+    Book::BorrowingTrip.for_book(@book || find_book)
   end
 
   def find_book_borrowing_trip
     @book_borrowing_trip = book_borrowing_trip_scope.find(params[:id] || params[:borrowing_trip_id])
+  end
+
+  def build_book_borrowing_trip
+    @book_borrowing_trip = book_borrowing_trip_scope.build(book: @book || find_book)
   end
 
   def book_borrowing_trip_params

@@ -6,7 +6,10 @@ class Book::BorrowingInvitation < ApplicationRecord
   belongs_to :holding
   has_one :inviter, through: :holding, source: :user
   has_one :book, through: :holding, source: :book
+  has_one :holding_borrowing, through: :holding, source: :borrowing
+  has_one :holding_borrowing_trip, through: :holding, source: :borrowing_trip
   belongs_to :borrowing, optional: true
+  has_one :borrowing_trip, through: :holding_borrowing
   has_many :invitation_users
   has_many :invitees, through: :invitation_users, source: :user
   has_one :accepted_invitation_user, -> { accepted }, class_name: 'InvitationUser'
@@ -21,7 +24,7 @@ class Book::BorrowingInvitation < ApplicationRecord
   validate :validate_state_is_ready_for_release, on: :create
 
   def borrowing_trip
-    holding.book.current_borrowing_trip
+    super || holding_borrowing_trip
   end
 
   def avaliable?
