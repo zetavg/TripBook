@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class BookInfosController < ApplicationController
   def index
-    @book_infos = book_infos_scope.order(updated_at: :desc).page(params[:page]).per(20)
+    @book_infos = book_infos_scope.reorder(updated_at: :desc).page(params[:page]).per(20)
   end
 
   def show

@@ -2,7 +2,7 @@
 class Me::BooksController < ApplicationController
   def index
     @show = (params[:show] || 'in_hand').underscore
-    @books = books_scope(@show).order(updated_at: :desc)
+    @books = books_scope(@show).reorder(updated_at: :desc)
   end
 
   private

@@ -2,7 +2,7 @@
 class Me::InvitationsController < ApplicationController
   def index
     @show = (params[:show] || 'pending').underscore
-    @invitations = invitations_scope(@show).order(updated_at: :desc)
+    @invitations = invitations_scope(@show).reorder(updated_at: :desc)
   end
 
   private

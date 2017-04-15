@@ -15,7 +15,7 @@ class Book::Story < ApplicationRecord
   belongs_to :user
   belongs_to :book_info, primary_key: :isbn, foreign_key: :book_isbn
   belongs_to :book,
-             ->(o) { joins(:past_holders).where('users.id' => o.user_id).order('book_holdings.updated_at DESC') },
+             ->(o) { joins(:past_holders).where('users.id' => o.user_id).reorder('book_holdings.updated_at DESC') },
              primary_key: :isbn, foreign_key: :book_isbn, optional: true
 
   def publish

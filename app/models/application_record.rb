@@ -3,6 +3,8 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   include ParseBoolean
 
+  default_scope -> { order(created_at: :asc) }
+
   class << self
     def human_enum_name(enum_name, enum_value)
       return unless enum_value

@@ -12,7 +12,7 @@ class Book::BorrowingTrip < ApplicationRecord
 
   belongs_to :holding, class_name: 'Holding'
   has_one :book, through: :holding
-  has_many :borrowings, -> { order(created_at: :asc) }
+  has_many :borrowings, -> { reorder(created_at: :asc) }
   has_one :current_borrowing, -> { active }, class_name: 'Borrowing'
 
   state_machine column: :state do

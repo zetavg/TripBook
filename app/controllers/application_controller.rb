@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   private
 
   def extract_locale_from_accept_language_header
+    # rubocop:disable Style/IdenticalConditionalBranches
     case request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-zA-Z\-]{2,5}/).first
     when 'en'
       'zh-TW'
