@@ -21,6 +21,7 @@ class Book::BorrowingInvitation < ApplicationRecord
   accepts_nested_attributes_for :invitation_users, allow_destroy: true
 
   validates :holding, uniqueness: true
+  validate :validate_borrowing_trip_is_pending_or_in_progress, on: :create
   validate :validate_state_is_ready_for_release, on: :create
 
   def borrowing_trip
@@ -40,6 +41,11 @@ class Book::BorrowingInvitation < ApplicationRecord
   end
 
   private
+
+  def validate_borrowing_trip_is_pending_or_in_progress
+    return if borrowing_trip&.pending? || borrowing_trip&.in_progress?
+    errors.add(:borrowing_trip, :not_pending_or_in_progress)
+  end
 
   def validate_state_is_ready_for_release
     return if state == 'ready_for_release'

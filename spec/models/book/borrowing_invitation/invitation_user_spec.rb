@@ -8,6 +8,7 @@ RSpec.describe Book::BorrowingInvitation::InvitationUser, type: :model do
     invitation_user = build(:book_borrowing_invitation_invitation_user, borrowing_invitation: invitation)
     expect(invitation_user).to be_valid
     borrowing_trip.prepare_to_end!
+    invitation_user.borrowing_trip.reload
     expect(invitation_user).not_to be_valid
     invitation_user.save!(validate: false)
     expect(invitation_user).to be_valid
