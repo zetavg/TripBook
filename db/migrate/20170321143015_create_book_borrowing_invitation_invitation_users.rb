@@ -14,5 +14,8 @@ class CreateBookBorrowingInvitationInvitationUsers < ActiveRecord::Migration[5.0
 
       t.timestamps
     end
+
+    add_index :book_borrowing_invitation_invitation_users, [:user_id, :borrowing_invitation_id],
+              unique: true, name: 'index_book_borrowing_invitation_invitation_users_on_u_id_b_i_id'
   end
 end

@@ -60,8 +60,21 @@ class User
           gender: %w(male female).include?(gender) ? gender : :other
         )
 
-        user.create_picture!(remote_image_url: picture_url) if user.picture.blank?
-        user.create_cover_photo!(remote_image_url: cover_photo_url) if user.cover_photo.blank?
+        if picture_url.present?
+          user.create_picture(
+            remote_image_url: picture_url,
+            secure_token: Digest::MD5.hexdigest(picture_url)[0..200],
+            provider: :facebook
+          )
+        end
+
+        if cover_photo_url.present?
+          user.create_cover_photo(
+            remote_image_url: cover_photo_url,
+            secure_token: Digest::MD5.hexdigest(picture_url)[0..200],
+            provider: :facebook
+          )
+        end
 
         user.from_facebook = true
         user

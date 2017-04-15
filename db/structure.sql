@@ -112,6 +112,7 @@ CREATE TABLE book_borrow_demands (
     user_id integer NOT NULL,
     book_isbn character varying NOT NULL,
     state character varying(32) NOT NULL,
+    message text,
     borrowing_id uuid,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -140,7 +141,7 @@ CREATE TABLE book_borrowing_invitation_invitation_users (
 CREATE TABLE book_borrowing_invitations (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     holding_id uuid NOT NULL,
-    borrowing_id uuid,
+    created_borrowing_id uuid,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -152,7 +153,7 @@ CREATE TABLE book_borrowing_invitations (
 
 CREATE TABLE book_borrowing_trips (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    holding_id uuid,
+    holding_id uuid NOT NULL,
     state character varying(32),
     max_single_durition_days integer,
     max_durition_days integer,
@@ -160,7 +161,8 @@ CREATE TABLE book_borrowing_trips (
     borrowings_count integer DEFAULT 0 NOT NULL,
     ended_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    CONSTRAINT ended_book_borrowing_trips_ended_at CHECK (((((state)::text = 'ended'::text) AND (ended_at IS NOT NULL)) OR (((state)::text <> 'ended'::text) AND (ended_at IS NULL))))
 );
 
 
@@ -191,7 +193,8 @@ CREATE TABLE book_holdings (
     ready_for_released_at timestamp without time zone,
     released_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    CONSTRAINT released_book_holdings_released_at CHECK (((((state)::text = 'released'::text) AND (released_at IS NOT NULL)) OR (((state)::text <> 'released'::text) AND (released_at IS NULL))))
 );
 
 
@@ -310,34 +313,16 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE TABLE user_cover_photos (
-    id integer NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     user_id integer,
     image character varying,
     secure_token character varying,
     width integer,
     height integer,
+    provider character varying(32),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: user_cover_photos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE user_cover_photos_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: user_cover_photos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE user_cover_photos_id_seq OWNED BY user_cover_photos.id;
 
 
 --
@@ -345,7 +330,7 @@ ALTER SEQUENCE user_cover_photos_id_seq OWNED BY user_cover_photos.id;
 --
 
 CREATE TABLE user_facebook_accounts (
-    id integer NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     user_id integer,
     facebook_id character varying NOT NULL,
     email character varying,
@@ -360,57 +345,20 @@ CREATE TABLE user_facebook_accounts (
 
 
 --
--- Name: user_facebook_accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE user_facebook_accounts_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: user_facebook_accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE user_facebook_accounts_id_seq OWNED BY user_facebook_accounts.id;
-
-
---
 -- Name: user_pictures; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE user_pictures (
-    id integer NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     user_id integer,
     image character varying,
     secure_token character varying,
     width integer,
     height integer,
+    provider character varying(32),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: user_pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE user_pictures_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: user_pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE user_pictures_id_seq OWNED BY user_pictures.id;
 
 
 --
@@ -418,7 +366,7 @@ ALTER SEQUENCE user_pictures_id_seq OWNED BY user_pictures.id;
 --
 
 CREATE TABLE user_profiles (
-    id integer NOT NULL,
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
     user_id integer,
     gender smallint,
     birthday_year bigint,
@@ -427,25 +375,6 @@ CREATE TABLE user_profiles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: user_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE user_profiles_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: user_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE user_profiles_id_seq OWNED BY user_profiles.id;
 
 
 --
@@ -463,7 +392,7 @@ CREATE VIEW user_recieved_book_borrowing_invitations AS
     book_borrowing_invitation_invitation_users.message,
     book_borrowing_invitations.id,
     book_borrowing_invitations.holding_id,
-    book_borrowing_invitations.borrowing_id,
+    book_borrowing_invitations.created_borrowing_id,
     book_borrowing_invitations.created_at,
     book_borrowing_invitations.updated_at
    FROM ((((book_borrowing_invitations
@@ -530,34 +459,6 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 --
 
 ALTER TABLE ONLY admins ALTER COLUMN id SET DEFAULT nextval('admins_id_seq'::regclass);
-
-
---
--- Name: user_cover_photos id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY user_cover_photos ALTER COLUMN id SET DEFAULT nextval('user_cover_photos_id_seq'::regclass);
-
-
---
--- Name: user_facebook_accounts id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY user_facebook_accounts ALTER COLUMN id SET DEFAULT nextval('user_facebook_accounts_id_seq'::regclass);
-
-
---
--- Name: user_pictures id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY user_pictures ALTER COLUMN id SET DEFAULT nextval('user_pictures_id_seq'::regclass);
-
-
---
--- Name: user_profiles id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY user_profiles ALTER COLUMN id SET DEFAULT nextval('user_profiles_id_seq'::regclass);
 
 
 --
@@ -755,10 +656,24 @@ CREATE INDEX index_book_borrow_demands_on_user_id ON book_borrow_demands USING b
 
 
 --
+-- Name: index_book_borrow_demands_on_user_id_and_book_isbn; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_book_borrow_demands_on_user_id_and_book_isbn ON book_borrow_demands USING btree (user_id, book_isbn);
+
+
+--
 -- Name: index_book_borrowing_invitation_invitation_users_on_b_o_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_book_borrowing_invitation_invitation_users_on_b_o_id ON book_borrowing_invitation_invitation_users USING btree (borrowing_invitation_id);
+
+
+--
+-- Name: index_book_borrowing_invitation_invitation_users_on_u_id_b_i_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_book_borrowing_invitation_invitation_users_on_u_id_b_i_id ON book_borrowing_invitation_invitation_users USING btree (user_id, borrowing_invitation_id);
 
 
 --
@@ -769,10 +684,10 @@ CREATE INDEX index_book_borrowing_invitation_invitation_users_on_user_id ON book
 
 
 --
--- Name: index_book_borrowing_invitations_on_borrowing_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_book_borrowing_invitations_on_created_borrowing_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_book_borrowing_invitations_on_borrowing_id ON book_borrowing_invitations USING btree (borrowing_id);
+CREATE INDEX index_book_borrowing_invitations_on_created_borrowing_id ON book_borrowing_invitations USING btree (created_borrowing_id);
 
 
 --
@@ -787,6 +702,13 @@ CREATE INDEX index_book_borrowing_invitations_on_holding_id ON book_borrowing_in
 --
 
 CREATE INDEX index_book_borrowing_trips_on_holding_id ON book_borrowing_trips USING btree (holding_id);
+
+
+--
+-- Name: index_book_borrowing_trips_on_holding_id_where_not_ended; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_book_borrowing_trips_on_holding_id_where_not_ended ON book_borrowing_trips USING btree (holding_id) WHERE ((state)::text <> 'ended'::text);
 
 
 --
@@ -818,10 +740,24 @@ CREATE INDEX index_book_holdings_on_book_id ON book_holdings USING btree (book_i
 
 
 --
+-- Name: index_book_holdings_on_book_id_where_no_previous_holding_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_book_holdings_on_book_id_where_no_previous_holding_id ON book_holdings USING btree (book_id) WHERE (previous_holding_id IS NULL);
+
+
+--
+-- Name: index_book_holdings_on_book_id_where_not_released; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_book_holdings_on_book_id_where_not_released ON book_holdings USING btree (book_id) WHERE ((state)::text <> 'released'::text);
+
+
+--
 -- Name: index_book_holdings_on_previous_holding_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_book_holdings_on_previous_holding_id ON book_holdings USING btree (previous_holding_id);
+CREATE UNIQUE INDEX index_book_holdings_on_previous_holding_id ON book_holdings USING btree (previous_holding_id);
 
 
 --
@@ -1009,14 +945,6 @@ ALTER TABLE ONLY books
 
 
 --
--- Name: book_borrowing_invitations fk_rails_25e71b8cd3; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY book_borrowing_invitations
-    ADD CONSTRAINT fk_rails_25e71b8cd3 FOREIGN KEY (borrowing_id) REFERENCES book_borrowings(id);
-
-
---
 -- Name: book_borrowing_invitation_invitation_users fk_rails_2ce47b00cd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1185,6 +1113,14 @@ ALTER TABLE ONLY book_borrow_demands
 
 
 --
+-- Name: book_borrowing_invitations fk_rails_f4c3b1ab51; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_invitations
+    ADD CONSTRAINT fk_rails_f4c3b1ab51 FOREIGN KEY (created_borrowing_id) REFERENCES book_borrowings(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1192,6 +1128,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES
 ('20170212142932'),
+('20170212150218'),
 ('20170217033201'),
 ('20170217075002'),
 ('20170217080642'),

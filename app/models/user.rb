@@ -8,8 +8,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
-  has_one :picture
-  has_one :cover_photo
+  has_one :picture, -> { order(updated_at: :desc) }
+  has_one :cover_photo, -> { order(updated_at: :desc) }
   has_one :facebook_account
 
   validates :name, presence: true

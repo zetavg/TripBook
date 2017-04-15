@@ -8,7 +8,7 @@ class Book::BorrowingInvitation < ApplicationRecord
   has_one :book, through: :holding, source: :book
   has_one :holding_borrowing, through: :holding, source: :borrowing
   has_one :holding_borrowing_trip, through: :holding, source: :borrowing_trip
-  belongs_to :borrowing, optional: true
+  belongs_to :created_borrowing, class_name: 'Borrowing', optional: true
   has_one :borrowing_trip, through: :holding_borrowing
   has_many :invitation_users
   has_many :invitees, through: :invitation_users, source: :user

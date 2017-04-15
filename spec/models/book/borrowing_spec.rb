@@ -55,7 +55,7 @@ RSpec.describe Book::Borrowing, type: :model do
         end
 
         it "logs its id on the borrowing invitation" do
-          expect { subject }.to change { borrowing_invitation.reload.borrowing_id }.from(nil).to(borrowing_uuid)
+          expect { subject }.to change { borrowing_invitation.reload.created_borrowing_id }.from(nil).to(borrowing_uuid)
         end
       end
     end

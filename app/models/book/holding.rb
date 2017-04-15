@@ -50,7 +50,7 @@ class Book::Holding < ApplicationRecord
   validate :immutable_book_id, on: :update
 
   before_validation :set_previous_holding, on: :create
-  after_create :release_old_holdings
+  before_create :release_old_holdings
   after_destroy :rehold_previous_holding
 
   def active?
@@ -78,6 +78,6 @@ class Book::Holding < ApplicationRecord
   end
 
   def rehold_previous_holding
-    previous_holding&.reload.update_attributes!(state: :holding)
+    previous_holding&.reload.update_attributes!(state: :holding, released_at: nil)
   end
 end

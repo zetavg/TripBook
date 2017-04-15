@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class CreateUserFacebookAccounts < ActiveRecord::Migration[5.0]
   def change
-    create_table :user_facebook_accounts do |t|
+    create_table :user_facebook_accounts, id: :uuid do |t|
       t.references :user, foreign_key: true
       t.string :facebook_id, null: false
       t.string :email

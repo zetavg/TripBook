@@ -44,6 +44,11 @@ class Book::BorrowingTrip < ApplicationRecord
 
     event :cancel do
       transitions from: :pending, to: :ended
+
+      before do |params|
+        params ||= {}
+        self.ended_at = params.fetch(:released_at, Time.current)
+      end
     end
   end
 
