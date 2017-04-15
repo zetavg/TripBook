@@ -9,6 +9,7 @@ The TripBook Project.
 * Linux or macOS
 * Ruby 2.4
 * Node.js 6.0+
+* ImageMagick
 
 ### Database
 
