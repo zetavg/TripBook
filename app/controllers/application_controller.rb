@@ -2,9 +2,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_locale
+  around_action :using_time_zone
 
   def set_locale
     I18n.locale = extract_locale_from_accept_language_header
+  end
+
+  def using_time_zone(&block)
+    Time.use_zone(8, &block)
   end
 
   private
@@ -12,11 +17,12 @@ class ApplicationController < ActionController::Base
   def extract_locale_from_accept_language_header
     case request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-zA-Z\-]{2,5}/).first
     when 'en'
-      'en'
+      'zh-TW'
     when 'zh-TW'
       'zh-TW'
     else
-      'en'
+      'zh-TW'
+    end
   end
 
   def info_for_paper_trail
