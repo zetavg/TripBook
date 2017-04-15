@@ -2,36 +2,39 @@
 require 'rails_helper'
 
 RSpec.describe Book::BorrowingTrip, type: :model do
-  it { is_expected.to belong_to(:book) }
+  it { is_expected.to belong_to(:holding) }
+  it { is_expected.to have_one(:book) }
   it { is_expected.to have_many(:borrowings) }
   it { is_expected.to have_one(:current_borrowing) }
+  it { is_expected.to validate_presence_of(:holding) }
 
   it "should require unique value for book if active" do
     book = create(:book)
-    existing_book_borrowing_trip = create(:book_borrowing_trip, book: book)
+    existing_book_borrowing_trip = create(:book_borrowing_trip, holding: book.current_holding)
 
-    new_book_borrowing_trip = build(:book_borrowing_trip, book: book)
+    new_book_borrowing_trip = build(:book_borrowing_trip, holding: book.current_holding)
     expect(new_book_borrowing_trip).not_to be_valid
 
     existing_book_borrowing_trip.end!
     expect(new_book_borrowing_trip).to be_valid
   end
 
-  it "validates if the book is holding by the owner on create" do
+  it "validates if the book holding is active on create" do
     book = create(:book)
-    create(:book_holding, book: book)
+    book_borrowing_trip = build(:book_borrowing_trip, holding: book.current_holding)
+    expect(book_borrowing_trip).to be_valid
 
-    book_borrowing_trip = build(:book_borrowing_trip, book: book)
+    create(:book_holding, book: book)
+    book_borrowing_trip.holding.reload
     expect(book_borrowing_trip).not_to be_valid
 
-    create(:book_holding, book: book, user: book.owner)
-    book_borrowing_trip.book.reload
+    book_borrowing_trip.save!(validate: false)
     expect(book_borrowing_trip).to be_valid
   end
 
   describe "life cycle" do
     describe "after create" do
-      subject(:book_borrowing_trip) { create(:book_borrowing_trip, book: book) }
+      subject(:book_borrowing_trip) { create(:book_borrowing_trip, holding: book.current_holding) }
       let(:book) { create(:book) }
 
       it "makes the current holding becomes ready_for_release" do
@@ -41,7 +44,7 @@ RSpec.describe Book::BorrowingTrip, type: :model do
 
     describe "book returned to owner" do
       subject { create(:book_holding, user: book.owner, book: book) }
-      let!(:book_borrowing_trip) { create(:book_borrowing_trip, book: book) }
+      let!(:book_borrowing_trip) { create(:book_borrowing_trip, holding: book.current_holding) }
       let(:book) { create(:book) }
 
       it "ends itself" do
@@ -71,7 +74,7 @@ RSpec.describe Book::BorrowingTrip, type: :model do
 
     describe "end" do
       subject { book_borrowing_trip.reload.end! }
-      let!(:book_borrowing_trip) { create(:book_borrowing_trip, book: book) }
+      let!(:book_borrowing_trip) { create(:book_borrowing_trip, holding: book.current_holding) }
       let(:book) { create(:book) }
 
       it "ends all borrowings" do

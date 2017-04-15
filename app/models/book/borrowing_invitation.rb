@@ -6,7 +6,10 @@ class Book::BorrowingInvitation < ApplicationRecord
   belongs_to :holding
   has_one :inviter, through: :holding, source: :user
   has_one :book, through: :holding, source: :book
+  has_one :holding_borrowing, through: :holding, source: :borrowing
+  has_one :holding_borrowing_trip, through: :holding, source: :borrowing_trip
   belongs_to :borrowing, optional: true
+  has_one :borrowing_trip, through: :holding_borrowing
   has_many :invitation_users
   has_many :invitees, through: :invitation_users, source: :user
   has_one :accepted_invitation_user, -> { accepted }, class_name: 'InvitationUser'
@@ -18,10 +21,11 @@ class Book::BorrowingInvitation < ApplicationRecord
   accepts_nested_attributes_for :invitation_users, allow_destroy: true
 
   validates :holding, uniqueness: true
+  validate :validate_borrowing_trip_is_pending_or_in_progress, on: :create
   validate :validate_state_is_ready_for_release, on: :create
 
   def borrowing_trip
-    holding.book.current_borrowing_trip
+    super || holding_borrowing_trip
   end
 
   def avaliable?
@@ -37,6 +41,11 @@ class Book::BorrowingInvitation < ApplicationRecord
   end
 
   private
+
+  def validate_borrowing_trip_is_pending_or_in_progress
+    return if borrowing_trip&.pending? || borrowing_trip&.in_progress?
+    errors.add(:borrowing_trip, :not_pending_or_in_progress)
+  end
 
   def validate_state_is_ready_for_release
     return if state == 'ready_for_release'

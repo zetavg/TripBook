@@ -2,7 +2,7 @@
 class CreateBookBorrowingTrips < ActiveRecord::Migration[5.0]
   def change
     create_table :book_borrowing_trips, id: :uuid do |t|
-      t.references :book, null: false, index: true, foreign_key: true, type: :uuid
+      t.references :holding, foreign_key: { to_table: :book_holdings }, index: true, type: :uuid
       t.string :state, limit: 32
       t.integer :max_single_durition_days
       t.integer :max_durition_days

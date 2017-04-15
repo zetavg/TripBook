@@ -11,7 +11,7 @@ RSpec.describe Book::Borrowing, type: :model do
         create(:book_borrowing, borrowing_trip: book_borrowing_trip.reload, borrower: borrower, id: borrowing_uuid)
       end
       let(:borrowing_uuid) { SecureRandom.uuid }
-      let(:book_borrowing_trip) { create(:book_borrowing_trip, book: book) }
+      let(:book_borrowing_trip) { create(:book_borrowing_trip, holding: book.current_holding) }
       let(:book) { create(:book) }
       let(:borrower) { create(:user) }
 

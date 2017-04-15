@@ -152,7 +152,7 @@ CREATE TABLE book_borrowing_invitations (
 
 CREATE TABLE book_borrowing_trips (
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    book_id uuid NOT NULL,
+    holding_id uuid,
     state character varying(32),
     max_single_durition_days integer,
     max_durition_days integer,
@@ -783,10 +783,10 @@ CREATE INDEX index_book_borrowing_invitations_on_holding_id ON book_borrowing_in
 
 
 --
--- Name: index_book_borrowing_trips_on_book_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_book_borrowing_trips_on_holding_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_book_borrowing_trips_on_book_id ON book_borrowing_trips USING btree (book_id);
+CREATE INDEX index_book_borrowing_trips_on_holding_id ON book_borrowing_trips USING btree (holding_id);
 
 
 --
@@ -1105,14 +1105,6 @@ ALTER TABLE ONLY book_info_cover_images
 
 
 --
--- Name: book_borrowing_trips fk_rails_8724753a26; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY book_borrowing_trips
-    ADD CONSTRAINT fk_rails_8724753a26 FOREIGN KEY (book_id) REFERENCES books(id);
-
-
---
 -- Name: user_profiles fk_rails_87a6352e58; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1126,6 +1118,14 @@ ALTER TABLE ONLY user_profiles
 
 ALTER TABLE ONLY book_holdings
     ADD CONSTRAINT fk_rails_88e83c63e4 FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: book_borrowing_trips fk_rails_8d016d8452; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrowing_trips
+    ADD CONSTRAINT fk_rails_8d016d8452 FOREIGN KEY (holding_id) REFERENCES book_holdings(id);
 
 
 --

@@ -7,6 +7,8 @@ class Book::BorrowingInvitation::InvitationUser < ApplicationRecord
   belongs_to :borrowing_invitation
   belongs_to :user
 
+  delegate :borrowing_trip, to: :borrowing_invitation, prefix: false, allow_nil: true
+
   state_machine column: :state do
     state :pending, initial: true
     state :accepted
@@ -23,4 +25,12 @@ class Book::BorrowingInvitation::InvitationUser < ApplicationRecord
 
   validates :user_id, :borrowing_invitation, presence: true
   validates :user_id, uniqueness: { scope: :borrowing_invitation_id, message: '已重複邀請' }
+  validate :validate_borrowing_trip_is_pending_or_in_progress, on: :create
+
+  private
+
+  def validate_borrowing_trip_is_pending_or_in_progress
+    return if borrowing_trip&.pending? || borrowing_trip&.in_progress?
+    errors.add(:borrowing_trip, :not_pending_or_in_progress)
+  end
 end
