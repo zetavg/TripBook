@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Book::BorrowingInvitation < ApplicationRecord
+  include Trackable
+
   scope :avaliable, -> { joins(:holding).where('book_holdings.state': :ready_for_release) }
   scope :ended, -> { joins(:holding).where('book_holdings.state': :released) }
 

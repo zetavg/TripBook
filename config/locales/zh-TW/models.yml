@@ -73,3 +73,11 @@ zh-TW:
         book: 書籍
         story_content: 與書的故事
         story_privacy_level: 與書的故事－隱私級別
+      version:
+        item: 物件
+        event: 事件
+        operator: 更動者
+        object: 物件
+        object_changes: 更動
+        changeset: 更動
+        created_at: 變更發生日期

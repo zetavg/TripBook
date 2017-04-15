@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class BookInfo < ApplicationRecord
+  include Trackable
   include BorrowingRelations
 
   ISBN_REGEXP = /\A(97(8|9))?\d{9}(\d|X)\Z/

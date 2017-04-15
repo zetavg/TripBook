@@ -45,6 +45,39 @@ ActiveAdmin.register User do
       row :updated_at
     end
 
+    if resource.versions.any?
+      panel 'Recent Changes' do
+        table_for resource.versions.reorder(created_at: :desc).limit(100) do
+          column :created_at do |version|
+            link_to l(version.created_at), [:admin, version], target: '_blank'
+          end
+          column :event do |version|
+            status_tag_class = case version.event
+                               when 'create'
+                                 'ok'
+                               when 'update'
+                                 'yes'
+                               else
+                                 'orange'
+                               end
+            status_tag(version.event, class: status_tag_class)
+          end
+          column :operator do |version|
+            if version.operator.present?
+              link_to [:admin, version.operator], target: '_blank' do
+                status_tag_class = version.operator.class.name == 'User' ? 'yes' : 'orange'
+                status_tag(version.operator.class.name, class: status_tag_class)
+                version.operator.email
+              end
+            end
+          end
+          column :changeset do |version|
+            pre JSON.pretty_generate(version.changeset)
+          end
+        end
+      end
+    end
+
     panel 'Actions' do
       para do
         link_to 'Sign in as this user', go_sign_in_admin_user_path(user), target: :_blank

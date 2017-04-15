@@ -455,6 +455,23 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
+-- Name: versions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE versions (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    item_type character varying NOT NULL,
+    item_id character varying NOT NULL,
+    event character varying NOT NULL,
+    operator_type character varying,
+    operator_id character varying,
+    object json,
+    object_changes json,
+    created_at timestamp without time zone
+);
+
+
+--
 -- Name: admins id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -618,6 +635,14 @@ ALTER TABLE ONLY user_profiles
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: versions versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY versions
+    ADD CONSTRAINT versions_pkey PRIMARY KEY (id);
 
 
 --
@@ -929,6 +954,20 @@ CREATE UNIQUE INDEX index_users_on_username ON users USING btree (username);
 
 
 --
+-- Name: index_versions_on_item_type_and_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_versions_on_item_type_and_item_id ON versions USING btree (item_type, item_id);
+
+
+--
+-- Name: index_versions_on_operator_type_and_operator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_versions_on_operator_type_and_operator_id ON versions USING btree (operator_type, operator_id);
+
+
+--
 -- Name: book_stories fk_rails_0699fdcfff; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1146,6 +1185,7 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170321135208'),
 ('20170321143015'),
 ('20170323154713'),
-('20170325154836');
+('20170325154836'),
+('20170415161411');
 
 

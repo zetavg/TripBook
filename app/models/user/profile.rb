@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class User
   class Profile < ApplicationRecord
+    include Trackable
+
     belongs_to :user, optional: true
 
     enum gender: {

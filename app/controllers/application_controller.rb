@@ -17,6 +17,13 @@ class ApplicationController < ActionController::Base
       'zh-TW'
     else
       'en'
+  end
+
+  def info_for_paper_trail
+    if is_a?(ActiveAdmin::BaseController)
+      { operator_type: current_admin&.class&.name, operator_id: current_admin&.id }
+    else
+      { operator_type: current_user&.class&.name, operator_id: current_user&.id }
     end
   end
 end

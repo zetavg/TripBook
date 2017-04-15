@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class BookInfo::CoverImage < ApplicationRecord
+  include Trackable
+
   mount_uploader :image, BookCoverImageUploader
 
   belongs_to :book_info, primary_key: :isbn, foreign_key: :isbn, optional: true

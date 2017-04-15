@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class Book < ApplicationRecord
+  include Trackable
   include BorrowingRelations
 
   attr_accessor :for_user

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class User < ApplicationRecord
   include Profileable
+  include Trackable
   include BookRelations
   include BookBorrowingRelations
   include FacebookAuthenticatable

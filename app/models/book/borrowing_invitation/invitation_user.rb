@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Book::BorrowingInvitation::InvitationUser < ApplicationRecord
   include StateMachine
+  include Trackable
 
   scope :not_accepted, -> { where.not(state: :accepted) }
 
