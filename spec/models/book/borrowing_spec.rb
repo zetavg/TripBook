@@ -8,8 +8,9 @@ RSpec.describe Book::Borrowing, type: :model do
   describe "life cycle" do
     describe "after create" do
       subject(:book_borrowing) do
-        create(:book_borrowing, borrowing_trip: book_borrowing_trip.reload, borrower: borrower)
+        create(:book_borrowing, borrowing_trip: book_borrowing_trip.reload, borrower: borrower, id: borrowing_uuid)
       end
+      let(:borrowing_uuid) { SecureRandom.uuid }
       let(:book_borrowing_trip) { create(:book_borrowing_trip, book: book) }
       let(:book) { create(:book) }
       let(:borrower) { create(:user) }
@@ -45,6 +46,16 @@ RSpec.describe Book::Borrowing, type: :model do
 
         it "marks the borrow demand as fulfilled" do
           expect { subject }.to change { borrow_demand.reload.state }.from('pending').to('fulfilled')
+        end
+      end
+
+      context "has avaliable borrowing invitation" do
+        let!(:borrowing_invitation) do
+          create(:book_borrowing_invitation, holding: book_borrowing_trip.book.current_holding)
+        end
+
+        it "logs its id on the borrowing invitation" do
+          expect { subject }.to change { borrowing_invitation.reload.borrowing_id }.from(nil).to(borrowing_uuid)
         end
       end
     end
