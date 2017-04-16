@@ -17,6 +17,8 @@ default: &default
   facebook:
     app_id: <%= ENV['FB_APP_ID'] %>
     app_secret: <%= ENV['FB_APP_SECRET'] %>
+  new_relic:
+    license_key: <%= ENV['NEW_RELIC_LICENSE_KEY'] %>
 
 development:
   <<: *default
