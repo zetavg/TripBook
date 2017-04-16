@@ -7,7 +7,7 @@ module Users
       access_token_expires_at = auth.credentials.expires_at
 
       id = auth.uid
-      email = auth.info.email
+      email = auth.info.email || "#{id}@facebook"
       name = auth.info.name
 
       gender = auth.extra&.raw_info&.gender
@@ -36,10 +36,12 @@ module Users
         sign_in @user
         redirect_to root_path
       end
+    rescue StandardError
+      failure
     end
 
     def failure
-      redirect_to root_path
+      redirect_to root_path, flash: { error: '使用 Facebook 登入失敗，請確認您的帳號是有效的' }
     end
   end
 end
