@@ -1,0 +1,12 @@
+<%= render layout: 'layouts/base' do %>
+
+  <%= yield :body %>
+
+  <%= render partial: 'layouts/navbar' %>
+  <%= render partial: 'layouts/flash_messages' %>
+
+  <%= yield %>
+
+  <%= render partial: 'layouts/footer' %>
+
+<% end %>

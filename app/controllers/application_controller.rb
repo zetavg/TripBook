@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   around_action :using_time_zone
 
+  layout 'content'
+
   def set_locale
     I18n.locale = extract_locale_from_accept_language_header
   end
