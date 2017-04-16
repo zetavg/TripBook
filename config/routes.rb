@@ -31,6 +31,12 @@ Rails.application.routes.draw do
 
   authenticate :user do
     namespace :me do
+      resource :settings, only: [:show] do
+        scope module: :settings do
+          resource :profile, only: [:show, :update]
+        end
+      end
+
       resources :invitations, only: [:index] do
         scope module: :invitations do
           resource :acception, only: [:create]

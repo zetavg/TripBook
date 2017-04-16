@@ -95,8 +95,8 @@ ActiveAdmin.register User do
               end
             end
           end
-          column :changeset do |version|
-            pre JSON.pretty_generate(version.changeset)
+          column :object_changes do |version|
+            pre JSON.pretty_generate(version.object_changes)
           end
         end
       end
