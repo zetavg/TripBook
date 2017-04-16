@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class BookInfosController < ApplicationController
+  before_action :authenticate_user!, only: [:show], if: :show_book_info_requires_sign_in
+
   def index
     @book_infos = book_infos_scope.reorder(updated_at: :desc).page(params[:page]).per(20)
   end
@@ -22,5 +24,9 @@ class BookInfosController < ApplicationController
 
   def find_book_info
     @book_info = book_infos_scope.find(params[:isbn])
+  end
+
+  def show_book_info_requires_sign_in
+    Config.feature_flags.show_book_info_requires_sign_in
   end
 end

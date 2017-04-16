@@ -19,6 +19,8 @@ default: &default
     app_secret: <%= ENV['FB_APP_SECRET'] %>
   new_relic:
     license_key: <%= ENV['NEW_RELIC_LICENSE_KEY'] %>
+  feature_flags:
+    show_book_info_requires_sign_in: <%= ENV['FF_SHOW_BOOK_INFO_REQUIRES_SIGN_IN'] == 'true' %>
 
 development:
   <<: *default
