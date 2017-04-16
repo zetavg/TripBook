@@ -1,11 +1,11 @@
 <% host_url = ENV['HOST_URL'].presence || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/" %>
 default: &default
   app:
-    secret_key: <%= ENV['SECRET_KEY'] %>
-    pepper: <%= ENV['PEPPER'] %>
     url: <%= uri = URI.parse(host_url); uri.path = ''; uri %>
     host: <%= URI.parse(host_url).host %>
     port: <%= URI.parse(host_url).port %>
+    secret_key: <%= ENV['SECRET_KEY'] %>
+    pepper: <%= ENV['PEPPER'] %>
   mailer:
     default_sender: <%= ENV['MAILER_DEFAULT_SENDER'] %>
   aws_s3:

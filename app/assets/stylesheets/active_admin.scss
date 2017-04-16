@@ -16,6 +16,17 @@
 //
 //   .status_tag { background: #6090DB; }
 
+.admin_dashboard {
+
+  .panel_contents {
+
+    dl,
+    pre {
+      margin: 0;
+    }
+  }
+}
+
 .col-changeset {
   pre {
     margin: 0;

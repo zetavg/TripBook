@@ -17,6 +17,24 @@ zh-TW:
         sign_in_count: 登入次數
         created_at: 註冊時間
         updated_at: 更新時間
+        current_sign_in_at: 目前登入時間
+        last_sign_in_at: 最後登入時間
+        current_sign_in_ip: "目前登入 IP"
+        last_sign_in_ip: "最後登入 IP"
+        actions: 操作
+        facebook_account: "Facebook 帳號"
+      user/facebook_account:
+        facebook_id: "Facebook ID"
+        email: 電子郵件信箱
+        name: 姓名
+        picture: 頭像
+        picture_url: 頭像
+        cover_photo: 封面照片
+        cover_photo_url: 封面照片
+        access_token: "Access Token"
+        access_token_expires_at: "Access Token 有效期限"
+        created_at: 記錄建立時間
+        updated_at: 更新時間
       book:
         isbn: ISBN
         info: 書籍資料

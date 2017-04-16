@@ -11,11 +11,17 @@ ActiveAdmin.register User do
 
   scope :all, default: true
 
+  filter :username
   filter :name
   filter :email
   filter :created_at
+  filter :last_sign_in_at
 
   permit_params :name, :username
+
+  action_item :sign_in, only: :show do
+    link_to I18n.t("admin.users.sign_in_as_this_user"), go_sign_in_admin_user_path(user), target: :_blank
+  end
 
   index do
     selectable_column
@@ -28,9 +34,10 @@ ActiveAdmin.register User do
       link_to user.username, admin_user_path(user)
     end
     column :email
+    column :last_sign_in_at
     column :created_at
     column :actions do |user|
-      link_to "Sign in", go_sign_in_admin_user_path(user), target: :_blank
+      link_to I18n.t("admin.users.sign_in_as_this_user"), go_sign_in_admin_user_path(user), target: :_blank
     end
 
     actions
@@ -41,12 +48,29 @@ ActiveAdmin.register User do
       row :id
       row :email
 
+      row :name
+      row :username
+
       row :created_at
       row :updated_at
     end
 
+    if resource.facebook_account.present?
+      panel I18n.t("models.attributes.user.facebook_account") do
+        attributes_table_for resource.facebook_account do
+          row :facebook_id do |facebook_account|
+            link_to facebook_account.facebook_id, facebook_account.url, target: '_blank'
+          end
+          row :email
+          row :name
+          row :created_at
+          row :updated_at
+        end
+      end
+    end
+
     if resource.versions.any?
-      panel 'Recent Changes' do
+      panel I18n.t("admin.general.recent_changes") do
         table_for resource.versions.reorder(created_at: :desc).limit(100) do
           column :created_at do |version|
             link_to l(version.created_at), [:admin, version], target: '_blank'
@@ -78,15 +102,11 @@ ActiveAdmin.register User do
       end
     end
 
-    panel 'Actions' do
+    panel I18n.t("admin.general.actions") do
       para do
-        link_to 'Sign in as this user', go_sign_in_admin_user_path(user), target: :_blank
+        link_to I18n.t("admin.users.sign_in_as_this_user"), go_sign_in_admin_user_path(user), target: :_blank
       end
     end
-  end
-
-  action_item :sign_in, only: :show do
-    link_to "Sign in", go_sign_in_admin_user_path(user), target: :_blank
   end
 
   form do |f|
