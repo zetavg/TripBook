@@ -64,4 +64,12 @@ Rails.application.configure do
 
   config.generators.helper = false
   config.generators.assets = false
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.rails_logger = true
+    Bullet.console = true
+    Bullet.add_footer = true
+  end
 end

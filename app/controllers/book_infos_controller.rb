@@ -3,7 +3,7 @@ class BookInfosController < ApplicationController
   before_action :authenticate_user!, only: [:show], if: :show_book_info_requires_sign_in
 
   def index
-    @book_infos = book_infos_scope.reorder(updated_at: :desc).page(params[:page]).per(20)
+    @book_infos = book_infos_scope.includes(:cover_image).reorder(updated_at: :desc).page(params[:page]).per(20)
   end
 
   def show
