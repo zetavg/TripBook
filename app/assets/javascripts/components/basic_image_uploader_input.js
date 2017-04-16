@@ -3,6 +3,7 @@ export default class BasicImageUploaderInput {
     this.$elenemt = $(elenemt)
     this.uploadAPIPath = this.$elenemt.data('upload-api-path')
     this.imageModelName = this.$elenemt.data('image-model-name')
+    this.thumbnailSize = this.$elenemt.data('thumbnail-size')
     this.$uploadInput = this.$elenemt.find('[data-upload-input]')
     this.$imageThumbnail = this.$elenemt.find('.image-thumbnail')
     this.$imageIDInput = this.$elenemt.find('[data-uploader="id_input"]')
@@ -59,7 +60,7 @@ export default class BasicImageUploaderInput {
 
   showPreviewImage(image) {
     this.$imageThumbnail.find('a').attr('href', image.url)
-    this.$imageThumbnail.find('img').attr('src', image.thumbnail_url)
+    this.$imageThumbnail.find('img').attr('src', image[`${this.thumbnailSize}_url`])
     this.$imageThumbnail.css('display', 'inline-block')
   }
 

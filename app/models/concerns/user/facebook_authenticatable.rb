@@ -7,6 +7,8 @@ class User
       attr_accessor :from_facebook
       attr_accessor :new_from_facebook
       attr_accessor :unauthenticated_from_facebook
+
+      has_one :facebook_account
     end
 
     def from_facebook?
@@ -61,7 +63,7 @@ class User
         )
 
         if picture_url.present?
-          user.create_picture(
+          user.pictures.create(
             remote_image_url: picture_url,
             secure_token: Digest::MD5.hexdigest(picture_url)[0..200],
             provider: :facebook
@@ -69,7 +71,7 @@ class User
         end
 
         if cover_photo_url.present?
-          user.create_cover_photo(
+          user.cover_photos.create(
             remote_image_url: cover_photo_url,
             secure_token: Digest::MD5.hexdigest(picture_url)[0..200],
             provider: :facebook

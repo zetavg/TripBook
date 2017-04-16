@@ -70,4 +70,8 @@ class ApplicationRecord < ActiveRecord::Base
   def respond_to_missing?(method, *args)
     method.match(/^belonging_(.+)_id(=?)$/) || method.match(/^human_(.+)$/) || super
   end
+
+  def error?(attribute)
+    errors.key?(attribute)
+  end
 end

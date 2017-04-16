@@ -23,6 +23,14 @@ zh-TW:
         last_sign_in_ip: "最後登入 IP"
         actions: 操作
         facebook_account: "Facebook 帳號"
+        picture: 頭像
+        gender: 性別
+        birthdate: 生日
+      user/profile:
+        genders:
+          male: 男
+          female: 女
+          other: 其他
       user/facebook_account:
         facebook_id: "Facebook ID"
         email: 電子郵件信箱

@@ -28,6 +28,7 @@ nav.navbar.navbar-default.navbar-toggleable-md class="#{yield :navbar_class}"
               .dropdown-divider
               = link_to '我的藏書', me_owned_books_path, class: 'dropdown-item'
               .dropdown-divider
+              = link_to '設定', me_settings_path, class: 'dropdown-item'
               = link_to '登出', destroy_user_session_path, :method => :delete, class: 'dropdown-item'
         - else
           li.nav-item= link_to 'Sign in', new_user_session_path, class: 'nav-link'

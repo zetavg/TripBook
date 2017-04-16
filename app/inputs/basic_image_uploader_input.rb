@@ -11,7 +11,8 @@ class BasicImageUploaderInput < SimpleForm::Inputs::Base
 
     template.content_tag :div, class: 'basic_image_uploader_input', data: {
       upload_api_path: try("api_#{image_model_name.pluralize}_path"),
-      image_model_name: image_model_name
+      image_model_name: image_model_name,
+      thumbnail_size: thumbnail_size
     } do
 
       template.concat <<-EOF.strip_heredoc.html_safe

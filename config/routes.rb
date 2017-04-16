@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resource :settings, only: [:show] do
         scope module: :settings do
           resource :profile, only: [:show, :update]
+          resource :account, only: [:show, :update]
         end
       end
 
@@ -79,6 +80,7 @@ Rails.application.routes.draw do
     resources :users, path: 'users', only: [:index]
     resources :book_infos, path: 'book-infos', only: [:index]
     resources :book_info_cover_images, path: 'book-info-cover-images', only: [:create]
+    resources :user_pictures, path: 'user-pictures', only: [:create]
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

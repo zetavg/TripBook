@@ -1,0 +1,17 @@
+.card style="margin-bottom: 16px;"
+  = simple_form_for @user, url: me_settings_account_path do |f|
+    .card-block
+      h2.h4.card-title 帳號
+      hr
+      .row
+        .col-lg-8.col-md-10
+          h3.h5 電子信箱
+          = f.input :email, label: false, hint: @user.unconfirmed_email.present? && @user.confirmation_sent_at > 1.day.ago && "系統已發送一封確認信至 #{@user.unconfirmed_email}，請前往確認以更新您的電子信箱"
+          = f.submit '更新', class: 'btn btn-secondary'
+          / hr
+          / h3.h5 變更密碼
+          / p 若需要變更密碼，請填入目前密碼與新密碼。
+          / = f.input :current_password, label: '目前密碼'
+          / = f.input :password, label: '新密碼', autocomplete: 'off'
+          / = f.input :password_confirmation, label: '確認新密碼', autocomplete: 'off'
+          / = f.submit '變更密碼', class: 'btn btn-secondary'

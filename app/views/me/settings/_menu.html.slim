@@ -1,0 +1,7 @@
+nav.settings-menu style="margin-bottom: 16px;"
+  h2.settings-menu-header 個人設定
+  ul.settings-menu-list
+    li
+      = link_to '個人檔案', me_settings_profile_path, class: ['settings-menu-list-item', controller.class.name.starts_with?('Me::Settings::Profiles') ? 'active' : nil]
+    li
+      = link_to '帳號', me_settings_account_path, class: ['settings-menu-list-item', controller.class.name.starts_with?('Me::Settings::Accounts') ? 'active' : nil]

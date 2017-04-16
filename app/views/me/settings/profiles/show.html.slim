@@ -1,0 +1,13 @@
+.card style="margin-bottom: 16px;"
+  = simple_form_for @user, url: me_settings_profile_path do |f|
+    .card-block
+      h2.h4.card-title 個人檔案
+      hr
+      .row
+        .col-lg-8.col-md-10
+          = f.input :picture, as: :basic_image_uploader, thumbnail_size: :small
+          = f.input :name, hint: '設定使用者名稱之後，您的本名將不會被公開顯示'
+          = f.input :username, hint: !@user.error?(:username) && '只能包含英文字母、數字與底線'
+          = f.input :gender, label: '我是', collection: User::Profile.human_genders, include_blank: true
+          = f.input :birthdate, as: :date, start_year: Date.today.year - 300, end_year: Date.today.year - 16, include_blank: true
+          = f.submit '更新', class: 'btn btn-secondary'

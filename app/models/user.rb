@@ -9,14 +9,27 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
-  has_one :picture, -> { reorder(updated_at: :desc) }
-  has_one :cover_photo, -> { reorder(updated_at: :desc) }
-  has_one :facebook_account
+  USERNAME_REGEXP = /\A[0-9A-Za-z_]+\Z/
+
+  has_one :picture, -> { reorder(provider: :desc, updated_at: :desc) }
+  has_one :cover_photo, -> { reorder(provider: :desc, updated_at: :desc) }
+  has_many :pictures
+  has_many :cover_photos
 
   validates :name, presence: true
-  validates :username, uniqueness: true
+  validates :username, uniqueness: { case_sensitive: false },
+                       format: { with: USERNAME_REGEXP, message: '只能包含英文字母和數字' },
+                       allow_nil: true
 
-  def username
-    self[:username] || name
+  before_validation :nilify_blanks
+
+  def displayed_name
+    username || name
+  end
+
+  private
+
+  def nilify_blanks
+    self.username = username.presence
   end
 end

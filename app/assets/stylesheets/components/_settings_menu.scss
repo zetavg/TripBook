@@ -1,0 +1,59 @@
+.settings-menu {
+  $padding-x: 10px;
+  $padding-y: 8px;
+  $border-color: $gray-light;
+  $border-radius: 3px;
+  $header-color: $gray-darker;
+  $header-background-color: $gray-lighter;
+  $item-color: $black;
+  $item-active-color: $black;
+  $item-background-color: $white;
+  $item-hover-background-color: lighten($gray-lighter, 1.8);
+  $item-active-decoration-size: 3px;
+  $item-active-decoration-color: $brand-primary;
+
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  &-header {
+    display: block;
+    padding: $padding-y $padding-x;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: .95rem;
+    font-weight: 600;
+    line-height: 20px;
+    color: $header-color;
+    background-color: $header-background-color;
+    border-bottom: 0;
+  }
+
+  &-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &-item {
+      display: block;
+      padding: $padding-y $padding-x;
+      font-size: .95rem;
+      line-height: 20px;
+      text-decoration: none;
+      border-top: 1px solid $border-color;
+      color: $item-color;
+      background-color: $item-background-color;
+
+      &:hover {
+        text-decoration: none;
+        background-color: $item-hover-background-color;
+      }
+
+      &.active {
+        color: $item-active-color;
+        padding-left: $padding-x - $item-active-decoration-size;
+        border-left: $item-active-decoration-size solid $item-active-decoration-color;
+      }
+    }
+  }
+}
