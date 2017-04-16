@@ -1,4 +1,4 @@
-# TripBook [![Build Status](https://travis-ci.org/zetavg/TripBook.svg?branch=master)](https://travis-ci.org/zetavg/TripBook) [![Coverage Status](https://coveralls.io/repos/github/zetavg/TripBook/badge.svg?branch=master)](https://coveralls.io/github/zetavg/TripBook?branch=master)
+# TripBook [![Build Status](https://travis-ci.org/zetavg/TripBook.svg?branch=develop)](https://travis-ci.org/zetavg/TripBook) [![Coverage Status](https://coveralls.io/repos/github/zetavg/TripBook/badge.svg?branch=develop)](https://coveralls.io/github/zetavg/TripBook?branch=develop)
 
 The TripBook Project.
 
