@@ -12,6 +12,6 @@ class CreateBookBorrowDemands < ActiveRecord::Migration[5.0]
     end
 
     add_foreign_key :book_borrow_demands, :book_infos, column: :book_isbn, primary_key: :isbn, on_delete: :restrict
-    add_index :book_borrow_demands, [:user_id, :book_isbn], unique: true
+    add_index :book_borrow_demands, [:user_id, :book_isbn, :state], where: "state = 'pending'", unique: true
   end
 end

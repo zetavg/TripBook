@@ -1,0 +1,39 @@
+.l-new-borrow-demand-block {
+
+  &-actions {
+    @extend .d-flex;
+    @extend .align-items-stretch;
+
+    > * {
+      margin: 0 !important;
+    }
+
+    .gap {
+      width: 8px;
+    }
+  }
+
+  .collapse ~ .collapsed-only {
+    @extend .d-flex;
+  }
+
+  .collapse ~ .not-collapsed-only {
+    display: none !important;
+  }
+
+  .collapse.show ~ .collapsed-only {
+    display: none !important;
+  }
+
+  .collapse.show ~ .not-collapsed-only {
+    @extend .d-flex;
+  }
+
+  .collapsing ~ .collapsed-only {
+    display: none !important;
+  }
+
+  .collapsing ~ .not-collapsed-only {
+    @extend .d-flex;
+  }
+}

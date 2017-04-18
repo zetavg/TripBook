@@ -29,10 +29,26 @@
             = @book_info.borrow_demands.active.count
             | &nbsp;個
       - if user_signed_in?
-        - if current_user.book_borrow_demands.where(book_info: @book_info).active.any?
+        - if current_user.book_borrow_demands.active.where(book_info: @book_info).last.present?
+          - if current_user.book_borrow_demands.active.where(book_info: @book_info).last.message.present?
+            .card style="margin-bottom: 8px;"
+              .card-block style="padding-bottom: 4px;"
+                = simple_format current_user.book_borrow_demands.active.where(book_info: @book_info).last.message
+
           = link_to '取消借閱登記', book_info_borrow_demand_cancellation_path(book_info_isbn: @book_info.isbn), method: :post, class: 'btn btn-block btn-danger'
         - else
-          = link_to '我想要借', book_info_borrow_demand_path(book_info_isbn: @book_info.isbn), method: :post, class: 'btn btn-block btn-primary'
+          .l-new-borrow-demand-block
+            = simple_form_for current_user.book_borrow_demands.build(book_info: @book_info), url: book_info_borrow_demand_path(book_info_isbn: @book_info.isbn) do |f|
+              #borrow-demand-collapse.collapse
+                = f.input :message, label: false, placeholder: '想看的原因（選填，將會被公開）'
+              .l-new-borrow-demand-block-actions.collapsed-only
+                button class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#borrow-demand-collapse"
+                  | 我想要借
+              .l-new-borrow-demand-block-actions.not-collapsed-only
+                = f.submit '確認', class: "btn btn-block btn-success"
+                .gap
+                button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#borrow-demand-collapse"
+                  | 取消
       - else
         = link_to '登入後即可申請借閱', new_user_session_path, class: 'btn btn-block btn-primary disabled'
       p

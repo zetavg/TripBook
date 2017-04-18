@@ -681,10 +681,10 @@ CREATE INDEX index_book_borrow_demands_on_user_id ON book_borrow_demands USING b
 
 
 --
--- Name: index_book_borrow_demands_on_user_id_and_book_isbn; Type: INDEX; Schema: public; Owner: -
+-- Name: index_book_borrow_demands_on_user_id_and_book_isbn_and_state; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_book_borrow_demands_on_user_id_and_book_isbn ON book_borrow_demands USING btree (user_id, book_isbn);
+CREATE UNIQUE INDEX index_book_borrow_demands_on_user_id_and_book_isbn_and_state ON book_borrow_demands USING btree (user_id, book_isbn, state) WHERE ((state)::text = 'pending'::text);
 
 
 --
