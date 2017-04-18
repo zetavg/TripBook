@@ -43,8 +43,10 @@ class BookInfoInput < SimpleForm::Inputs::Base
                                     label: I18n.t(:cover_image, scope: 'models.attributes.book_info'),
                                     as: :basic_image_uploader,
                                     hint: cover_image_hint.html_safe
-            template.concat f.input :author, label: I18n.t(:author, scope: 'models.attributes.book_info')
-            template.concat f.input :publisher, label: I18n.t(:publisher, scope: 'models.attributes.book_info')
+            template.concat f.input :author, label: I18n.t(:author, scope: 'models.attributes.book_info'),
+                                             hint: '建議填寫'
+            template.concat f.input :publisher, label: I18n.t(:publisher, scope: 'models.attributes.book_info'),
+                                                hint: '建議填寫'
           end)
         end
 

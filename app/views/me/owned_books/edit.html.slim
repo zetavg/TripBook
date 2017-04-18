@@ -1,22 +1,28 @@
-.container style="padding-top: 16px;"
-  h2= @book.name
-  - if @book.author
-    h3
-      .small= @book.author
+.row.justify-content-md-center
+  .col-lg-8.col-md-10
 
-  = simple_form_for @book, url: me_owned_book_path(@book) do |f|
-    .card style="margin-top: 8px; margin-bottom: 16px;"
-      .card-block
-        h2.h4.card-title 我與書的故事
-        = f.simple_fields_for :story do |f|
-          = f.hidden_field :id
-          = f.input :content, input_html: { style: 'height: 200px;' }
-          = f.input :privacy_level, collection: Book::Story.human_privacy_levels, include_blank: false, include_hidden: false
-          = f.hidden_field :publish, as: :boolean
-        = f.submit '更新', class: 'btn btn-success'
-    / h3 個人書摘
-    / = f.simple_fields_for :summary do |f|
-    /   = f.hidden_field :id
-    /   = f.input :content, label: '內容'
-    /   = f.input :privacy_level, label: '隱私層級'
-    /   = f.input :publish, as: :boolean, label: '發佈'
+    h2= @book.name
+    - if @book.author
+      h3
+        .small= @book.author
+
+    p
+
+    = simple_form_for @book, url: me_owned_book_path(@book) do |f|
+      .card style="margin-top: 8px; margin-bottom: 16px;"
+        .card-block
+          h2.h4.card-title 我與書的故事
+          .h6.card-subtitle.text-muted 為什麼看了這本書、看完之後的感覺、對您的影響⋯⋯
+          p.card-text
+          = f.simple_fields_for :story do |f|
+            = f.hidden_field :id
+            = f.input :content, input_html: { style: 'height: 200px;' }, label: false
+            = f.input :privacy_level, collection: Book::Story.human_privacy_levels, include_blank: false, include_hidden: false
+            = f.hidden_field :publish, as: :boolean
+          = f.submit '更新', class: 'btn btn-success'
+      / h3 個人書摘
+      / = f.simple_fields_for :summary do |f|
+      /   = f.hidden_field :id
+      /   = f.input :content, label: '內容'
+      /   = f.input :privacy_level, label: '隱私層級'
+      /   = f.input :publish, as: :boolean, label: '發佈'

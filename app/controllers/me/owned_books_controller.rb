@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Me::OwnedBooksController < ApplicationController
+  layout 'me/owned_books'
+
   def index
     @books = books_scope.includes(info: :cover_image)
   end

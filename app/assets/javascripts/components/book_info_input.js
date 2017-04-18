@@ -152,7 +152,7 @@ export default class BookInfoInput {
     this.$newInfoBlock.find('.book_info_name input').on('change', (e) => {
       const value = e.target.value
       const googleCoverImageURL = `https://www.google.com/search?q=${value.replace(/ /g, '+')}&tbm=isch`
-      this.$newInfoBlock.find('.book_info_cover_image .help-block a').attr('href', googleCoverImageURL)
+      this.$newInfoBlock.find('.book_info_cover_image .form-text a').attr('href', googleCoverImageURL)
     })
   }
 
