@@ -29,8 +29,10 @@ class BookInfoInput < SimpleForm::Inputs::Base
           template.concat '<p>這本書目前尚未在我們的系統中建檔，請填寫以下資訊協助我們認識它吧！</p>'.html_safe
           template.concat(@builder.simple_fields_for(:info) do |f|
             template.concat f.input :isbn, label: I18n.t(:isbn, scope: 'models.attributes.book_info'),
+                                           required: false,
                                            hint: '必填，請輸入書本條碼上 10 或 13 碼的 ISBN 號碼'
             template.concat f.input :name, label: I18n.t(:name, scope: 'models.attributes.book_info'),
+                                           required: false,
                                            hint: '必填，請盡量輸入完整正確的書名喔'
             cover_image_hint = <<-EOF
               <a href="https://www.google.com/search?q=#{object.info.name&.tr(' ', '+')}&tbm=isch" target="_blank">
