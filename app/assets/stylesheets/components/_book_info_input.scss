@@ -10,7 +10,7 @@ $select-item-padding: 4px;
 
 .book-info-select-item {
   height: $select-item-height;
-  overflow: hidden;
+  white-space: nowrap;
 
   .select2-results__option > & {
     margin: -4px 0;
