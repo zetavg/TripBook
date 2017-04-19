@@ -4,7 +4,8 @@ class Book::Holding
     extend ActiveSupport::Concern
 
     included do
-      has_one :borrowing_trip, class_name: 'Book::BorrowingTrip'
+      has_many :borrowing_trips, class_name: 'Book::BorrowingTrip'
+      has_one :borrowing_trip, -> { reorder(created_at: :desc) }, class_name: 'Book::BorrowingTrip'
       has_one :borrowing
       has_one :borrowing_invitation
       # TODO: add more
