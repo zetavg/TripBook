@@ -1,15 +1,14 @@
-.container style="margin-top: 16px;"
-  .row.justify-content-md-center
-    .col-lg-4.col-md-8
-      .card
-        .card-block
-          h1.h4.card-title 閱讀記錄
-          h2.h6.card-subtitle 《#{@book.name}》
-          p
-          = simple_form_for @reading, url: me_book_reading_path(book_id: @book.id), method: :post do |f|
-            = f.input :story_content, as: :text, input_html: { style: 'height: 200px;' }
-            = f.input :story_privacy_level, collection: Book::Story.human_privacy_levels, include_blank: false, include_hidden: false
-            - if @reading.book.current_borrowing_user == current_user && @reading.book.current_holding.holding?
-              = f.input :ready_for_release, as: :boolean, label: '&nbsp;已閱畢，可以交給下一個人或歸還了'.html_safe
+.row.justify-content-md-center
+  .col-lg-4.col-md-8
+    .card
+      .card-block
+        h1.h4.card-title 閱讀記錄
+        h2.h6.card-subtitle 《#{@book.name}》
+        p
+        = simple_form_for @reading, url: me_book_reading_path(book_id: @book.id), method: :post do |f|
+          = f.input :story_content, as: :text, input_html: { style: 'height: 200px;' }
+          = f.input :story_privacy_level, collection: Book::Story.human_privacy_levels, include_blank: false, include_hidden: false
+          - if @reading.book.current_borrowing_user == current_user && @reading.book.current_holding.holding?
+            = f.input :ready_for_release, as: :boolean, label: '&nbsp;已閱畢，可以交給下一個人或歸還了'.html_safe
 
-            = f.submit '確認', class: 'btn btn-success'
+          = f.submit '確認', class: 'btn btn-success'

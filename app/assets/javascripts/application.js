@@ -11,7 +11,10 @@ import BookInfoInput from './components/book_info_input'
 import UserSelectionInput from './components/user_selection_input'
 import BasicImageUploaderInput from './components/basic_image_uploader_input'
 
+import MeBooksIndexPage from './pages/me_books_index_page'
+
 const components = {}
+const pages = {}
 
 $(document).on('turbolinks:load', () => {
   components.navbars = $('.navbar').toArray().map(el => new Navbar(el))
@@ -19,4 +22,6 @@ $(document).on('turbolinks:load', () => {
   components.userSelectionInputs = $('.user-selection-input').toArray().map(el => new UserSelectionInput(el))
   components.basicImageUploaderInput =
     $('.basic_image_uploader_input').toArray().map(el => new BasicImageUploaderInput(el))
+
+  pages.meBooksIndexPages = $('.me-books-index-page').toArray().map(el => new MeBooksIndexPage(el))
 })

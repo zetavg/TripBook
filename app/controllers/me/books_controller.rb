@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Me::BooksController < ApplicationController
+  layout 'me/books'
+
   def index
     @show = (params[:show] || 'in_hand').underscore
     @books = books_scope(@show).reorder(updated_at: :desc)
