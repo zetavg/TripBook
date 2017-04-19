@@ -27,9 +27,12 @@ ol.breadcrumb
         .card-footer
           - case @book.current_borrowing_trip.state
           - when 'pending'
-            span style="display: block; height: 27px; float: left; padding: 1px 2px;"
+            span style="display: inline-block; height: 27px; padding: 1px 2px;"
               | 下一步：
             = link_to '邀請借閱者', me_book_borrowing_invitations_path(book_id: @book.current_borrowing_trip.book.id), class: 'btn btn-sm btn-outline-primary'
+            span style="display: inline-block; height: 27px; padding: 1px 2px;"
+              | &nbsp;或&nbsp;
+            = link_to '取消', me_owned_book_borrowing_trip_cancellation_path(borrowing_trip_id: @book.current_borrowing_trip.id, owned_book_id: @book.current_borrowing_trip.book.id), method: :post, data: { confirm: '確定要取消這趟旅程嗎？' }, class: 'btn btn-sm btn-outline-primary'
           - else
             - if @book.current_borrowing_trip.may_prepare_to_end?
               => link_to '召回', me_owned_book_borrowing_trip_cancellation_path(borrowing_trip_id: @book.current_borrowing_trip.id, owned_book_id: @book.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'btn btn-secondary'
