@@ -309,6 +309,23 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: testt; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW testt AS
+ SELECT DISTINCT ON (books.id) books.id,
+    books.isbn,
+    books.owner_id,
+    books.created_at,
+    books.updated_at,
+    book_holdings.user_id,
+    book_holdings.updated_at AS holding_updated_at
+   FROM (books
+     JOIN book_holdings ON ((book_holdings.book_id = books.id)))
+  ORDER BY books.id, book_holdings.updated_at DESC;
+
+
+--
 -- Name: user_cover_photos; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -342,6 +359,26 @@ CREATE TABLE user_facebook_accounts (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: user_holding_books; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW user_holding_books AS
+ SELECT DISTINCT ON (books.id, book_holdings.user_id) books.id,
+    books.isbn,
+    books.owner_id,
+    books.created_at,
+    books.updated_at,
+    book_holdings.id AS holding_id,
+    book_holdings.user_id,
+    book_holdings.state AS holding_state,
+    book_holdings.updated_at AS holding_updated_at,
+    book_holdings.created_at AS holding_created_at
+   FROM (books
+     JOIN book_holdings ON ((book_holdings.book_id = books.id)))
+  ORDER BY books.id, book_holdings.user_id, book_holdings.created_at DESC;
 
 
 --
@@ -1186,6 +1223,7 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170321143015'),
 ('20170323154713'),
 ('20170325154836'),
-('20170415161411');
+('20170415161411'),
+('20170419034705');
 
 
