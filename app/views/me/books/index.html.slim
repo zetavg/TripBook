@@ -1,4 +1,6 @@
 .me-books-index-page
+  = render 'show_book_wrapper'
+
   h1.h2.hidden-sm-up style="padding-bottom: 4px;"
     | 我的書架
   = render 'navtab'
@@ -6,20 +8,7 @@
     .books-shelf
       - @books.each do |book|
         .books-shelf-item
-          = book_cover(book) do
-            .btn-toolbar
-              .btn-group
-                = link_to '更新閱讀記錄', new_me_book_reading_path(book_id: book.id), class: 'btn btn-sm'
-                - if book.current_holding.user == current_user
-                  - if book.current_borrowing_trip.present?
-                    - if book.current_holding.ready_for_release?
-                      - case book.current_borrowing_trip.next_step
-                      - when :lend
-                        = link_to '送出邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm btn-primary'
-                      - when :pass_on
-                        = link_to '送出邀請', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm btn-primary'
-                      - when :return
-                        = link_to '歸還', me_book_borrowing_invitations_path(book_id: book.id), class: 'btn btn-sm'
+          = book_cover(book, href: me_book_path(book))
   - else
     .card.text-center style="margin-top: 16px;"
       .card-block

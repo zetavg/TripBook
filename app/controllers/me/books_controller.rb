@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 class Me::BooksController < ApplicationController
-  layout 'me/books'
+  layout :resolve_layout
 
   def index
     @show = (params[:show] || 'in_hand').underscore
     @books = books_scope(@show).reorder(updated_at: :desc)
+  end
+
+  def show
+    find_book
   end
 
   private
@@ -21,6 +25,11 @@ class Me::BooksController < ApplicationController
   end
 
   def find_book
-    @book = books_scope.find(params[:book_id] || params[:id])
+    @book = books_scope.find(params[:book_id] || params[:id]).becomes(Book)
+  end
+
+  def resolve_layout
+    return 'me/books' unless params[:layout].present?
+    false
   end
 end

@@ -1,0 +1,9 @@
+.card
+  .card-block
+    h2.h4.card-title
+      = @book.name
+    .h6.card-subtitle
+      - if @book.author.present?
+        = @book.author
+        | &nbsp;
+      span.text-muted= @book.isbn

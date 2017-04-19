@@ -17,11 +17,13 @@ const components = {}
 const pages = {}
 
 $(document).on('turbolinks:load', () => {
+  // Mount Components
   components.navbars = $('.navbar').toArray().map(el => new Navbar(el))
   components.bookInfoInputs = $('.book_info_input').toArray().map(el => new BookInfoInput(el))
   components.userSelectionInputs = $('.user-selection-input').toArray().map(el => new UserSelectionInput(el))
   components.basicImageUploaderInput =
     $('.basic_image_uploader_input').toArray().map(el => new BasicImageUploaderInput(el))
 
+  // Mount Pages
   pages.meBooksIndexPages = $('.me-books-index-page').toArray().map(el => new MeBooksIndexPage(el))
 })

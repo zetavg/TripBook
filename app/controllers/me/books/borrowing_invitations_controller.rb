@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Me::Books::BorrowingInvitationsController < ApplicationController
+class Me::Books::BorrowingInvitationsController < Me::BooksController
   before_action :ensure_book_in_hand_and_ready_for_release
 
   def index
