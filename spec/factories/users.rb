@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :user do
     email { Faker::Internet.safe_email }
     password { Faker::Internet.password }
-    username { Faker::Internet.user_name }
+    username { Faker::Internet.user_name.gsub(/[^a-zA-Z0-9_]/, '_') }
     name { Faker::Name.name }
 
     confirmed_at { Time.current }

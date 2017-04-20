@@ -13,9 +13,7 @@ class Me::Settings::AccountsController < Me::SettingsController
         flash[:warning] = "系統已發送一封確認郵件至 #{@user.unconfirmed_email}，請前往確認您的新電子郵件地址"
       end
 
-      if user_params[:password]
-        flash[:info] = '您的密碼已更新'
-      end
+      flash[:info] = '您的密碼已更新' if user_params[:password]
 
       bypass_sign_in @user
       redirect_back fallback_location: me_settings_account_path
