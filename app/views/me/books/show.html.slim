@@ -24,7 +24,7 @@
         dt.col-md-2.col-sm-3 style="padding-right: 0;" 出版日期
         dd.col-md-10.col-sm-9= l @book.publish_date
 
-.btn-toolbar.mb-3 style="overflow: auto;"
+.btn-toolbar.mb-3 style="overflow: auto; -webkit-overflow-scrolling: touch;"
   - if @book.current_borrowing_trip.present? && (@book.holder == current_user || @book.owner == current_user)
     .btn-group.mr-2
       - if @book.holder == current_user
