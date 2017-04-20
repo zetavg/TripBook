@@ -29,7 +29,7 @@ class Me::BooksController < ApplicationController
   end
 
   def resolve_layout
-    return 'me/books' unless params[:layout].present?
+    return "me/books/#{action_name}" unless params[:layout].present?
     false
   end
 end

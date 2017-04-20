@@ -1,0 +1,9 @@
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+= render layout: 'layouts/content' do
+  .container style="margin-top: 16px;"
+    = yield

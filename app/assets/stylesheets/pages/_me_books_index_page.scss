@@ -1,0 +1,114 @@
+.me-books-index-page {
+  // Show Book Area
+  .show-book {
+    $dim-color: $gray-lightest;
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: none;
+    background-color: rgba($dim-color, 0);
+
+    transition: background-color .3s;
+
+    // Layers
+
+    .layer-1,
+    .layer-2 {
+      position: fixed;
+      z-index: 99999;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .layer-2 {
+      pointer-events: none;
+    }
+
+    // Card and image container layout
+
+    .show-book-card,
+    .show-book-image-container {
+      max-height: 800px;
+      margin-top: 10vh;
+      height: 80vh;
+
+      img { max-width: 100%; width: 100%; }
+    }
+
+    .show-book-card {
+      overflow: auto;
+    }
+
+    .show-book-image-container {
+      .book-cover {
+        display: inline-block !important;
+      }
+    }
+
+    @include media-breakpoint-between(xs, md) {
+      .show-book-card {
+        margin-top: 12vh;
+        height: 75vh;
+        padding-top: 10vh;
+      }
+
+      .show-book-image-container {
+        height: auto;
+        margin-top: 0;
+        text-align: center;
+
+        img { width: auto; height: 20vh; }
+      }
+    }
+
+    // Animations
+
+    .show-book-card,
+    .show-book-image {
+      transform-origin: top left;
+    }
+
+    &.pre-activating {
+      display: block;
+
+      > * {
+        opacity: 0;
+      }
+    }
+
+    &.active,
+    &.activating {
+      display: block;
+      background-color: rgba($dim-color, .8);
+
+      > * {
+        opacity: 1;
+      }
+
+      .show-book-card,
+      .show-book-image {
+        transform: none !important;
+        transition: all .3s;
+      }
+    }
+
+    &.deactivating {
+      display: block;
+
+      > * {
+        opacity: 1;
+      }
+
+      .show-book-card,
+      .show-book-image {
+        transition: all .3s;
+      }
+    }
+  }
+}

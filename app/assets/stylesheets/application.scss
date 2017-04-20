@@ -33,11 +33,16 @@
 
 // Layouts
 //
-// Arranges components to construct a block or page.
+// Arranges components to construct a block.
 
 @import 'layouts/content';
 @import 'layouts/new_borrow_demand_block';
 @import 'layouts/books_index_page_show_book';
+
+// Pages
+//
+// Page specific styles
+@import 'pages/me_books_index_page';
 
 // Utilities
 //
