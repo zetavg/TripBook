@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Me::Books::BorrowingInvitations::CancellationsController < Me::Books::BorrowingInvitationsController
+  layout 'me/books'
+
   def create
     find_borrowing_invitation_for_user
     @cancellation = Book::BorrowingInvitation::InvitationUser::Cancellation.new(

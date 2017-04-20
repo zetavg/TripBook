@@ -23,6 +23,8 @@ export default class BookInfoInput {
   }
 
   initSelect() {
+    this.$elenemt.find('.select2').remove()
+
     const templateItem = (obj) => {
       let $item
 

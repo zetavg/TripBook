@@ -7,7 +7,7 @@
       ul.list-group.list-group-flush
         - @borrowing_invitation.invitation_users.each do |invitation_user|
           li.list-group-item
-            = invitation_user.user&.username
+            = invitation_user.user&.display_name
             - if invitation_user.message.present?
               = "，訊息：「#{invitation_user.message}」"
             - else

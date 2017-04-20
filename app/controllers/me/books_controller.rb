@@ -25,7 +25,7 @@ class Me::BooksController < ApplicationController
   end
 
   def find_book
-    @book = books_scope.find(params[:book_id] || params[:id]).becomes(Book)
+    @book = books_scope.find(params[:book_id] || params[:id]).becomes(Book).for(current_user)
   end
 
   def resolve_layout

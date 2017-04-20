@@ -14,7 +14,7 @@ export default class MeBooksIndexPage {
   handleShowBookAreaClick(e) {
     if (this.isShowBookAnimating()) return true
     if (e.target.classList.contains('close-area')) {
-      this.closeBook(this.$currentBook)
+      this.closeBook(this.getCurrentBook())
       return false
     }
     return true
@@ -24,9 +24,20 @@ export default class MeBooksIndexPage {
     if (e.metaKey || e.ctrlKey) return true
     if (this.isShowBookAnimating()) return true
     e.preventDefault()
-    this.$currentBook = $(e.target).parent('.book-cover')
-    this.openBook(this.$currentBook)
+    const $currentBook = $(e.target).parent('.book-cover')
+    this.setCurrentBook($currentBook)
+    this.openBook($currentBook)
     return false
+  }
+
+  setCurrentBook($book) {
+    const id = $book.data('id')
+    this.$elenemt.attr('data-current-book-id', id)
+  }
+
+  getCurrentBook() {
+    const id = this.$elenemt.attr('data-current-book-id')
+    return this.$elenemt.find(`.book-cover[data-id=${id}]`)
   }
 
   isShowBookAnimating() {
@@ -60,6 +71,7 @@ export default class MeBooksIndexPage {
     const href = $book.attr('href')
     const imageSrc = $book.find('img').attr('src')
     this.$showBookImage.find('img').attr('src', imageSrc)
+    this.$showBookContent.html('')
 
     $.ajax({
       url: href,

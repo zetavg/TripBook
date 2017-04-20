@@ -14,6 +14,10 @@
 
     transition: background-color .3s;
 
+    html[data-turbolinks-preview] & {
+      display: none !important;
+    }
+
     // Layers
 
     .layer-1,
@@ -42,7 +46,33 @@
     }
 
     .show-book-card {
-      overflow: auto;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 12px;
+        right: 12px;
+        height: 32px;
+        background: linear-gradient(to bottom, $white 10%, rgba($white, 0) 100%);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        bottom: 0;
+        left: 12px;
+        right: 12px;
+        height: 32px;
+        background: linear-gradient(to top, $white 10%, rgba($white, 0) 100%);
+      }
+
+      > * {
+        overflow: auto;
+      }
     }
 
     .show-book-image-container {
@@ -53,9 +83,13 @@
 
     @include media-breakpoint-between(xs, md) {
       .show-book-card {
-        margin-top: 12vh;
-        height: 75vh;
-        padding-top: 10vh;
+        margin-top: 20vh;
+        height: 70vh;
+        padding-top: 7vh;
+
+        &::before {
+          top: 7vh;
+        }
       }
 
       .show-book-image-container {
@@ -63,7 +97,7 @@
         margin-top: 0;
         text-align: center;
 
-        img { width: auto; height: 20vh; }
+        img { width: auto; height: 24vh; }
       }
     }
 

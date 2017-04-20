@@ -46,7 +46,7 @@
     left: 0;
     right: 0;
     padding: 12px 12px;
-    background: linear-gradient(to top, rgba($gray, .5) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba($gray, .5) 0%, rgba($gray, 0) 100%);
 
     .btn {
       @include button-outline-variant($gray-lighter, $gray-lighter);

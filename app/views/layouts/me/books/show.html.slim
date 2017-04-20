@@ -6,4 +6,12 @@
 
 = render layout: 'layouts/content' do
   .container style="margin-top: 16px;"
-    = yield
+    ol.breadcrumb
+      li.breadcrumb-item
+        = link_to '書架', me_books_path
+      li.breadcrumb-item= @book.name
+    .row
+      .col-md-3.text-center
+        = book_cover(@book, responsive: true)
+      .col-md-9
+        = yield

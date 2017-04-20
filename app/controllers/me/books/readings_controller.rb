@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Me::Books::ReadingsController < Me::BooksController
+  layout 'me/books'
+
   def new
     find_book
     build_reading

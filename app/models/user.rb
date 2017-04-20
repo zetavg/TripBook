@@ -23,7 +23,7 @@ class User < ApplicationRecord
 
   before_validation :nilify_blanks
 
-  def displayed_name
+  def display_name
     username || name
   end
 

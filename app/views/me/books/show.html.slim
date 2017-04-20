@@ -1,4 +1,4 @@
-.card
+.card.mb-2
   .card-block
     h2.h4.card-title
       = @book.name
@@ -7,3 +7,43 @@
         = @book.author
         | &nbsp;
       span.text-muted= @book.isbn
+    hr
+    dl.row.mb-0
+      - if @book.owner != current_user
+        dt.col-md-2.col-sm-3 style="padding-right: 0;" 擁有者
+        dd.col-md-10.col-sm-9= @book.owner.display_name
+      dt.col-md-2.col-sm-3 style="padding-right: 0;" ISBN
+      dd.col-md-10.col-sm-9= @book.isbn
+      - if @book.author.present?
+        dt.col-md-2.col-sm-3 style="padding-right: 0;" 作者
+        dd.col-md-10.col-sm-9= @book.author
+      - if @book.publisher.present?
+        dt.col-md-2.col-sm-3 style="padding-right: 0;" 出版社
+        dd.col-md-10.col-sm-9= @book.publisher
+      - if @book.publish_date.present?
+        dt.col-md-2.col-sm-3 style="padding-right: 0;" 出版日期
+        dd.col-md-10.col-sm-9= l @book.publish_date
+
+.btn-toolbar.mb-3 style="overflow: auto;"
+  - if @book.current_borrowing_trip.present? && (@book.holder == current_user || @book.owner == current_user)
+    .btn-group.mr-2
+      - if @book.holder == current_user
+        - if @book.current_holding.ready_for_release?
+          - case @book.current_borrowing_trip.next_step
+          - when :lend
+            = link_to '邀請借閱者', me_book_borrowing_invitations_path(book_id: @book.id), class: 'btn btn-primary'
+          - when :pass_on
+            = link_to '尋找下一位借閱者', me_book_borrowing_invitations_path(book_id: @book.id), class: 'btn btn-primary'
+          - when :return
+            = link_to '歸還', me_book_borrowing_invitations_path(book_id: @book.id), class: 'btn btn-primary'
+        - else
+          = link_to '我讀完了', me_book_reading_path(book_id: @book.id, 'book_reading[ready_for_release]': true), method: :post, data: { confirm: '確定要表示讀完了嗎？接下來您就要歸還此書或尋找下一位借閱者囉。' }, class: 'btn btn-secondary'
+  .btn-group.mr-2
+    = link_to '更新閱讀記錄', new_me_book_reading_path(book_id: @book.id), class: 'btn btn-secondary'
+
+- if @book.story&.content&.present?
+  .card
+    .card-block
+      h3.h5.card-title 我與書的故事
+      hr
+      = simple_format @book.story&.content

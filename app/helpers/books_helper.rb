@@ -21,7 +21,8 @@ module BooksHelper
       style: style,
       href: href,
       'data-width': dimensions[0],
-      'data-height': dimensions[1]
+      'data-height': dimensions[1],
+      'data-id': book.id
     ) do
       if book.cover_image.image.present?
         concat image_tag(book.cover_image&.image&.medium&.url)
