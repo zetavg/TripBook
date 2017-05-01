@@ -15,20 +15,20 @@
           = book_cover invitation.book, max_width: 80, max_height: 100, style: 'float: right;', html_class: 'hidden-sm-down'
           h2.h4.card-title= invitation.book.name
           .h6.card-subtitle
-            | 來自 #{invitation.inviter.username}
+            | 來自 #{invitation.inviter.display_name}
             - if invitation.book.owner != invitation.inviter
-              | ，書籍為 #{invitation.book.owner.username} 所有
+              | ，書籍為 #{invitation.book.owner.display_name} 所有
           p.card-text
           p.card-text
             = link_to '查看書籍的更多資料', invitation.book.info, target: '_blank'
         ul.list-group.list-group-flush
           - if invitation.story&.content_for(:invitee).present?
             li.list-group-item
-              h3.h5 #{invitation.inviter.username} 與書的故事
+              h3.h5 #{invitation.inviter.display_name} 與書的故事
               div(style="width: 100%;")= simple_format invitation.story&.content_for(:invitee)
           - if invitation.message.present?
             li.list-group-item
-              h3.h5 #{invitation.inviter.username} 給你的訊息
+              h3.h5 #{invitation.inviter.display_name} 給你的訊息
               div(style="width: 100%;")= simple_format invitation.message
         - if invitation.avaliable?
           .card-block
@@ -37,7 +37,7 @@
             = link_to '謝絕', me_invitation_rejection_path(invitation_id: invitation.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'card-link text-danger', data: { confirm: '確定要謝絕此邀請嗎？' }
         - elsif invitation.accepted?
           .card-block
-            h3.h5 #{invitation.inviter.username} 的聯絡資訊
+            h3.h5 #{invitation.inviter.display_name} 的聯絡資訊
             ul
               li 本名：#{invitation.inviter.name}
               li= link_to 'Facebook', invitation.inviter.facebook_account&.url, target: '_blank'

@@ -38,6 +38,8 @@
             = link_to '歸還', me_book_borrowing_invitations_path(book_id: @book.id), class: 'btn btn-primary'
         - else
           = link_to '我讀完了', me_book_reading_path(book_id: @book.id, 'book_reading[ready_for_release]': true), method: :post, data: { confirm: '確定要表示讀完了嗎？接下來您就要歸還此書或尋找下一位借閱者囉。' }, class: 'btn btn-secondary'
+      - elsif @book.owner == current_user
+        = link_to '查看目前旅程狀態', me_owned_book_path(@book), class: 'btn btn-secondary'
   .btn-group.mr-2
     = link_to '更新閱讀記錄', new_me_book_reading_path(book_id: @book.id), class: 'btn btn-secondary'
 

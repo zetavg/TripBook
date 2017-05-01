@@ -15,9 +15,9 @@
           = book_cover invitation.book, max_width: 80, max_height: 100, style: 'float: right;', html_class: 'hidden-sm-down'
           h2.h4.card-title= invitation.book.name
           .h6.card-subtitle
-            | 來自 #{invitation.inviter.username}
+            | 來自 #{invitation.inviter.display_name}
             - if invitation.book.owner != invitation.inviter
-              | ，書籍為 #{invitation.book.owner.username} 所有
+              | ，書籍為 #{invitation.book.owner.display_name} 所有
           p.card-text
           p.card-text
             = link_to '查看書籍的更多資料', invitation.book.info, target: '_blank'
@@ -25,7 +25,7 @@
           ul.list-group.list-group-flush
             - invitation.invitation_users.each do |invitation_user|
               li.list-group-item
-                = invitation_user.user&.username
+                = invitation_user.user&.display_name
                 - if invitation_user.message.present?
                   = "，訊息：「#{invitation_user.message}」"
                 - else
@@ -41,15 +41,15 @@
               ul
                 - invitation.not_accepted_invitation_users.each do |invitation_user|
                   li
-                    = invitation_user.user&.username
+                    = invitation_user.user&.display_name
                     - if invitation_user.message.present?
                       = "，訊息：「#{invitation_user.message}」"
           .card-footer
             p
-              | 已由 #{invitation.accepted_invitee.username} 接受
+              | 已由 #{invitation.accepted_invitee.display_name} 接受
               - if invitation.accepted_invitation_user.message.present?
                 | ，您給他的訊息是：「#{invitation.accepted_invitation_user.message}」
-            p #{invitation.accepted_invitee.username} 的聯絡資訊：
+            p #{invitation.accepted_invitee.display_name} 的聯絡資訊：
             ul
               li 本名：#{invitation.accepted_invitee.name}
               li= link_to 'Facebook', invitation.accepted_invitee.facebook_account&.url, target: '_blank'

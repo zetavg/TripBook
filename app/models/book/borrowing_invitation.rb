@@ -27,7 +27,7 @@ class Book::BorrowingInvitation < ApplicationRecord
   validate :validate_state_is_ready_for_release, on: :create
 
   def borrowing_trip
-    super || holding_borrowing_trip
+    super || holding_borrowing&.borrowing_trip || holding_borrowing_trip
   end
 
   def avaliable?
