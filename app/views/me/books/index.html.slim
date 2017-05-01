@@ -9,15 +9,16 @@
       - @books.each do |book|
         .books-shelf-item
           = book_cover(book, href: me_book_path(book)) do
-            - if book.owner == current_user
-              - if book.holder != current_user
-                .book-cover-tag 出借中
-            - elsif book.holder == current_user
-              - if book.current_holding.borrowing.present?
-                .book-cover-tag 借閱本
-            - else
-              - if book.try(:borrowing).present?
-                .book-cover-tag 借閱本
+            .book-cover-decorations
+              - if book.owner == current_user
+                - if book.holder != current_user
+                  .book-cover-tag 出借中
+              - elsif book.holder == current_user
+                - if book.current_holding.borrowing.present?
+                  .book-cover-tag 借閱本
+              - else
+                - if book.try(:borrowing).present?
+                  .book-cover-tag 借閱本
   - else
     .card.text-center style="margin-top: 16px;"
       .card-block

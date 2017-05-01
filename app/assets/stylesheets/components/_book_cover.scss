@@ -24,6 +24,31 @@
   background-color: #f2f4ee;
   color: #0b0531;
 
+  &-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+
+  &-tag {
+    position: absolute;
+    width: 100px;
+    height: 24px;
+    font-size: 14px;
+    background: $blue;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-45deg);
+    transform-origin: top left;
+    top: 48px;
+    left: -22px;
+  }
+
   img {
     width: 100%;
     border-radius: 2px;
