@@ -60,6 +60,9 @@
             - @book_info.book_stories.open_to_world.each do |book_story|
               hr
               p= simple_format book_story.content_for(:public)
+              p.text-right.text-muted
+                | —— #{book_story.user .username || '匿名'}，#{book_story.updated_at.year}
+                | &nbsp;[#{link_to('我想跟這個人借書', '#')}]
           - else
             hr
             p.text-center.text-muted 目前還沒有公開的故事喔
