@@ -104,6 +104,20 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: book_borrow_demand_demand_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE book_borrow_demand_demand_users (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    borrow_demand_id uuid NOT NULL,
+    user_id integer NOT NULL,
+    message text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
 -- Name: book_borrow_demands; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -539,6 +553,14 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
+-- Name: book_borrow_demand_demand_users book_borrow_demand_demand_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrow_demand_demand_users
+    ADD CONSTRAINT book_borrow_demand_demand_users_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: book_borrow_demands book_borrow_demands_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -701,6 +723,27 @@ CREATE UNIQUE INDEX index_admins_on_reset_password_token ON admins USING btree (
 --
 
 CREATE UNIQUE INDEX index_admins_on_unlock_token ON admins USING btree (unlock_token);
+
+
+--
+-- Name: index_book_borrow_demand_demand_users_on_b_d_id_and_u_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_book_borrow_demand_demand_users_on_b_d_id_and_u_id ON book_borrow_demand_demand_users USING btree (borrow_demand_id, user_id);
+
+
+--
+-- Name: index_book_borrow_demand_demand_users_on_borrow_demand_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrow_demand_demand_users_on_borrow_demand_id ON book_borrow_demand_demand_users USING btree (borrow_demand_id);
+
+
+--
+-- Name: index_book_borrow_demand_demand_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_book_borrow_demand_demand_users_on_user_id ON book_borrow_demand_demand_users USING btree (user_id);
 
 
 --
@@ -1061,6 +1104,14 @@ ALTER TABLE ONLY book_borrowing_invitation_invitation_users
 
 
 --
+-- Name: book_borrow_demand_demand_users fk_rails_6b5127f192; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrow_demand_demand_users
+    ADD CONSTRAINT fk_rails_6b5127f192 FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
 -- Name: books fk_rails_6cd736403e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1181,6 +1232,14 @@ ALTER TABLE ONLY book_summaries
 
 
 --
+-- Name: book_borrow_demand_demand_users fk_rails_f362ad022e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY book_borrow_demand_demand_users
+    ADD CONSTRAINT fk_rails_f362ad022e FOREIGN KEY (borrow_demand_id) REFERENCES book_borrow_demands(id);
+
+
+--
 -- Name: book_borrow_demands fk_rails_f49f571546; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1224,6 +1283,7 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170323154713'),
 ('20170325154836'),
 ('20170415161411'),
-('20170419034705');
+('20170419034705'),
+('20170508143612');
 
 
