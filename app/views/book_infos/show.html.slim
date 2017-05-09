@@ -4,65 +4,69 @@
       background-color: #fcfcfc;
     }
 
-.container style="padding-top: 16px;"
-  h2= @book_info.name
-  - if @book_info.author
-    h3
-      .small= @book_info.author
-  .row style="padding-top: 8px; padding-bottom: 16px;"
-    .col-md-4.text-center
-      = book_cover(@book_info, responsive: true, style: 'margin-bottom: 16px;')
-      ul.book-statis style="margin-bottom: 16px;"
-        li
-          | 站上登記共有
-          span.pull-right
-            = @book_info.books.count
-            | &nbsp;冊
-        li
-          | 待出借數量
-          span.pull-right
-            = @book_info.book_holdings.ready_for_release.count
-            | &nbsp;冊
-        li
-          | 等候中的借閱請求
-          span.pull-right
-            = @book_info.borrow_demands.active.count
-            | &nbsp;個
-      - if user_signed_in?
-        - if current_user.book_borrow_demands.active.where(book_info: @book_info).last.present?
-          - if current_user.book_borrow_demands.active.where(book_info: @book_info).last.message.present?
-            .card style="margin-bottom: 8px;"
-              .card-block style="padding-bottom: 4px;"
-                = simple_format current_user.book_borrow_demands.active.where(book_info: @book_info).last.message
+.book-infos-show-page
+  .container style="padding-top: 16px;"
+    h2= @book_info.name
+    - if @book_info.author
+      h3
+        .small= @book_info.author
+    .row style="padding-top: 8px; padding-bottom: 16px;"
+      .col-md-4.text-center
+        = book_cover(@book_info, responsive: true, style: 'margin-bottom: 16px;')
+        ul.book-statis style="margin-bottom: 16px;"
+          li
+            | 站上登記共有
+            span.pull-right
+              = @book_info.books.count
+              | &nbsp;冊
+          li
+            | 待出借數量
+            span.pull-right
+              = @book_info.book_holdings.ready_for_release.count
+              | &nbsp;冊
+          li
+            | 等候中的借閱請求
+            span.pull-right
+              = @book_info.borrow_demands.active.count
+              | &nbsp;個
+        - if user_signed_in?
+          - if current_user.book_borrow_demands.active.where(book_info: @book_info).last.present?
+            - if current_user.book_borrow_demands.active.where(book_info: @book_info).last.message.present?
+              .card style="margin-bottom: 8px;"
+                .card-block style="padding-bottom: 4px;"
+                  = simple_format current_user.book_borrow_demands.active.where(book_info: @book_info).last.message
 
-          = link_to '取消借閱登記', book_info_borrow_demand_cancellation_path(book_info_isbn: @book_info.isbn), method: :post, class: 'btn btn-block btn-danger'
-        - else
-          .l-new-borrow-demand-block
-            = simple_form_for current_user.book_borrow_demands.build(book_info: @book_info), url: book_info_borrow_demand_path(book_info_isbn: @book_info.isbn) do |f|
-              #borrow-demand-collapse.collapse
-                = f.input :message, label: false, placeholder: '想看的原因（選填，將會被公開）'
-              .l-new-borrow-demand-block-actions.collapsed-only
-                button class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#borrow-demand-collapse"
-                  | 我想要借
-              .l-new-borrow-demand-block-actions.not-collapsed-only
-                = f.submit '確認', class: "btn btn-block btn-success"
-                .gap
-                button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#borrow-demand-collapse"
-                  | 取消
-      - else
-        = link_to '登入後即可申請借閱', new_user_session_path, class: 'btn btn-block btn-primary disabled'
-      p
-    .col-md-8
-      .card
-        .card-block
-          h4.card-title 大家與書的故事
-          - if @book_info.book_stories.open_to_world.any?
-            - @book_info.book_stories.open_to_world.each do |book_story|
-              hr
-              p= simple_format book_story.content_for(:public)
-              p.text-right.text-muted
-                | —— #{book_story.user .username || '匿名'}，#{book_story.updated_at.year}
-                | &nbsp;[#{link_to('我想跟這個人借書', '#')}]
+            = link_to '取消借閱登記', book_info_borrow_demand_cancellation_path(book_info_isbn: @book_info.isbn), method: :post, class: 'btn btn-block btn-danger'
           - else
-            hr
-            p.text-center.text-muted 目前還沒有公開的故事喔
+            .l-new-borrow-demand-block
+              = simple_form_for current_user.book_borrow_demands.build(book_info: @book_info), url: book_info_borrow_demand_path(book_info_isbn: @book_info.isbn) do |f|
+                #borrow-demand-collapse.collapse
+                  = f.input :message, label: false, placeholder: '想看的原因（選填，將會被公開）'
+                .l-new-borrow-demand-block-actions.collapsed-only
+                  button class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#borrow-demand-collapse"
+                    | 我想要借
+                .l-new-borrow-demand-block-actions.not-collapsed-only
+                  = f.submit '確認', class: "btn btn-block btn-success"
+                  .gap
+                  button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#borrow-demand-collapse"
+                    | 取消
+        - else
+          = link_to '登入後即可申請借閱', new_user_session_path, class: 'btn btn-block btn-primary disabled'
+        p
+      .col-md-8
+        .card
+          .card-block
+            h4.card-title 大家與書的故事
+            - if @book_info.book_stories.open_to_world.any?
+              - @book_info.book_stories.open_to_world.each do |book_story|
+                hr
+                p= simple_format book_story.content_for(:public)
+                p.text-right.text-muted
+                  | —— #{book_story.user.username || '匿名'}，#{book_story.updated_at.year}
+                  | &nbsp;[
+                  a.send-book-borrow-demand-with-user-popover-link href=new_person_book_info_borrow_demand_path(book_info_id: @book_info.isbn, person_id: book_story.user.id)
+                    | 我想跟這個人借書
+                  | ]
+            - else
+              hr
+              p.text-center.text-muted 目前還沒有公開的故事喔

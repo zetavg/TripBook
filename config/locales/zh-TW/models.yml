@@ -62,6 +62,9 @@ zh-TW:
           only_by_invitation: 限受邀者
           open_to_world: 公開
         publish: 發佈
+      book/borrow_demand/with_demand_user:
+        message: 公開訊息
+        demand_user_message: 私人訊息
       book/borrowing_trip:
         book: 書籍
         state: 狀態
