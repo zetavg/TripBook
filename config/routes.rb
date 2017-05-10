@@ -31,10 +31,10 @@ Rails.application.routes.draw do
 
   resources :people, only: [] do
     scope module: :people do
-      resources :book_infos, only: [] do
+      resources :book_infos, path: 'books', only: [] do
         scope module: :book_infos do
           authenticate :user do
-            resource :borrow_demand, only: [:new, :create]
+            resource :borrow_demand, path: 'borrow-demand', only: [:new, :create]
           end
         end
       end
