@@ -11,6 +11,7 @@ class Book::BorrowDemand < ApplicationRecord
   belongs_to :user
   belongs_to :borrowing, optional: true
   belongs_to :book_info, primary_key: :isbn, foreign_key: :book_isbn
+  has_many :demand_users, autosave: true
   has_many :books, primary_key: :book_isbn, foreign_key: :book_isbn
 
   state_machine column: :state do

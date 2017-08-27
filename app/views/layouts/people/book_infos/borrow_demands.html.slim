@@ -1,0 +1,15 @@
+- content_for :body do
+  css:
+    html, body {
+      background-color: #fcfcfc;
+    }
+
+= render layout: 'layouts/content' do
+  .container style="margin-top: 16px;"
+    h1.h2 借閱請求
+    h2.h5.text-muted #{@person.display_name} 的《#{@book_info.name}》
+    .row.mt-4
+      .col-md-3
+        = book_cover(@book_info, responsive: true, style: 'margin-bottom: 16px;')
+      .col-md-9
+        = yield

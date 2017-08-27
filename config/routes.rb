@@ -29,6 +29,19 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :people, only: [] do
+    scope module: :people do
+      resources :book_infos, path: 'books', only: [] do
+        scope module: :book_infos do
+          authenticate :user do
+            resource :borrow_demand, path: 'borrow-demand', only: [:new, :create]
+          end
+        end
+      end
+      resources :book_stories, only: []
+    end
+  end
+
   authenticate :user do
     namespace :me do
       resource :settings, only: [:show] do

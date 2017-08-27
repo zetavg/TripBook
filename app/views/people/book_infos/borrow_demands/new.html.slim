@@ -1,0 +1,4 @@
+= simple_form_for @borrow_demand, url: person_book_info_borrow_demand_path do |f|
+  = f.input :message, as: :text, placeholder: '手上有這本書的人，都可以發借書邀請給你喔！'
+  = f.input :demand_user_message, as: :text, placeholder: "給 #{@person.display_name} 的私人訊息。"
+  = f.submit '送出', class: 'btn btn-success'
