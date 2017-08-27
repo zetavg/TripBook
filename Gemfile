@@ -30,7 +30,7 @@ gem 'awesome_print'
 gem 'settingslogic'
 
 # Model Utils
-gem 'active_type', github: 'zetavg/active_type', ref: '6066e43b4f182a8b55e7122c84bd64d95b0e980d'
+gem 'active_type'
 gem 'aasm'
 gem 'paper_trail'
 
