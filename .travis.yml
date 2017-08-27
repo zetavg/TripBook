@@ -3,6 +3,7 @@ language: ruby
 rvm: 2.4.0
 cache:
   bundler: true
+  yarn: true
   directories:
     - ~/.rvm/gems/ruby-2.4.0
     - ~/.nvm
@@ -24,6 +25,7 @@ before_install:
   - ". \"$NVM_DIR/nvm.sh\""
   - "nvm install 6.5.0"
   - "nvm use 6.5.0"
+  - "npm install -g yarn"
 install:
   - travis_retry bin/setup
 script: bin/test

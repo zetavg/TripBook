@@ -2,6 +2,6 @@
 namespace :js do
   desc 'NPM install'
   task :install do
-    sh 'npm install'
+    sh 'bin/yarn install'
   end
 end
