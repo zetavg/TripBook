@@ -60,6 +60,7 @@ class Book::BorrowingTrip < ApplicationRecord
   after_initialize :prepare_to_end_if_needed
   after_initialize :end_if_needed
   before_validation :nilify_blanks
+  before_validation :restrict_holding_id_changes
   after_create :set_current_holding_to_ready_for_release
   after_save :set_current_holding_to_holding_if_needed
   after_save :end_borrowings_if_ended
@@ -138,6 +139,12 @@ class Book::BorrowingTrip < ApplicationRecord
     self.max_single_durition_days = nil if max_single_durition_days&.zero?
     self.max_durition_days = nil if max_durition_days&.zero?
     self.max_borrowings_count = nil if max_borrowings_count&.zero?
+  end
+
+  def restrict_holding_id_changes
+    return if holding_id_was.blank?
+    return if holding_id == holding_id_was
+    self.holding_id = holding_id_was
   end
 
   def validate_book_hold_by_owner
