@@ -24,7 +24,7 @@ export default class MeBooksIndexPage {
     if (e.metaKey || e.ctrlKey) return true
     if (this.isShowBookAnimating()) return true
     e.preventDefault()
-    const $currentBook = $(e.target).parent('.book-cover')
+    const $currentBook = $(e.target).closest('.book-cover')
     this.setCurrentBook($currentBook)
     this.openBook($currentBook)
     return false
