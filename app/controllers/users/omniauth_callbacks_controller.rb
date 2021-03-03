@@ -36,8 +36,8 @@ module Users
         sign_in @user
         redirect_to root_path
       end
-    rescue StandardError
-      failure
+    # rescue StandardError
+    #  failure
     end
 
     def failure
