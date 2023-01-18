@@ -390,7 +390,7 @@ GEM
       pry (>= 0.9.10)
     public_suffix (2.0.5)
     puma (3.7.0)
-    rack (2.0.1)
+    rack (2.2.6.2)
     rack-livereload (0.3.16)
       rack
     rack-test (0.6.3)
